@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Boutique</string>
-    <string name="regex">^[\\*|\\||\\(|\\)|\\?|\\.|\\-|\\\\|\\+|\'|\"]+$</string>
-    <string name="regex2">^[\*|\||\(|\)|\?|\.|\\-|\\\\|+|\'|\"]+$</string>
-    <string name="regex_res">\\(</string>
-    <string name="digits">012356789()?-*^$&amp;&quot;\"&apos;</string>
-    <string name="digits_test">"我叫XXX,今年XX岁了,身高X.X米!"</string>
-    <string name="digits_test2">&#34;"我叫XXX,今年XX岁了,身高X.X米"!&#34;</string>
-    <string name="digits_test3">\"我叫XXX,今"年XX岁了,身高X.X米！\"</string>
+    <string name="regex">^[\\*|\\||\\(|\\)|\\?|\\.|\\-|\\\\|\\+|\\^|\\$|\\[|\\]|\\{|\\}|\\,|\'|\"|&amp;|@|:|;|+|%|/|~|&lt;|&gt;|`|#]+$</string>
+    <!--&quot;\"：表示允许输入"-->
+    <string name="digits">012356789()?-*^$&amp;&quot;\"';&lt;&gt;@:%/\\.[]{},~`+#</string>
+    <string name="regex_test">\\(</string>
+    <string name="regex_test2">\\</string>
+    <string name="regex_test3">\\\\</string>
+    <string name="digits_test">"我叫WBJ"</string>
+    <string name="digits_test2">&quot;我"叫\"WBJ&quot;</string>
+    <string name="digits_test3">\"我叫WBJ\"</string>
 </resources>

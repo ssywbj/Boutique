@@ -18,9 +18,9 @@ public class BoutiqueActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boutique);
 
-        Log.d(TAG, getString(R.string.digits_test));
-        Log.d(TAG, getString(R.string.digits_test2));
-        Log.d(TAG, getString(R.string.digits_test3));
+        Log.d(TAG, getString(R.string.digits_test) + ", " + getString(R.string.digits_test2) + ", " + getString(R.string.digits_test3));
+        Log.d(TAG, "\\( = " + getString(R.string.regex_test) + " ,\\ = " + getString(R.string.regex_test2)
+                + " ,\\\\ = " + getString(R.string.regex_test3));
 
         mEditPwd = findViewById(R.id.edit_pwd);
         mEditPwd.addTextChangedListener(new TextWatcher() {
@@ -36,16 +36,12 @@ public class BoutiqueActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 String pwd = s.toString();
                 Log.d(TAG, "match = " + pwd.matches("\\*") + ", " + pwd.matches("\\|")
-                        + ", " + pwd.matches("\\(") + ", " + pwd.matches(getString(R.string.regex_res)) + ", " + pwd.matches("\\)")
+                        + ", " + pwd.matches("\\(") + ", " + pwd.matches(getString(R.string.regex_test)) + ", " + pwd.matches("\\)")
                         + ", " + pwd.matches("\\?") + ", " + pwd.matches(".")
                         + ", " + pwd.matches("\\.") + ", " + pwd.matches("-")
                         + ", " + pwd.matches("\\\\") + ", " + "\\\\");
                 String regex = getString(R.string.regex);
-                String regex2 = getString(R.string.regex2);
-                Log.d(TAG, "regex = " + regex + ", " + "regex2 = " + regex2);
-                Log.d(TAG, "match = " + pwd.matches(regex) + ", " + pwd.matches(regex2));
-
-                Log.d(TAG, "( = " + "\\(" + ", " + getString(R.string.regex_res));
+                Log.d(TAG, "regex = " + regex + ", match = " + pwd.matches(regex));
             }
         });
     }
