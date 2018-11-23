@@ -1,0 +1,8 @@
+<resources>
+    <array name="main_item">
+        <item>Regex</item>
+        <item>启动方式</item>
+        <item>ConstraintLayout</item>
+        <item>DataBinding</item>
+    </array>
+</resources>

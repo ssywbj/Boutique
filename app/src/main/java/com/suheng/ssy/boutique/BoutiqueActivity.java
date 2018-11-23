@@ -1,56 +1,47 @@
 package com.suheng.ssy.boutique;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
+import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class BoutiqueActivity extends AppCompatActivity {
-
-    public static final String TAG = BoutiqueActivity.class.getSimpleName();
-    private EditText mEditPwd;
+public class BoutiqueActivity extends BasicActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_boutique);
-
-        Log.d(TAG, getString(R.string.digits_test) + ", " + getString(R.string.digits_test2) + ", " + getString(R.string.digits_test3));
-        Log.d(TAG, "\\( = " + getString(R.string.regex_test) + " ,\\ = " + getString(R.string.regex_test2)
-                + " ,\\\\ = " + getString(R.string.regex_test3));
-
-        mEditPwd = findViewById(R.id.edit_pwd);
-        mEditPwd.addTextChangedListener(new TextWatcher() {
+        ListView listView = new ListView(this);
+        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1
+                , getResources().getStringArray(R.array.main_item)));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String pwd = s.toString();
-                Log.d(TAG, "match = " + pwd.matches("\\*") + ", " + pwd.matches("\\|")
-                        + ", " + pwd.matches("\\(") + ", " + pwd.matches(getString(R.string.regex_test)) + ", " + pwd.matches("\\)")
-                        + ", " + pwd.matches("\\?") + ", " + pwd.matches(".")
-                        + ", " + pwd.matches("\\.") + ", " + pwd.matches("-")
-                        + ", " + pwd.matches("\\\\") + ", " + "\\\\");
-                String regex = getString(R.string.regex);
-                Log.d(TAG, "regex = " + regex + ", match = " + pwd.matches(regex));
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent;
+                switch (i) {
+                    case 0:
+                        intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
+                        break;
+                    case 1:
+                        intent = new Intent(BoutiqueActivity.this, LaunchTypeActivity.class);
+                        break;
+                    case 2:
+                        intent = new Intent(BoutiqueActivity.this, ConstraintLayoutActivity.class);
+                        break;
+                    case 3:
+                        intent = new Intent(BoutiqueActivity.this, DataBindingActivity.class);
+                        break;
+                    default:
+                        intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
+                        break;
+                }
+                startActivity(intent);
             }
         });
+
+        setContentView(listView);
     }
 
-    public void onClickVerify(View view) {
-        String pwd = mEditPwd.getText().toString();
-        Log.d(TAG, "match = " + pwd.matches("\\*") + pwd.matches("\\|") + pwd.matches("\\("));
-        String regex = getString(R.string.regex);
-        Log.d(TAG, "regex = " + regex);
-        Log.d(TAG, "match = " + pwd.matches(regex));
-    }
 }
