@@ -25,7 +25,7 @@ public class BoutiqueActivity extends BasicActivity {
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
                         break;
                     case 1:
-                        intent = new Intent(BoutiqueActivity.this, LaunchTypeActivity.class);
+                        intent = new Intent(BoutiqueActivity.this, LaunchStandardActivity.class);
                         break;
                     case 2:
                         intent = new Intent(BoutiqueActivity.this, ConstraintLayoutActivity.class);

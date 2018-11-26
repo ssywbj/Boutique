@@ -9,4 +9,9 @@
     <string name="digits_test">"我叫WBJ"</string>
     <string name="digits_test2">&quot;我"叫\"WBJ&quot;</string>
     <string name="digits_test3">\"我叫WBJ\"</string>
+
+    <string name="launch_standard">Standard</string>
+    <string name="launch_single_top">SingleTop</string>
+    <string name="launch_single_task">SingleTask</string>
+    <string name="launch_single_instance">SingleInstance</string>
 </resources>
