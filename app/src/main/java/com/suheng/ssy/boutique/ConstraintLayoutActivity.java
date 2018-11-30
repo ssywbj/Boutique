@@ -10,5 +10,4 @@ public class ConstraintLayoutActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_constraint_layout);
     }
-
 }

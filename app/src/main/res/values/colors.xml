@@ -2,5 +2,13 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#d81b60</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="edit_hint">#BBBBBB</color>
+    <color name="divide_line">#EEEEEE</color>
+    <color name="login_btn_enabled">#424B74</color>
+    <color name="login_btn_pressed">#18663a</color>
+    <color name="login_btn_disabled">#AAAAAA</color>
+    <color name="text_switch_login_type">#3090f7</color>
+    <color name="text_obtain_sms_enabled">@color/login_btn_enabled</color>
+    <color name="text_obtain_sms_disabled">#999999</color>
 </resources>

@@ -1,11 +1,28 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="EditInput">
+        <item name="android:background">@null</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/text_edit_input</item>
+        <item name="android:textColorHint">@color/edit_hint</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!--Widget.AppCompat.Button.Borderless样式自带按钮的点击阴影效果-->
+    <style name="LoginBtn" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_login_btn</item>
+        <item name="android:background">@drawable/btn_login_bg</item>
+        <item name="android:layout_height">@dimen/login_btn_height</item>
     </style>
 
 </resources>

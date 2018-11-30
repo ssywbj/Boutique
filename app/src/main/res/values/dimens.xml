@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="edit_input_height">46dp</dimen>
+    <dimen name="divide_line_height">1dp</dimen>
+    <dimen name="text_edit_input">15sp</dimen>
+    <dimen name="text_item_title">16sp</dimen>
+    <dimen name="text_login_btn">17sp</dimen>
+    <dimen name="login_user_icon">72dp</dimen>
+    <dimen name="login_btn_height">48dp</dimen>
+    <dimen name="corner_radius">32dp</dimen>
+    <dimen name="text_obtain_sms">14sp</dimen>
+    <dimen name="text_switch_login_type">@dimen/text_obtain_sms</dimen>
+    <dimen name="text_obtain_sms_padding_lr">8dp</dimen>
+    <dimen name="text_obtain_sms_padding_tb">4dp</dimen>
+    <dimen name="logint_btn_height">48dp</dimen>
+</resources>
