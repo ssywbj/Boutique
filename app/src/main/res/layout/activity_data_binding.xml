@@ -1,19 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="com.suheng.ssy.boutique.User" />
+        <!--引入方式1：import（java.lang.* 包中的类会被自动导入）-->
+        <import type="com.suheng.ssy.boutique.User"/>
 
         <variable
             name="user"
-            type="User" />
+            type="User"/>
+
+        <!--引入方式2-->
+        <!--<variable
+            name="user"
+            type="com.suheng.ssy.boutique.User"/>-->
+
+        <!--如果import的类名相同，可以使用alias指定别名-->
+        <import
+            alias="TmpUser"
+            type="com.suheng.ssy.boutique.model.User"/>
+
+        <variable
+            name="tmpUser"
+            type="TmpUser"/>
+
+        <variable
+            name="userHandler"
+            type="com.suheng.ssy.boutique.model.UserHandler"/>
 
         <variable
             name="text"
-            type="String" />
+            type="String"/>
+
+        <import type="android.databinding.ObservableList"/>
+
+        <variable
+            name="index"
+            type="int"/>
+
+        <variable
+            name="list"
+            type="ObservableList&lt;String&gt;"/>
+
+        <import type="android.databinding.ObservableMap"/>
+
+        <variable
+            name="map"
+            type="ObservableMap&lt;String, String&gt;"/>
+
+        <variable
+            name="key"
+            type="String"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -27,43 +66,108 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.22"/>
 
+        <!--由于 @{user.name}在布局文件中并没有明确的值，所以在预览视图中什么都不会显示，不便于
+        观察文本的大小和字体颜色等属性，此时可以为之设定默认值（文本内容或者是字体大小等属性都适用）
+        ，默认值将只在预览视图中显示且不能包含引号（使用“tools:text”也能达到同样的效果）-->
         <Button
             android:id="@+id/btn_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:onClick="@{user::onClickName}"
-            android:text="@{user.name}"
+            android:layout_marginBottom="4dp"
+            android:onClick="@{()->user.onClickName(text)}"
+            android:text="@{user.name, default=@string/launch_standard}"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <Button
             android:id="@+id/btn_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:layout_marginTop="8dp"
-            android:onClick="@{()->user.setName(text)}"
+            android:onClick="@{()->user.setAge(30)}"
             android:text="@{String.valueOf(user.age)}"
+            android:tooltipText="@string/launch_standard"
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="@+id/btn_name"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/btn_name"
-            app:layout_constraintTop_toTopOf="@+id/guideline2" />
+            app:layout_constraintTop_toTopOf="@+id/guideline2"
+            tools:text="@string/digits_test"/>
 
         <EditText
             android:id="@+id/editText"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:text="@={tmpUser.name,default=Name}"
             app:layout_constraintBottom_toTopOf="@+id/btn_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.33"/>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:onClick="@{()->userHandler.onClickName(text)}"
+            android:text="@{tmpUser.name}"
+            app:layout_constraintEnd_toEndOf="@+id/btn_age"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btn_age"
+            app:layout_constraintTop_toTopOf="@+id/guideline3"/>
+
+        <Button
+            android:id="@+id/btn_alias_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:onClick="@{()->userHandler.onClickAge(110)}"
+            android:text="@{String.valueOf(tmpUser.age)}"
+            app:layout_constraintEnd_toEndOf="@+id/button"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/button"
+            app:layout_constraintTop_toBottomOf="@+id/button"/>
+
+        <Button
+            android:id="@+id/btn_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{list[index],default=List}"
+            app:layout_constraintEnd_toEndOf="@+id/btn_alias_age"
+            app:layout_constraintStart_toStartOf="@+id/btn_alias_age"
+            app:layout_constraintTop_toBottomOf="@+id/btn_alias_age"/>
+
+        <Button
+            android:id="@+id/btn_map"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:onClick="@{()->userHandler.onClickGetEdit(tmpUser.name, user.age)}"
+            android:text="@{map[key],default=MapText}"
+            app:layout_constraintEnd_toEndOf="@+id/btn_list"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btn_list"
+            app:layout_constraintTop_toBottomOf="@+id/btn_list"/>
     </android.support.constraint.ConstraintLayout>
 </layout>
