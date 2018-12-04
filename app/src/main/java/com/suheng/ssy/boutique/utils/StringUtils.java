@@ -6,4 +6,7 @@ public class StringUtils {
         return text + "---";
     }
 
+    public static boolean isEmpty(String text) {
+        return text == null || text.trim().isEmpty();
+    }
 }

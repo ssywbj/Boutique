@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <!--引入方式1：import（java.lang.* 包中的类会被自动导入）-->
-        <import type="com.suheng.ssy.boutique.User" />
+        <import type="com.suheng.ssy.boutique.User"/>
 
         <variable
             name="user"
-            type="User" />
+            type="User"/>
 
         <!--引入方式2-->
         <!--<variable
@@ -20,45 +20,73 @@
         <!--如果import的类名相同，可以使用alias指定别名-->
         <import
             alias="TmpUser"
-            type="com.suheng.ssy.boutique.model.User" />
+            type="com.suheng.ssy.boutique.model.User"/>
 
         <variable
             name="tmpUser"
-            type="TmpUser" />
+            type="TmpUser"/>
 
         <variable
             name="userHandler"
-            type="com.suheng.ssy.boutique.model.UserHandler" />
+            type="com.suheng.ssy.boutique.model.UserHandler"/>
 
         <variable
             name="text"
-            type="String" />
+            type="String"/>
 
-        <import type="android.databinding.ObservableList" />
+        <import type="android.databinding.ObservableList"/>
 
         <variable
             name="index"
-            type="int" />
+            type="int"/>
 
         <variable
             name="list"
-            type="ObservableList&lt;String&gt;" />
+            type="ObservableList&lt;String&gt;"/>
 
-        <import type="android.databinding.ObservableMap" />
+        <import type="android.databinding.ObservableMap"/>
 
         <variable
             name="map"
-            type="ObservableMap&lt;String, String&gt;" />
+            type="ObservableMap&lt;String, String&gt;"/>
 
         <variable
             name="key"
-            type="String" />
+            type="String"/>
 
-        <import type="com.suheng.ssy.boutique.utils.StringUtils" />
+        <import type="com.suheng.ssy.boutique.utils.StringUtils"/>
+
+        <!--List、Map、Set、SparseArray、数组的用法与ObservableList、ObservableMap的用法差不多-->
+        <import type="java.util.List"/>
+
+        <variable
+            name="javaList"
+            type="List&lt;String&gt;"/>
+
+        <import type="java.util.Map"/>
+
+        <variable
+            name="javaMap"
+            type="Map&lt;String, String&gt;"/>
+
+        <import type="java.util.Set"/>
+
+        <variable
+            name="set"
+            type="Set&lt;String&gt;"/>
+
+        <import type="android.util.SparseArray"/>
+
+        <variable
+            name="sparse"
+            type="SparseArray&lt;String&gt;"/>
+
+        <variable
+            name="array"
+            type="String[]"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/edit_input"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".DataBindingActivity">
@@ -68,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.22" />
+            app:layout_constraintGuide_percent="0.22"/>
 
         <!--由于 @{user.name}在布局文件中并没有明确的值，所以在预览视图中什么都不会显示，不便于
         观察文本的大小和字体颜色等属性，此时可以为之设定默认值（文本内容或者是字体大小等属性都适用）
@@ -77,19 +105,18 @@
             android:id="@+id/btn_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
             android:onClick="@{()->user.onClickName(text)}"
             android:text="@{user.name, default=@string/launch_standard}"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.686"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <Button
             android:id="@+id/btn_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:onClick="@{()->user.setAge(30)}"
             android:text="@{String.valueOf(user.age)}"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
@@ -97,7 +124,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/btn_name"
             app:layout_constraintTop_toTopOf="@+id/guideline2"
-            tools:text="@string/digits_test" />
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="@string/digits_test"/>
 
         <!--监听EditText的字符变化：android:afterTextChanged="@{userHandler.afterTextChanged}"（方法名可以和原来的监听方式不一样，
         但方法参数和返回值必须和原始的回调函数保持一致）-->
@@ -105,9 +133,9 @@
             android:id="@+id/editText"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:afterTextChanged="@{userHandler.afterTextChanged}"
             android:ems="10"
             android:inputType="textPersonName"
@@ -117,26 +145,27 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.33" />
+            app:layout_constraintGuide_percent="0.33"/>
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:onClick="@{()->userHandler.onClickName(text)}"
             android:text="@{tmpUser.name}"
             app:layout_constraintEnd_toEndOf="@+id/btn_age"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="@+id/btn_age"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+            app:layout_constraintTop_toTopOf="@+id/guideline3"/>
 
         <Button
             android:id="@+id/btn_alias_age"
@@ -146,25 +175,24 @@
             android:onClick="@{()->userHandler.onClickAge(110)}"
             android:text="@{String.valueOf(tmpUser.age)}"
             app:layout_constraintEnd_toEndOf="@+id/button"
-            app:layout_constraintHorizontal_bias="0.01"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintTop_toBottomOf="@+id/button"/>
 
         <Button
             android:id="@+id/btn_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{list[index],default=List}"
+            android:text="@{list[index],default=列表数据}"
             app:layout_constraintEnd_toEndOf="@+id/btn_alias_age"
             app:layout_constraintStart_toStartOf="@+id/btn_alias_age"
-            app:layout_constraintTop_toBottomOf="@+id/btn_alias_age" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_alias_age"/>
 
         <Button
             android:id="@+id/btn_map"
-            android:layout_width="88dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:onClick="@{()->userHandler.onClickGetEdit(tmpUser.name, user.age)}"
@@ -172,35 +200,64 @@
             app:layout_constraintEnd_toEndOf="@+id/btn_list"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="@+id/btn_list"
-            app:layout_constraintTop_toBottomOf="@+id/btn_list" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_list"/>
 
-        <!--直接调用类的方法"@{StringUtils.format(tmpUser.name)}"-->
+        <!--直接调用类的方法"@{StringUtils.format(tmpUser.name)}"；textAllCaps为false：去掉btn上的英文文案默认大写-->
         <Button
             android:id="@+id/btn_class_method"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:onClick="@{()->userHandler.onClickSetNameNull()}"
-            android:text="@{StringUtils.format(tmpUser.name)}"
+            android:onClick="@{()->userHandler.onClickSetSchool(tmpUser.name,@id/btn_class_method)}"
+            android:text="@{StringUtils.isEmpty(tmpUser.school)?StringUtils.format(tmpUser.name):String.valueOf(tmpUser.age)}"
+            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="@+id/btn_map"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/btn_map"
-            app:layout_constraintTop_toBottomOf="@+id/btn_map" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_map"/>
 
-        <!--空合并运算符??会取第一个不为null的值作为返回值：tmpUser.name??String.valueOf(tmpUser.age)等价于
-        tmpUser.name != null ? tmpUser.name : String.valueOf(tmpUser.age)-->
+        <!--??：Null Coalescing（空合并运算符），会取第一个不为null的值作为返回值：tmpUser.name??String.valueOf(tmpUser.age)
+        等价于tmpUser.name != null ? tmpUser.name : String.valueOf(tmpUser.age)；注意：null是指对象为空，而不是空字符串-->
         <TextView
             android:id="@+id/text_null_coalescing"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_height="18dp"
             android:gravity="center"
-            android:text="@{tmpUser.name??String.valueOf(tmpUser.age)}"
+            android:onClick="@{()->userHandler.onClickSetSchool(tmpUser.name,@id/text_null_coalescing)}"
+            android:text="@{tmpUser.school??String.valueOf(tmpUser.age)}"
             app:layout_constraintEnd_toEndOf="@+id/btn_class_method"
             app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="@+id/btn_class_method"
-            app:layout_constraintTop_toBottomOf="@+id/btn_class_method" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_class_method"/>
 
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            app:imageUrl="@{userHandler.mUrl}"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_class_method"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.68"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_class_method"
+            app:layout_constraintTop_toTopOf="@+id/btn_class_method"
+            app:layout_constraintVertical_bias="0.0"
+            app:loadError="@{@drawable/clear}"
+            app:srcCompat="@mipmap/ic_launcher"/>
+
+        <!--android:text='@{"覆盖原属性adfa"}'：为什么要在中文后面加单词才能编译过呀？？-->
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{"覆盖原属性adfa"}'
+            app:layout_constraintEnd_toEndOf="@+id/text_null_coalescing"
+            app:layout_constraintStart_toStartOf="@+id/text_null_coalescing"
+            app:layout_constraintTop_toBottomOf="@+id/text_null_coalescing"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

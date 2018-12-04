@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.suheng.ssy.boutique.databinding.ActivityDataBindingBinding;
 import com.suheng.ssy.boutique.model.UserHandler;
 
+import java.util.Random;
+
 /**
  * 1.XML只做赋值或者简单的三元运算或者判空等不要做复杂运算；
  * 2.逻辑运算在Model中；
@@ -23,6 +25,7 @@ public class DataBindingActivity extends BasicActivity implements Navigor {
 
     //AaaBbbBinding（绑定类）命名规则（系统自动生成）：根据布局文件名(aaa_bbb)生成——改为首字母大写的驼峰命名法并省略布局文件名包含的下划线。
     private ActivityDataBindingBinding mDataBinding;
+    private UserHandler mUserHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,8 +53,12 @@ public class DataBindingActivity extends BasicActivity implements Navigor {
         });
 
         com.suheng.ssy.boutique.model.User aliasUser = new com.suheng.ssy.boutique.model.User("Ssy", 18);
+        aliasUser.school.set("");
         mDataBinding.setTmpUser(aliasUser);
-        mDataBinding.setUserHandler(new UserHandler(aliasUser));
+        mUserHandler = new UserHandler(aliasUser);
+        mDataBinding.setUserHandler(mUserHandler);
+
+        mUserHandler.mUrl.set("图片Url22222");
 
         ObservableList<String> listText = new ObservableArrayList<>();
         listText.add("AAAAAAAA");
@@ -70,5 +77,6 @@ public class DataBindingActivity extends BasicActivity implements Navigor {
     public void tip(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
         //mDataBinding.btnAge.setText("30");//获取控件的方式：获取方式与绑定类类似，但首字母小写
+        mUserHandler.mUrl.set("图片Url" + new Random().nextInt(2));
     }
 }

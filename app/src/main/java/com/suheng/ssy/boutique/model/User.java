@@ -7,10 +7,12 @@ public class User {
 
     private ObservableField<String> name;//不是声明public修饰符的，一定要设置setter和getter方法，不然在XML会找不到该属性
     public ObservableInt age;
+    public ObservableField<String> school;
 
     public User(String name, int age) {
         this.name = new ObservableField<>(name);
         this.age = new ObservableInt(age);
+        this.school = new ObservableField<>();
     }
 
     public ObservableField<String> getName() {
