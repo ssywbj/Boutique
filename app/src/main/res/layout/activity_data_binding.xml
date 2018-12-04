@@ -128,7 +128,7 @@
             tools:text="@string/digits_test"/>
 
         <!--监听EditText的字符变化：android:afterTextChanged="@{userHandler.afterTextChanged}"（方法名可以和原来的监听方式不一样，
-        但方法参数和返回值必须和原始的回调函数保持一致）-->
+        但方法参数和返回值必须和原始的回调函数保持一致）,android:text="@={tmpUser.name,default=Name}"中的“=”也是赋值运算符-->
         <EditText
             android:id="@+id/editText"
             android:layout_width="0dp"

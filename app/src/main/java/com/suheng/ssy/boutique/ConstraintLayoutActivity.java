@@ -18,6 +18,7 @@ public class ConstraintLayoutActivity extends BasicActivity implements LoginNavi
         layoutBinding.setLoginViewModel(new LoginViewModel(this));
 
         layoutBinding.editPhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(LoginViewModel.EDIT_PHONE_MAX_LENGTH)});
+        layoutBinding.editSmsCode.setFilters(new InputFilter[]{new InputFilter.LengthFilter(LoginViewModel.EDIT_SMS_CODE_MAX_LENGTH)});
     }
 
 }

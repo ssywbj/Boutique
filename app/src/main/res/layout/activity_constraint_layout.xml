@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="com.suheng.ssy.boutique.model.LoginViewModel"/>
+        <import type="com.suheng.ssy.boutique.model.LoginViewModel" />
 
         <variable
             name="loginViewModel"
-            type="LoginViewModel"/>
+            type="LoginViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -21,8 +21,8 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
             android:text="+86"
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_item_title"
@@ -30,28 +30,28 @@
             app:layout_constraintEnd_toStartOf="@+id/edit_phone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edit_phone"/>
+            app:layout_constraintTop_toTopOf="@+id/edit_phone" />
 
         <TextView
             android:id="@+id/text_obtain_sms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/text_obtain_sms_bg"
-            android:enabled="@{()->loginViewModel.isPhoneLegal()}"
+            android:enabled="@{loginViewModel.mIsBtnClearEnabled}"
             android:gravity="center"
-            android:paddingBottom="@dimen/text_obtain_sms_padding_tb"
-            android:paddingEnd="@dimen/text_obtain_sms_padding_lr"
             android:paddingStart="@dimen/text_obtain_sms_padding_lr"
             android:paddingTop="@dimen/text_obtain_sms_padding_tb"
+            android:paddingEnd="@dimen/text_obtain_sms_padding_lr"
+            android:paddingBottom="@dimen/text_obtain_sms_padding_tb"
             android:text="获取验证码"
-            android:textColor="@color/text_obtain_sms_disabled"
+            android:textColor="@{loginViewModel.mIsBtnClearEnabled?@color/text_obtain_sms_enabled:@color/text_obtain_sms_disabled}"
             android:textSize="@dimen/text_obtain_sms"
             app:layout_constraintBottom_toBottomOf="@+id/edit_sms_code"
             app:layout_constraintEnd_toEndOf="@+id/btn_clear_input"
             app:layout_constraintStart_toEndOf="@+id/edit_sms_code"
-            app:layout_constraintTop_toTopOf="@+id/edit_sms_code"/>
+            app:layout_constraintTop_toTopOf="@+id/edit_sms_code" />
 
         <EditText
             android:id="@+id/edit_phone"
@@ -59,6 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/edit_input_height"
             android:layout_marginTop="32dp"
+            android:afterTextChanged="@{loginViewModel.afterTextChanged}"
             android:hint="请输入电话号码"
             android:inputType="number"
             android:text="@={loginViewModel.mPhoneNumber}"
@@ -66,7 +67,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <EditText
             android:id="@+id/edit_sms_code"
@@ -74,46 +75,48 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/edit_input_height"
             android:layout_marginTop="6dp"
+            android:afterTextChanged="@{loginViewModel.afterTextChanged}"
             android:hint="请输入验证码"
             android:inputType="number"
+            android:text="@={loginViewModel.mSmsCode}"
             app:layout_constraintEnd_toStartOf="@+id/text_obtain_sms"
             app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/divide_line_phone"/>
+            app:layout_constraintTop_toBottomOf="@+id/divide_line_phone" />
 
         <Button
             android:id="@+id/btn_login"
             style="@style/LoginBtn"
             android:layout_width="0dp"
             android:layout_height="@dimen/logint_btn_height"
-            android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="28dp"
-            android:enabled="true"
-            android:onClick="@{()->loginViewModel.onClickLogin()}"
+            android:layout_marginEnd="24dp"
+            android:enabled="@{loginViewModel.mIsBtnLoginEnabled}"
+            android:onClick="@{()->loginViewModel.onClickLogin(loginViewModel.mPhoneNumber,loginViewModel.mSmsCode)}"
             android:text="登录"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divide_line_pwd"/>
+            app:layout_constraintTop_toBottomOf="@+id/divide_line_pwd" />
 
         <TextView
             android:id="@+id/btn_switch_login_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
             android:text="密码登录"
             android:textColor="@color/text_switch_login_type"
             app:layout_constraintEnd_toEndOf="@+id/btn_login"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login"/>
+            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
         <ImageButton
             android:id="@+id/btn_clear_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@null"
             android:onClick="@{()->loginViewModel.onClickClearInput()}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_phone"
@@ -121,7 +124,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toEndOf="@+id/edit_phone"
             app:layout_constraintTop_toTopOf="@+id/edit_phone"
-            app:srcCompat="@drawable/clear"/>
+            app:srcCompat="@drawable/clear" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -133,7 +136,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_launcher_round"/>
+            app:srcCompat="@mipmap/ic_launcher_round" />
 
         <TextView
             android:id="@+id/textView5"
@@ -148,33 +151,33 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"/>
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <ImageView
             android:id="@+id/divide_line_phone"
             android:layout_width="0dp"
             android:layout_height="@dimen/divide_line_height"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_phone"
-            app:srcCompat="@color/divide_line"/>
+            app:srcCompat="@color/divide_line" />
 
         <ImageView
             android:id="@+id/divide_line_pwd"
             android:layout_width="0dp"
             android:layout_height="@dimen/divide_line_height"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_sms_code"
-            app:srcCompat="@color/divide_line"/>
+            app:srcCompat="@color/divide_line" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>
