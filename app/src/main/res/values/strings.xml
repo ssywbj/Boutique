@@ -14,4 +14,9 @@
     <string name="launch_single_top">SingleTop</string>
     <string name="launch_single_task">SingleTask</string>
     <string name="launch_single_instance">SingleInstance</string>
+    <string name="login_by_pwd">密码登录</string>
+    <string name="login_by_sms">验证码登录</string>
+    <string name="obtain_sms_code">获取验证码</string>
+    <string name="obtain_sms_countdown">%ds后重新获取</string>
+    <string name="obtain_sms_retry">重新获取</string>
 </resources>

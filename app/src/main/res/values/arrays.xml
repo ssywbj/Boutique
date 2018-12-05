@@ -4,5 +4,6 @@
         <item>启动方式</item>
         <item>ConstraintLayout</item>
         <item>DataBinding</item>
+        <item>Dagger</item>
     </array>
 </resources>
