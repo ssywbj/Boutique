@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConstraintLayoutActivity">
+        <activity android:name=".BoutiqueActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -28,8 +28,9 @@
         <activity
             android:name=".SingleInstanceActivity"
             android:launchMode="singleInstance"/>
-        <activity android:name=".BoutiqueActivity"/>
+        <activity android:name=".ConstraintLayoutActivity"/>
         <activity android:name=".DataBindingActivity"/>
+        <activity android:name=".DaggerActivity"/>
     </application>
 
 </manifest>
