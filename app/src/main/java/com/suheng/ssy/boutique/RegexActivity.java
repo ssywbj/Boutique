@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.suheng.ssy.boutique.dagger.ab.A;
+import com.suheng.ssy.boutique.dagger.ab.B;
 import com.suheng.ssy.boutique.dagger.ab.DaggerMainComponent;
+import com.suheng.ssy.boutique.dagger.coffee.CoffeeMachine;
 
 import javax.inject.Inject;
 
@@ -18,9 +20,11 @@ public class RegexActivity extends BasicActivity {
     private EditText mEditPwd;
 
     @Inject
+    B b;
+    @Inject
     A a;//A的构造方法改变了，此处要修改（第三处要修改）
-    /*@Inject
-    CoffeeMachine mCoffeeMachine;*/
+    @Inject
+    CoffeeMachine mCoffeeMachine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,7 @@ public class RegexActivity extends BasicActivity {
             }
         });
 
-        /*Log.d(TAG, "make coffee info: " + mCoffeeMachine.makeCoffee());*/
+        Log.d(TAG, "make coffee info: " + mCoffeeMachine.makeCoffee());
     }
 
     public void onClickVerify(View view) {

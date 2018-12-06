@@ -23,9 +23,9 @@ public class CoffeeMachine {
     Hard init不仅增加了各个模块的耦合，还让单元测试变得更加困难。
      */
     //@Inject
-    public CoffeeMachine(Cooker cooker) {
+    /*public CoffeeMachine(Cooker cooker) {
         mCoffeeMaker = new SimpleMaker(cooker);
-    }
+    }*/
 
     /*
     CoffeeMachine(Cooker)-->CoffeeMachine(CoffeeMaker) 还是需new，而是方法注入

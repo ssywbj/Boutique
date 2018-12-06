@@ -19,4 +19,10 @@ public class SimpleModule {
         return new SimpleMaker(cooker);
         //return new SimpleMaker(new Cooker("Ssy", "YYYYYCoffee"));
     }
+
+    /*@Provides
+    CoffeeMachine provideCoffeeMachine(CoffeeMaker coffeeMaker) {
+        return new CoffeeMachine(coffeeMaker);
+    }*/
+
 }

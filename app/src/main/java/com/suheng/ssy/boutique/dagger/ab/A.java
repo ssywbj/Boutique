@@ -10,12 +10,17 @@ public class A {//A类会在多处被new出来引用到，如果此时构造方�
     @Inject
     B b;
 
-    @Inject
+    /*@Inject
     public A(B b) {
         this.b = b;
+    }*/
+
+    @Inject
+    public A() {
+        //this.b = b;
     }
 
     public String eat() {
-        return "A eat eat eat";
+        return b == null ? "A eat eat eat" : b.eat();
     }
 }

@@ -1,7 +1,5 @@
 package com.suheng.ssy.boutique.dagger.ab;
 
-import android.util.Log;
-
 import javax.inject.Inject;
 
 /**
@@ -13,7 +11,7 @@ public class B {
     public B() {
     }
 
-    public void eat() {
-        Log.d("WBJ", "B eat eat eat");
+    public String eat() {
+        return "B eat eat eat";
     }
 }
