@@ -1,17 +1,14 @@
 package com.suheng.ssy.boutique.dagger.coffee;
 
-import javax.inject.Inject;
-
 /**
  * Created by wbj on 2018/12/6.
  */
-
 public class SimpleMaker implements CoffeeMaker {
 
-    @Inject
+    //@Inject
     Cooker mCooker;
 
-    @Inject
+    //@Inject
     public SimpleMaker(Cooker cooker) {
         mCooker = cooker;
     }

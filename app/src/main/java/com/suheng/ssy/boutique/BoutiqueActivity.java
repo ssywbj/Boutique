@@ -46,7 +46,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, DaggerActivity.class));
+        //startActivity(new Intent(this, DaggerActivity.class));
     }
 
 }

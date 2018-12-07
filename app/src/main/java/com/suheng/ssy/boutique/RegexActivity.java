@@ -7,35 +7,28 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.suheng.ssy.boutique.dagger.ab.A;
-import com.suheng.ssy.boutique.dagger.ab.B;
-import com.suheng.ssy.boutique.dagger.ab.DaggerMainComponent;
-import com.suheng.ssy.boutique.dagger.coffee.CoffeeMachine;
-
-import javax.inject.Inject;
-
 public class RegexActivity extends BasicActivity {
 
     public static final String TAG = RegexActivity.class.getSimpleName();
     private EditText mEditPwd;
 
-    @Inject
+    /*@Inject
     B b;
     @Inject
     A a;//A的构造方法改变了，此处要修改（第三处要修改）
     @Inject
-    CoffeeMachine mCoffeeMachine;
+    CoffeeMachine mCoffeeMachine;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regex);
 
-        DaggerMainComponent.create().inject(this);
+        //DaggerMainComponent.create().inject(this);
 
         Log.d(TAG, getString(R.string.digits_test) + ", " + getString(R.string.digits_test2) + ", " + getString(R.string.digits_test3));
         Log.d(TAG, "\\( = " + getString(R.string.regex_test) + " ,\\ = " + getString(R.string.regex_test2)
-                + " ,\\\\ = " + getString(R.string.regex_test3) + ", " + a.eat());
+                + " ,\\\\ = " + getString(R.string.regex_test3) + ", "/* + a.eat()*/);
 
         mEditPwd = findViewById(R.id.edit_pwd);
         mEditPwd.addTextChangedListener(new TextWatcher() {
@@ -60,7 +53,7 @@ public class RegexActivity extends BasicActivity {
             }
         });
 
-        Log.d(TAG, "make coffee info: " + mCoffeeMachine.makeCoffee());
+        //Log.d(TAG, "make coffee info: " + mCoffeeMachine.makeCoffee());
     }
 
     public void onClickVerify(View view) {

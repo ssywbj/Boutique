@@ -1,12 +1,9 @@
 package com.suheng.ssy.boutique.dagger.ab;
 
-import dagger.Module;
-import dagger.Provides;
-
 /**
  * Created by wbj on 2018/12/6.
  */
-@Module(includes = BModule.class)
+//@Module(includes = BModule.class)
 public class MainModule {
 
     /*@Provides
@@ -14,7 +11,7 @@ public class MainModule {
         return new B();
     }*/
 
-    @Provides
+    //@Provides
     A providerA() {
         return new A(/*this.providerB()*/);
     }

@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.suheng.ssy.boutique.dagger.ab.A;
-import com.suheng.ssy.boutique.dagger.coffee.CoffeeMachine;
-import com.suheng.ssy.boutique.dagger.coffee.DaggerSimpleComponent;
+import com.suheng.ssy.boutique.dagger.DaggerOnlyInjectComponent;
+import com.suheng.ssy.boutique.dagger.Person;
 import com.suheng.ssy.boutique.databinding.ActivityDaggerBinding;
 
 import javax.inject.Inject;
@@ -16,11 +15,14 @@ public class DaggerActivity extends LaunchTypeActivity {
 
     private static final String TAG = DaggerActivity.class.getSimpleName();
     //A a;
-    @Inject
+    /*@Inject
     A a;
 
     @Inject
-    CoffeeMachine mCoffeeMachine;
+    CoffeeMachine mCoffeeMachine;*/
+
+    @Inject
+    Person mPerson;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,11 +33,14 @@ public class DaggerActivity extends LaunchTypeActivity {
         //mCoffeeMachine = new CoffeeMachine();
         //mCoffeeMachine = new CoffeeMachine(new Cooker("Wbj", "Suheng"));
         //mCoffeeMachine = new CoffeeMachine(new SimpleMaker(new Cooker("Wbj", "Suheng")));
-        DaggerSimpleComponent.builder().build().inject(this);
-        Log.d(TAG, "CoffeeMachine makeCoffee: " + mCoffeeMachine.makeCoffee());
+        //DaggerSimpleComponent.builder().build().inject(this);
+        //Log.d(TAG, "CoffeeMachine makeCoffee: " + mCoffeeMachine.makeCoffee());
 
         //a = new A();//A的构造方法改变了，此处要修改（第一处要修改）
-        Log.d(TAG, "aaaa: " + a.eat());
+        //Log.d(TAG, "aaaa: " + a.eat());
+
+        DaggerOnlyInjectComponent.builder().build().inject(this);
+        Log.d(TAG, "mPerson.getName(): " + mPerson.getName());
     }
 
 }

@@ -6,14 +6,17 @@ import android.support.annotation.Nullable;
 import android.text.InputFilter;
 import android.util.Log;
 
-import com.suheng.ssy.boutique.dagger.ab.A;
-import com.suheng.ssy.boutique.dagger.coffee.CoffeeMachine;
-import com.suheng.ssy.boutique.dagger.coffee.DaggerSimpleComponent;
+import com.suheng.ssy.boutique.dagger.Consumer;
+import com.suheng.ssy.boutique.dagger.DataModule;
+import com.suheng.ssy.boutique.dagger.PriorityTestEntity;
+import com.suheng.ssy.boutique.dagger.coffee.ConsumerQualifier;
+import com.suheng.ssy.boutique.dagger.coffee.DaggerConsumerComponent;
 import com.suheng.ssy.boutique.databinding.ActivityConstraintLayoutBinding;
 import com.suheng.ssy.boutique.model.LoginNavigator;
 import com.suheng.ssy.boutique.model.LoginViewModel;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class ConstraintLayoutActivity extends BasicActivity implements LoginNavigator {
 
@@ -21,11 +24,26 @@ public class ConstraintLayoutActivity extends BasicActivity implements LoginNavi
     private LoginViewModel mLoginViewModel;
 
     //A a;
-    @Inject
+    /*@Inject
     A a;
 
     @Inject
-    CoffeeMachine mCoffeeMachine;
+    CoffeeMachine mCoffeeMachine;*/
+
+    @Inject
+    PriorityTestEntity mPriorityTestEntity;
+    @Inject
+    Consumer mConsumer;//默认对象
+    //如果需要特定的对象，用@Qualifier标识符注解，@Named是自定义的一个标识符注解
+    @Inject
+    @Named(DataModule.MALE)
+    Consumer mConsumerMale;
+    @Inject
+    @Named(DataModule.FEMALE)
+    Consumer mConsumerFemale;
+    @Inject
+    @ConsumerQualifier
+    Consumer mConsumerQualifier;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,11 +55,15 @@ public class ConstraintLayoutActivity extends BasicActivity implements LoginNavi
         layoutBinding.editPhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(LoginViewModel.EDIT_PHONE_MAX_LENGTH)});
         layoutBinding.editSmsCode.setFilters(new InputFilter[]{new InputFilter.LengthFilter(LoginViewModel.EDIT_SMS_CODE_MAX_LENGTH)});
 
-        DaggerSimpleComponent.create().inject(this);
-        Log.d(TAG, "CoffeeMachine makeCoffee: " + mCoffeeMachine.makeCoffee());
+        //DaggerSimpleComponent.create().inject(this);
+        //Log.d(TAG, "CoffeeMachine makeCoffee: " + mCoffeeMachine.makeCoffee());
 
         //a = new A();//A的构造方法改变了，此处要修改（第二处要修改）
-        Log.d(TAG, "aaaa: " + a.eat());
+        //Log.d(TAG, "aaaa: " + a.eat());
+
+        DaggerConsumerComponent.create().inject(this);
+        Log.d(TAG, "mConsumer.getSex(): " + mConsumer.getSex() + ", mPriorityTestEntity.getName(): " + mPriorityTestEntity.getName());
+        Log.d(TAG, mConsumerMale.getSex() + "；" + mConsumerFemale.getSex() + "；" + mConsumerQualifier.getSex());
     }
 
     @Override

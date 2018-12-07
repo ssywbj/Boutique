@@ -1,7 +1,5 @@
 package com.suheng.ssy.boutique.dagger.coffee;
 
-import javax.inject.Inject;
-
 /**
  * Created by wbj on 2018/12/6.
  * 这是一个制作Coffee的例子
@@ -9,7 +7,7 @@ import javax.inject.Inject;
  */
 public class CoffeeMachine {
 
-    @Inject
+    //@Inject
     CoffeeMaker mCoffeeMaker;
 
     /*public CoffeeMachine() {
@@ -33,7 +31,7 @@ public class CoffeeMachine {
     这样我们需要依赖的类和提供依赖的类的实现方法就分隔开了。
     依赖注入的3种常见形式：No.1 构造函数注入
      */
-    @Inject
+    //@Inject
     public CoffeeMachine(CoffeeMaker coffeeMaker) {
         mCoffeeMaker = coffeeMaker;
     }
