@@ -1,7 +1,5 @@
 package com.suheng.ssy.boutique.dagger;
 
-import com.suheng.ssy.boutique.dagger.coffee.ConsumerQualifier;
-
 import javax.inject.Named;
 
 import dagger.Module;

@@ -5,11 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.suheng.ssy.boutique.dagger.DaggerOnlyInjectComponent;
-import com.suheng.ssy.boutique.dagger.Person;
+import com.suheng.ssy.boutique.dagger.Consumer;
+import com.suheng.ssy.boutique.dagger.ConsumerQualifier;
+import com.suheng.ssy.boutique.dagger.DaggerConsumerComponent;
+import com.suheng.ssy.boutique.dagger.DataModule;
+import com.suheng.ssy.boutique.dagger.PriorityTestEntity;
 import com.suheng.ssy.boutique.databinding.ActivityDaggerBinding;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class DaggerActivity extends LaunchTypeActivity {
 
@@ -22,7 +26,19 @@ public class DaggerActivity extends LaunchTypeActivity {
     CoffeeMachine mCoffeeMachine;*/
 
     @Inject
-    Person mPerson;
+    PriorityTestEntity mPriorityTestEntity;
+    @Inject
+    Consumer mConsumer;//默认对象
+    //如果需要特定的对象，用@Qualifier标识符注解，@Named是自定义的一个标识符注解
+    @Inject
+    @Named(DataModule.MALE)
+    Consumer mConsumerMale;
+    @Inject
+    @Named(DataModule.FEMALE)
+    Consumer mConsumerFemale;
+    @Inject
+    @ConsumerQualifier
+    Consumer mConsumerQualifier;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,8 +55,9 @@ public class DaggerActivity extends LaunchTypeActivity {
         //a = new A();//A的构造方法改变了，此处要修改（第一处要修改）
         //Log.d(TAG, "aaaa: " + a.eat());
 
-        DaggerOnlyInjectComponent.builder().build().inject(this);
-        Log.d(TAG, "mPerson.getName(): " + mPerson.getName());
+        DaggerConsumerComponent.create().inject(this);
+        Log.d(TAG, "mConsumer.getSex(): " + mConsumer.getSex() + ", mPriorityTestEntity.getName(): " + mPriorityTestEntity.getName());
+        Log.d(TAG, mConsumerMale.getSex() + "；" + mConsumerFemale.getSex() + "；" + mConsumerQualifier.getSex());
     }
 
 }

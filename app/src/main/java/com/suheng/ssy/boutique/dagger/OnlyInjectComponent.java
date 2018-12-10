@@ -1,6 +1,6 @@
 package com.suheng.ssy.boutique.dagger;
 
-import com.suheng.ssy.boutique.DaggerActivity;
+import com.suheng.ssy.boutique.ConstraintLayoutActivity;
 
 import dagger.Component;
 
@@ -19,5 +19,5 @@ public interface OnlyInjectComponent {
      *
      * @param activity
      */
-    void inject(DaggerActivity activity);
+    void inject(ConstraintLayoutActivity activity);
 }

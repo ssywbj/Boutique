@@ -1,4 +1,4 @@
-package com.suheng.ssy.boutique.dagger.coffee;
+package com.suheng.ssy.boutique.dagger;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

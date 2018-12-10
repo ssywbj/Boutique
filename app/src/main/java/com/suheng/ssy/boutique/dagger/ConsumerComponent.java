@@ -1,7 +1,6 @@
-package com.suheng.ssy.boutique.dagger.coffee;
+package com.suheng.ssy.boutique.dagger;
 
-import com.suheng.ssy.boutique.ConstraintLayoutActivity;
-import com.suheng.ssy.boutique.dagger.DataModule;
+import com.suheng.ssy.boutique.DaggerActivity;
 
 import dagger.Component;
 
@@ -11,5 +10,5 @@ import dagger.Component;
  */
 @Component(modules = DataModule.class)
 public interface ConsumerComponent {
-    void inject(ConstraintLayoutActivity activity);
+    void inject(DaggerActivity activity);
 }
