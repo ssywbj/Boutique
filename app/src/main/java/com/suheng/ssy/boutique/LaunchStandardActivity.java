@@ -20,7 +20,7 @@ public class LaunchStandardActivity extends LaunchTypeActivity {
         setContentView(R.layout.activity_launch_standard);
         mTextInfo = findViewById(R.id.text_standard);
         //DaggerSingletonComponent.builder().build().inject(this);
-        DaggerSingletonComponent.getInstance().inject(this);
+        DaggerSingletonComponent.getInstance().inject(this);//单例的实例化方式
         mTextInfo.setText(mTextInfo.getText().toString() + ", " + hashCode() + ": " + mTestEntity);
 
     }
