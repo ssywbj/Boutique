@@ -20,7 +20,7 @@ public class LaunchTypeActivity extends BasicActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(mTag, "onCreate：" + getClass().getSimpleName() + "，TaskId: " + getTaskId() + "，hasCode:" + hashCode());
-        dumpTaskAffinity();
+        this.dumpTaskAffinity();
     }
 
     @Override

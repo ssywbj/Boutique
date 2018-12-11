@@ -3,11 +3,8 @@ package com.suheng.ssy.boutique;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.TextView;
 
 public class SingleInstanceActivity extends LaunchTypeActivity {
-
-    private TextView mTextInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

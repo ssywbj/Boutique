@@ -41,6 +41,8 @@ public class LoginViewModel {
         }
     }
 
+    /*在绑定表达式中会根据需要生成一个名为context的特殊变量，context的值是根据View的getContext()方法返回的Context对象，
+    context变量会被具有该名称的显式变量声明所覆盖*/
     public void onClickObtainSms(final Context context) {
         mIsBtnObtainSmsEnabled.set(false);//倒计时过程中，获取短信按钮不可用
         mIsCountdownStatus = true;

@@ -36,6 +36,9 @@ public class BoutiqueActivity extends BasicActivity {
                     case 4:
                         intent = new Intent(BoutiqueActivity.this, DaggerActivity.class);
                         break;
+                    case 5:
+                        intent = new Intent(BoutiqueActivity.this, FragmentRecyclerActivity.class);
+                        break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
                         break;
@@ -46,7 +49,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        //startActivity(new Intent(this, DaggerActivity.class));
+        startActivity(new Intent(this, FragmentRecyclerActivity.class));
     }
 
 }

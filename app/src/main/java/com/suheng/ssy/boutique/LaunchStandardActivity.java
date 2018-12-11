@@ -22,14 +22,14 @@ public class LaunchStandardActivity extends LaunchTypeActivity {
         //DaggerSingletonComponent.builder().build().inject(this);
         DaggerSingletonComponent.getInstance().inject(this);//单例的实例化方式
         mTextInfo.setText(mTextInfo.getText().toString() + ", " + hashCode() + ": " + mTestEntity);
-
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        /*standard模式启动的Activity，每启动一个Activity就会新开一个Activity加在栈中，
+        并不会调用onNewIntent方法处理Intent事件*/
         mTextInfo.setText(mTextInfo.getText().toString() + ", onNewIntent: " + hashCode());
     }
-
 
 }
