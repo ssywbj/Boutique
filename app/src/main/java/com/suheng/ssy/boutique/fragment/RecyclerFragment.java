@@ -1,19 +1,12 @@
 package com.suheng.ssy.boutique.fragment;
 
-import android.content.Context;
-import android.content.res.TypedArray;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +15,10 @@ import android.widget.TextView;
 
 import com.suheng.ssy.boutique.BR;
 import com.suheng.ssy.boutique.R;
-import com.suheng.ssy.boutique.databinding.FragmentRecyclerAdtBinding;
 import com.suheng.ssy.boutique.databinding.FragmentRecyclerBinding;
+import com.suheng.ssy.boutique.view.RecyclerAdapter;
+import com.suheng.ssy.boutique.view.RecyclerDivider;
+import com.suheng.ssy.boutique.view.RecyclerHolder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +50,7 @@ public class RecyclerFragment extends BasicFragment {
         Log.d(mTag, this + ", onActivityCreated");
 
         mViewBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));//设置布局管理器
-        mViewBinding.recyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        mViewBinding.recyclerView.addItemDecoration(new RecyclerDivider(getContext(), LinearLayoutManager.VERTICAL));
         mViewBinding.recyclerView.setItemAnimator(new DefaultItemAnimator());
         mViewBinding.recyclerView.setAdapter(new MyAdapter(Arrays.asList(getResources().getStringArray(R.array.main_item))));//设置adapter
     }
@@ -84,136 +79,57 @@ public class RecyclerFragment extends BasicFragment {
         Log.d(mTag, this + ", onDetach");
     }
 
-    private class MyAdapter extends RecyclerView.Adapter {
+    private class MyAdapter extends RecyclerAdapter<String> {
 
-        private List<String> mDataList;
+        private static final int VIEW_TYPE_BLACK = 0;
+        private static final int VIEW_TYPE_RED = 1;
 
-        private MyAdapter(List<String> dataList) {
-            mDataList = dataList;
+        public MyAdapter(List<String> dataList) {
+            super(dataList);
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            FragmentRecyclerAdtBinding dataBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(),
-                    R.layout.fragment_recycler_adt, parent, false);
-            //View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_recycler_adt, parent, false); // 实例化展示的view
-            RecyclerView.ViewHolder viewHolder = new ViewHolder(dataBinding.getRoot()); //实例化ViewHolder
-            return viewHolder;
+        public int getItemViewType(int position) {
+            return position % 2 == 0 ? VIEW_TYPE_BLACK : VIEW_TYPE_RED;
+        }
+
+        @NonNull
+        @Override//在RecyclerView的adapter中使用DataBinding
+        public RecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            ViewDataBinding dataBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(),
+                    (viewType == VIEW_TYPE_BLACK ? R.layout.fragment_recycler_adt : R.layout.fragment_recycler_adt2), parent, false);
+            return (viewType == VIEW_TYPE_BLACK ? new BlackHolder(dataBinding.getRoot()) : new RedHolder(dataBinding.getRoot()));//实例化ViewHolder
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int pst) {
-            if (viewHolder instanceof ViewHolder) {
-                ((ViewHolder) viewHolder).setBinding(BR.item, mDataList.get(pst));
-
-                //FragmentRecyclerAdtBinding dataBinding = DataBindingUtil.getBinding(viewHolder.itemView);
-                /*dataBinding.setItem(mDataList.get(pst));
-                dataBinding.executePendingBindings();*/
-
-                //((ViewHolder) viewHolder).textItem.setText(mDataList.get(pst));// 绑定数据
+        public int getVariableId(@NonNull RecyclerHolder viewHolder) {
+            if (viewHolder.getItemViewType() == VIEW_TYPE_BLACK) {
+                return BR.item;
+            } else {
+                return BR.textInfo;
             }
         }
 
-
-        @Override
-        public int getItemCount() {
-            return mDataList == null ? 0 : mDataList.size();
-        }
-
-        class ViewHolder extends RecyclerView.ViewHolder {
-
-            private final ViewDataBinding mDataBinding;
+        class BlackHolder extends RecyclerHolder {
 
             TextView textItem;
 
-            public ViewHolder(View view) {
+            public BlackHolder(View view) {
                 super(view);
                 textItem = view.findViewById(R.id.text_item);
-                mDataBinding = DataBindingUtil.bind(view);
             }
 
-            public void setBinding(int variableId, Object object) {
-                mDataBinding.setVariable(variableId, object);
-                mDataBinding.executePendingBindings();
+        }
+
+        class RedHolder extends RecyclerHolder {
+
+            TextView textItem;
+
+            public RedHolder(View view) {
+                super(view);
+                textItem = view.findViewById(R.id.text_info);
             }
+
         }
     }
-
-
-    private class MyDividerItemDecoration extends RecyclerView.ItemDecoration {
-        private final int[] ATTRS = new int[]{android.R.attr.listDivider};
-        public static final int HORIZONTAL = LinearLayoutManager.HORIZONTAL;
-        public static final int VERTICAL = LinearLayoutManager.VERTICAL;
-        /**
-         * 用于绘制间隔样式
-         */
-        private Drawable mDivider;
-        /**
-         * 列表的方向，水平/竖直
-         */
-        private int mOrientation;
-
-        public MyDividerItemDecoration(Context context, int orientation) {
-            // 获取默认主题的属性
-            final TypedArray a = context.obtainStyledAttributes(ATTRS);
-            mDivider = a.getDrawable(0);
-            a.recycle();
-
-            mOrientation = (orientation == HORIZONTAL ? HORIZONTAL : VERTICAL);
-        }
-
-        @Override
-        public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            // 绘制间隔
-            if (mOrientation == VERTICAL) {
-                drawVertical(c, parent);
-            } else {
-                drawHorizontal(c, parent);
-            }
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            if (mOrientation == VERTICAL) {
-                outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
-            } else {
-                outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
-            }
-        }
-
-        /**
-         * 绘制间隔
-         */
-        private void drawVertical(Canvas c, RecyclerView parent) {
-            final int left = parent.getPaddingLeft();
-            final int right = parent.getWidth() - parent.getPaddingRight();
-            final int childCount = parent.getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                final View child = parent.getChildAt(i);
-                final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-                final int top = child.getBottom() + params.bottomMargin + Math.round(ViewCompat.getTranslationY(child));
-                final int bottom = top + mDivider.getIntrinsicHeight();
-                mDivider.setBounds(left, top, right, bottom);
-                mDivider.draw(c);
-            }
-        }
-
-        /**
-         * 绘制间隔
-         */
-        private void drawHorizontal(Canvas c, RecyclerView parent) {
-            final int top = parent.getPaddingTop();
-            final int bottom = parent.getHeight() - parent.getPaddingBottom();
-            final int childCount = parent.getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                final View child = parent.getChildAt(i);
-                final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-                final int left = child.getRight() + params.rightMargin + Math.round(ViewCompat.getTranslationX(child));
-                final int right = left + mDivider.getIntrinsicHeight();
-                mDivider.setBounds(left, top, right, bottom);
-                mDivider.draw(c);
-            }
-        }
-    }
-
 }
