@@ -43,7 +43,9 @@ public class BoutiqueActivity extends BasicActivity {
                         break;
                     case 6:
                         //intent = new Intent(BoutiqueActivity.this, ARouterActivity.class);
-                        ARouter.getInstance().build("/module_b/activity_b")
+                        /*ARouter.getInstance().build("/module_b/activity_b")
+                                .withString("name", "Wbj").withInt("age", 22).navigation();*/
+                        ARouter.getInstance().build("/module2/activity_demo")
                                 .withString("name", "Wbj").withInt("age", 22).navigation();
                         break;
                     default:
