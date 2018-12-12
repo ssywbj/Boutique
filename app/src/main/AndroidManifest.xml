@@ -33,6 +33,7 @@
         <activity android:name=".DataBindingActivity"/>
         <activity android:name=".DaggerActivity"/>
         <activity android:name=".FragmentRecyclerActivity"/>
+        <activity android:name=".ARouterActivity"/>
     </application>
 
 </manifest>

@@ -8,6 +8,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 public class BoutiqueActivity extends BasicActivity {
 
     @Override
@@ -19,7 +21,7 @@ public class BoutiqueActivity extends BasicActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent;
+                Intent intent = null;
                 switch (i) {
                     case 0:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
@@ -39,11 +41,18 @@ public class BoutiqueActivity extends BasicActivity {
                     case 5:
                         intent = new Intent(BoutiqueActivity.this, FragmentRecyclerActivity.class);
                         break;
+                    case 6:
+                        //intent = new Intent(BoutiqueActivity.this, ARouterActivity.class);
+                        ARouter.getInstance().build("/module_b/activity_b")
+                                .withString("name", "Wbj").withInt("age", 22).navigation();
+                        break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
                         break;
                 }
-                startActivity(intent);
+                if (intent != null) {
+                    startActivity(intent);
+                }
             }
         });
 

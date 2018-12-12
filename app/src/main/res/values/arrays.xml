@@ -6,5 +6,6 @@
         <item>DataBinding</item>
         <item>Dagger</item>
         <item>Fragment与RecyclerView、DataBinding</item>
+        <item>ARouter</item>
     </array>
 </resources>

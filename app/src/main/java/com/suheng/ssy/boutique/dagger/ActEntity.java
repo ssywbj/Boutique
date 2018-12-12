@@ -7,4 +7,9 @@ public class ActEntity {
     public ActEntity(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "ActEntity{" + "name='" + name + '\'' + '}';
+    }
 }

@@ -14,19 +14,27 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.suheng.ssy.boutique.BR;
+import com.suheng.ssy.boutique.BoutiqueApp;
 import com.suheng.ssy.boutique.R;
+import com.suheng.ssy.boutique.dagger.ActEntity;
+import com.suheng.ssy.boutique.dagger.DaggerActivityComponent;
 import com.suheng.ssy.boutique.databinding.FragmentRecyclerBinding;
-import com.suheng.ssy.boutique.view.RecyclerAdapter;
+import com.suheng.ssy.boutique.view.RecyclerBindingAdapter;
+import com.suheng.ssy.boutique.view.RecyclerBindingHolder;
 import com.suheng.ssy.boutique.view.RecyclerDivider;
-import com.suheng.ssy.boutique.view.RecyclerHolder;
 
 import java.util.Arrays;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by wbj on 2018/12/11.
  */
 public class RecyclerFragment extends BasicFragment {
+
+    @Inject
+    ActEntity mActEntity;
 
     private FragmentRecyclerBinding mViewBinding;
 
@@ -47,7 +55,9 @@ public class RecyclerFragment extends BasicFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(mTag, this + ", onActivityCreated");
+        DaggerActivityComponent.builder().appComponent(((BoutiqueApp) getActivity()
+                .getApplication()).getAppComponent()).build().getActSubComponent().inject(this);
+        Log.d(mTag, this + ", onActivityCreated, " + mActEntity.toString());
 
         mViewBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));//设置布局管理器
         mViewBinding.recyclerView.addItemDecoration(new RecyclerDivider(getContext(), LinearLayoutManager.VERTICAL));
@@ -79,7 +89,7 @@ public class RecyclerFragment extends BasicFragment {
         Log.d(mTag, this + ", onDetach");
     }
 
-    private class MyAdapter extends RecyclerAdapter<String> {
+    private class MyAdapter extends RecyclerBindingAdapter<String> {
 
         private static final int VIEW_TYPE_BLACK = 0;
         private static final int VIEW_TYPE_RED = 1;
@@ -95,22 +105,22 @@ public class RecyclerFragment extends BasicFragment {
 
         @NonNull
         @Override//在RecyclerView的adapter中使用DataBinding
-        public RecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public RecyclerBindingHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             ViewDataBinding dataBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(),
                     (viewType == VIEW_TYPE_BLACK ? R.layout.fragment_recycler_adt : R.layout.fragment_recycler_adt2), parent, false);
             return (viewType == VIEW_TYPE_BLACK ? new BlackHolder(dataBinding.getRoot()) : new RedHolder(dataBinding.getRoot()));//实例化ViewHolder
         }
 
         @Override
-        public int getVariableId(@NonNull RecyclerHolder viewHolder) {
-            if (viewHolder.getItemViewType() == VIEW_TYPE_BLACK) {
+        public int getVariableId(@NonNull RecyclerBindingHolder bindingHolder) {
+            if (bindingHolder.getItemViewType() == VIEW_TYPE_BLACK) {
                 return BR.item;
             } else {
                 return BR.textInfo;
             }
         }
 
-        class BlackHolder extends RecyclerHolder {
+        class BlackHolder extends RecyclerBindingHolder {
 
             TextView textItem;
 
@@ -118,10 +128,9 @@ public class RecyclerFragment extends BasicFragment {
                 super(view);
                 textItem = view.findViewById(R.id.text_item);
             }
-
         }
 
-        class RedHolder extends RecyclerHolder {
+        class RedHolder extends RecyclerBindingHolder {
 
             TextView textItem;
 
@@ -129,7 +138,7 @@ public class RecyclerFragment extends BasicFragment {
                 super(view);
                 textItem = view.findViewById(R.id.text_info);
             }
-
         }
     }
+
 }

@@ -35,6 +35,7 @@ public class ConstraintLayoutActivity extends BasicActivity implements LoginNavi
         ActivityConstraintLayoutBinding layoutBinding = DataBindingUtil.setContentView(this, R.layout.activity_constraint_layout);
         mLoginViewModel = new LoginViewModel(this);
         layoutBinding.setLoginViewModel(mLoginViewModel);
+        //layoutBinding.setVariable(BR.loginViewModel, mLoginViewModel);//或这样绑定,setVariable为父类（ViewDataBinding）的方法
 
         layoutBinding.editPhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(LoginViewModel.EDIT_PHONE_MAX_LENGTH)});
         layoutBinding.editSmsCode.setFilters(new InputFilter[]{new InputFilter.LengthFilter(LoginViewModel.EDIT_SMS_CODE_MAX_LENGTH)});
