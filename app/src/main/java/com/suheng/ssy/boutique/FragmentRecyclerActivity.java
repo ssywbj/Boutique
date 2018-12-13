@@ -13,6 +13,9 @@ public class FragmentRecyclerActivity extends BasicActivity {
         setContentView(R.layout.activity_fragment_recycler);
         //getSupportFragmentManager().beginTransaction().add(new RecyclerFragment(), "RecyclerFragment").commit();//创建fragment但是不绘制UI
         getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment, new RecyclerFragment()).commit();
+        /*//通过路由获取Fragment实例
+        getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,
+                (RecyclerFragment) ARouter.getInstance().build("/app/activity/fragment_recycler").navigation()).commit();*/
     }
 
 }

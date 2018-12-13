@@ -19,7 +19,7 @@ public class HellServiceImpl implements HellService {
 
     @Override
     public void init(Context context) {
-        Log.d("WBJ", "init, HellServiceImpl");//只会初始化一次
+        Log.d("WBJ", "init, HellServiceImpl");//在整个应用中，只会初始化一次
     }
 
 }

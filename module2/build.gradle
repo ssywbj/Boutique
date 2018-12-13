@@ -1,14 +1,18 @@
-apply plugin: 'com.android.application'
+if (rootProject.ext.isModule2Independent) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
 
 android {
-    compileSdkVersion 28
-
-
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.suheng.ssy.module2"
-        minSdkVersion 15
-        targetSdkVersion 28
+        if (rootProject.ext.isModule2Independent) {
+            applicationId "com.suheng.ssy.module2"
+        }
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -29,6 +33,20 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            if (rootProject.ext.isModule2Independent) {
+                manifest.srcFile 'src/application/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/library/AndroidManifest.xml'
+            }
+        }
+    }
+
+    /*compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }*/
 }
 
 dependencies {
@@ -43,6 +61,6 @@ dependencies {
     //ARouter
     //需要注意的是api
     //要与compiler匹配使用，均使用最新版可以保证兼容
-    api 'com.alibaba:arouter-api:1.3.1'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+    api "com.alibaba:arouter-api:$rootProject.arouterApiVersion"
+    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.arouterCompilerVersion"
 }

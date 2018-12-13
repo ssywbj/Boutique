@@ -10,7 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.suheng.ssy.boutique.model.HellService;
 
-@Route(path = "/module_b/activity_b")
+@Route(path = "/module_b/activity_b")//路径至少需要有两级，第一级是Group名称
 public class ARouterActivity extends BasicActivity {
 
     @Autowired(name = "name")

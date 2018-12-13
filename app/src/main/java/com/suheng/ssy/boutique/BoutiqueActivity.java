@@ -3,11 +3,14 @@ package com.suheng.ssy.boutique;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 public class BoutiqueActivity extends BasicActivity {
@@ -43,10 +46,32 @@ public class BoutiqueActivity extends BasicActivity {
                         break;
                     case 6:
                         //intent = new Intent(BoutiqueActivity.this, ARouterActivity.class);
-                        /*ARouter.getInstance().build("/module_b/activity_b")
-                                .withString("name", "Wbj").withInt("age", 22).navigation();*/
-                        ARouter.getInstance().build("/module2/activity_demo")
-                                .withString("name", "Wbj").withInt("age", 22).navigation();
+                        ARouter.getInstance().build("/module2/activity_demo"/*"/module_b/activity_b"*/)//使用路由跳转
+                                .withString("name", "Wbj").withInt("age", 22).navigation(BoutiqueActivity.this,
+                                new NavCallback() {
+                                    @Override
+                                    public void onFound(Postcard postcard) {
+                                        super.onFound(postcard);
+                                        Log.d(mTag, "onFound, " + postcard.getGroup());
+                                    }
+
+                                    @Override
+                                    public void onLost(Postcard postcard) {
+                                        super.onLost(postcard);
+                                        Log.d(mTag, "onLost, " + postcard.getGroup());
+                                    }
+
+                                    @Override
+                                    public void onArrival(Postcard postcard) {
+                                        Log.d(mTag, "onArrival, " + postcard.getGroup());
+                                    }
+
+                                    @Override
+                                    public void onInterrupt(Postcard postcard) {
+                                        super.onInterrupt(postcard);
+                                        Log.d(mTag, "onInterrupt, " + postcard.getGroup());
+                                    }
+                                });
                         break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);

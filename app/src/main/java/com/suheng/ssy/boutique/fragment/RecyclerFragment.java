@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.suheng.ssy.boutique.BR;
 import com.suheng.ssy.boutique.BoutiqueApp;
 import com.suheng.ssy.boutique.R;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 /**
  * Created by wbj on 2018/12/11.
  */
+@Route(path = "/app/activity/fragment_recycler")//也可以通过路由的方式启动Fragment
 public class RecyclerFragment extends BasicFragment {
 
     @Inject
