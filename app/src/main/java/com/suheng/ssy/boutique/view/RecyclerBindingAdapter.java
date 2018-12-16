@@ -10,8 +10,8 @@ public abstract class RecyclerBindingAdapter<T> extends RecyclerView.Adapter<Rec
 
     private List<T> mDataList;
 
-    public RecyclerBindingAdapter(List<T> mDataList) {
-        this.mDataList = mDataList;
+    public RecyclerBindingAdapter(List<T> dataList) {
+        this.mDataList = dataList;
     }
 
     @NonNull
