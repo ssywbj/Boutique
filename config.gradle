@@ -4,9 +4,15 @@ ext {//若引用该变量，需要在同级目录下build.gradler的文件添加
     targetSdkVersion = 28
     compileSdkVersion = 28
 
-    //App Dependencies
+    //App Dependencies List
+    //ARouter
     arouterApiVersion = '1.3.1'
     arouterCompilerVersion = '1.1.4'
+
+    //Dagger
+    daggerAndroidVersion = '2.16'
+    daggerAndroidSupportVersion = '2.16'
+    daggerCompilerVersion = '2.16'
 
     //true表示module2是个application，可以独立运行；false表示module2是个library，依赖于其它Module运行
     isModule2Independent = true
