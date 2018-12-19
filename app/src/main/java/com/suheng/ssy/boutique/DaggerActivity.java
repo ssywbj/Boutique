@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 
 import com.suheng.ssy.boutique.dagger.Consumer;
 import com.suheng.ssy.boutique.dagger.ConsumerQualifier;
@@ -12,10 +13,12 @@ import com.suheng.ssy.boutique.dagger.DataModule;
 import com.suheng.ssy.boutique.dagger.PriorityTestEntity;
 import com.suheng.ssy.boutique.databinding.ActivityDaggerBinding;
 
+import java.util.Random;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
-public class DaggerActivity extends LaunchTypeActivity {
+public class DaggerActivity extends BasicActivity {
 
     private static final String TAG = DaggerActivity.class.getSimpleName();
     //A a;
@@ -40,11 +43,13 @@ public class DaggerActivity extends LaunchTypeActivity {
     @ConsumerQualifier
     Consumer mConsumerQualifier;
 
+    private ActivityDaggerBinding mDaggerBinding;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityDaggerBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_dagger);
-        binding.setAty(this);
+        mDaggerBinding = DataBindingUtil.setContentView(this, R.layout.activity_dagger);
+        mDaggerBinding.setAty(this);
 
         //mCoffeeMachine = new CoffeeMachine();
         //mCoffeeMachine = new CoffeeMachine(new Cooker("Wbj", "Suheng"));
@@ -58,6 +63,19 @@ public class DaggerActivity extends LaunchTypeActivity {
         DaggerConsumerComponent.create().inject(this);
         Log.d(TAG, "mConsumer.getSex(): " + mConsumer.getSex() + ", mPriorityTestEntity.getName(): " + mPriorityTestEntity.getName());
         Log.d(TAG, mConsumerMale.getSex() + "；" + mConsumerFemale.getSex() + "；" + mConsumerQualifier.getSex());
+
+        mDaggerBinding.nodeProgressBar.setMax(MAX_PROGRESS);
+        mDaggerBinding.nodeProgressBar.setProgress(360);
+    }
+
+    public static final int MAX_PROGRESS = 500;
+
+    public void onClickDagger(View view) {
+        int progress = new Random().nextInt(MAX_PROGRESS + 1);
+        mDaggerBinding.button2.setText(progress + "/" + MAX_PROGRESS);
+        mDaggerBinding.nodeProgressBar.setProgress(progress);
+
+        //mDaggerBinding.nodeProgressBar.setProgress(200);
     }
 
 }

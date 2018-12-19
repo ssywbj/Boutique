@@ -85,7 +85,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, FragmentRecyclerActivity.class));
+        startActivity(new Intent(this, DaggerActivity.class));
     }
 
 }
