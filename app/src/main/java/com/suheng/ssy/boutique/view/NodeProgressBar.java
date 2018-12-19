@@ -14,7 +14,7 @@ public class NodeProgressBar extends View {
     //private int mBackgroundColor = Color.parseColor("#EEEEEE");
     private int mBackgroundColor = Color.parseColor("#000000");
     private int mForegroundColor = Color.parseColor("#F64C2B");
-    private int mRadius = 18;
+    private int mRadius = 16;
     private int mMax = 100;
     private int mProgress;
     private int mNodes = 6;
@@ -31,7 +31,7 @@ public class NodeProgressBar extends View {
     private void init() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setStrokeWidth(10);
+        mPaint.setStrokeWidth(8);
     }
 
     public void setProgress(int progress) {
@@ -78,7 +78,11 @@ public class NodeProgressBar extends View {
                         canvas.drawCircle(mRadius + index * divideWidth, mRadius, mRadius - 8, mPaint);
                     } else {
                         mPaint.setColor(mBackgroundColor);
-                        canvas.drawCircle(mRadius + index * divideWidth, mRadius, mRadius, mPaint);
+                        if (selectedNotes == 0) {
+                            canvas.drawCircle(mRadius + index * divideWidth, mRadius, mRadius, mPaint);
+                        } else {
+                            canvas.drawCircle(mRadius + index * divideWidth, mRadius, mRadius - 4, mPaint);
+                        }
                     }
                 }
             }
