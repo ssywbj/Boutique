@@ -73,6 +73,9 @@ public class BoutiqueActivity extends BasicActivity {
                                     }
                                 });
                         break;
+                    case 7:
+                        intent = new Intent(BoutiqueActivity.this, UnitTestActivity.class);
+                        break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
                         break;
@@ -85,7 +88,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, DaggerActivity.class));
+        startActivity(new Intent(this, UnitTestActivity.class));
     }
 
 }

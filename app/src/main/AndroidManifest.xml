@@ -34,6 +34,7 @@
         <activity android:name=".DaggerActivity"/>
         <activity android:name=".FragmentRecyclerActivity"/>
         <activity android:name=".ARouterActivity"/>
+        <activity android:name=".UnitTestActivity"/>
     </application>
 
 </manifest>

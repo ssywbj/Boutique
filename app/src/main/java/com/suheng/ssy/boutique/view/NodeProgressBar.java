@@ -63,12 +63,8 @@ public class NodeProgressBar extends View {
 
             if (mNodes > 1) {
                 final int divideWidth = (getWidth() - mRadius * 2) / (mNodes - 1);
-
                 final int divide = (int) (1.0 * mMax / (mNodes - 1));
-                int selectedNotes = mProgress / divide;
-                if (mProgress > 0 && (mProgress % divide) >= 0) {
-                    selectedNotes++;
-                }
+                final int selectedNotes = (mProgress / divide + 1);
 
                 for (int index = 0; index < mNodes; index++) {
                     if (index < selectedNotes) {
@@ -78,11 +74,7 @@ public class NodeProgressBar extends View {
                         canvas.drawCircle(mRadius + index * divideWidth, mRadius, mRadius - 8, mPaint);
                     } else {
                         mPaint.setColor(mBackgroundColor);
-                        if (selectedNotes == 0) {
-                            canvas.drawCircle(mRadius + index * divideWidth, mRadius, mRadius, mPaint);
-                        } else {
-                            canvas.drawCircle(mRadius + index * divideWidth, mRadius, mRadius - 4, mPaint);
-                        }
+                        canvas.drawCircle(mRadius + index * divideWidth, mRadius, mRadius - 4, mPaint);
                     }
                 }
             }

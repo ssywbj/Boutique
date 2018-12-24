@@ -7,5 +7,6 @@
         <item>Dagger</item>
         <item>Fragment与RecyclerView、DataBinding</item>
         <item>ARouter</item>
+        <item>单元测试</item>
     </array>
 </resources>
