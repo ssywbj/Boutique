@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.suheng.ssy.boutique.BR;
@@ -124,21 +123,15 @@ public class RecyclerFragment extends BasicFragment {
 
         class BlackHolder extends RecyclerBindingHolder {
 
-            TextView textItem;
-
             public BlackHolder(View view) {
                 super(view);
-                textItem = view.findViewById(R.id.text_item);
             }
         }
 
         class RedHolder extends RecyclerBindingHolder {
 
-            TextView textItem;
-
             public RedHolder(View view) {
                 super(view);
-                textItem = view.findViewById(R.id.text_info);
             }
         }
     }
