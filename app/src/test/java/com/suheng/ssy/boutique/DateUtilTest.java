@@ -26,7 +26,7 @@ public class DateUtilTest {
     private long timeStamp = 1508054402000L;
     private Date mDate;
 
-    public DateUtilTest(String time){
+    public DateUtilTest(String time) {
         this.time = time;
     }
 
@@ -64,6 +64,23 @@ public class DateUtilTest {
     public void dateToStamp2() throws Exception {
         //assertEquals(1670793, DateUtil.dateToStamp(time));
         assertEquals(1508054402000L, DateUtil.dateToStamp("2017-10-15"));
+    }
+
+    @Test(timeout = 100)//性能测试，如果方法耗时超过100毫秒->失败
+    public void testTimeout() throws Exception {
+        try {
+            Thread.sleep(99);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void testTimeout2() throws Exception {
+        try {
+            Thread.sleep(99);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Parameterized.Parameters
