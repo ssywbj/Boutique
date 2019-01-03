@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.suheng.ssy.boutique">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".BoutiqueApp"
         android:allowBackup="true"
