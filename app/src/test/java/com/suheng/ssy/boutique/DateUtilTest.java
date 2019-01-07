@@ -18,6 +18,7 @@ import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by wbj on 2018/12/24.
+ * 手动创建测试类：选择对应的类->光标停留在类名上->按下ALT + ENTER->在弹出的弹窗中选择Create Test
  */
 @RunWith(Parameterized.class)
 public class DateUtilTest {

@@ -15,6 +15,7 @@ import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.core.CombinableMatcher.both;
 import static org.hamcrest.core.CombinableMatcher.either;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.nullValue;
 
@@ -47,6 +48,12 @@ public class AssertThatTest {
     @Test
     public void testAssertThat5() throws Exception {
         Assert.assertThat("jj556wtrr666", new IsPhoneMatcher());
+    }
+
+    @Test
+    public void testAssertThat6() throws Exception {
+        Assert.assertThat("jj556wtrr666".equals("ffff"), is(true));
+        //Assert.assertEquals(true, "jj556wtrr666".equals("ffff"));
     }
 
     public class IsPhoneMatcher extends BaseMatcher<String> {
