@@ -31,7 +31,8 @@
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:textColor="@android:color/black"
-                android:textSize="19sp"/>
+                android:textSize="19sp"
+                android:text="After Click"/>
         </LinearLayout>
 
 

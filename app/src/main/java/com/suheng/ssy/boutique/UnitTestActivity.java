@@ -49,12 +49,12 @@ public class UnitTestActivity extends BasicActivity {
 
         ((ScrollView) findViewById(R.id.scroll_view)).smoothScrollTo(0, 0);
 
-        findViewById(R.id.btn_unit_test).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.btn_unit_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((TextView) findViewById(R.id.text_result)).setText("After Click");
             }
-        });
+        });*/
     }
 
 }
