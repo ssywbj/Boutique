@@ -1,6 +1,6 @@
 ext {//若引用该变量，需要在同级目录下build.gradler的文件添加配置：apply from: "config.gradle"
     //Sdk and Tools
-    minSdkVersion = 17
+    minSdkVersion = 18
     targetSdkVersion = 28
     compileSdkVersion = 28
 

@@ -9,9 +9,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.core.AllOf.allOf;
 
 /**
  * Created by wbj on 2019/1/7.
@@ -25,7 +26,14 @@ public class UnitTestActivityTest {
 
     @Test
     public void clickBtnTest() {
-        //Espresso.onView(withId(R.id.btn_unit_test)).perform(click());
-        //onView(allOf(withId(R.id.text_result), withText("After Click")));
+        onView(withId(R.id.btn_unit_test)).perform(click())/*.check(matches(isEnabled()))*/;
+        //onView(withText("After Click")).perform(longClick()).check(matches(isChecked()));
+        onView(withId(R.id.text_result)).check(matches(withText("After Click")));
+    }
+
+    @Test
+    public void clickTextTest() {
+        onView(withId(R.id.text_result)).check(matches(withText("After Click")));
+        //onView(withId(R.id.text_result)).perform(typeText("3"))/*.check(matches(withText("After Click")))*/;
     }
 }
