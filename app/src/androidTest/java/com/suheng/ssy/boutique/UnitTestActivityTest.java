@@ -1,6 +1,5 @@
 package com.suheng.ssy.boutique;
 
-import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -18,7 +17,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * Created by wbj on 2019/1/7.
  */
 @RunWith(AndroidJUnit4.class)
-@LargeTest
 public class UnitTestActivityTest {
 
     @Rule
