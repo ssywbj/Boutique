@@ -76,6 +76,9 @@ public class BoutiqueActivity extends BasicActivity {
                     case 7:
                         intent = new Intent(BoutiqueActivity.this, UnitTestActivity.class);
                         break;
+                    case 8:
+                        intent = new Intent(BoutiqueActivity.this, OkGoActivity.class);
+                        break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
                         break;
@@ -88,7 +91,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, UnitTestActivity.class));
+        startActivity(new Intent(this, OkGoActivity.class));
     }
 
 }
