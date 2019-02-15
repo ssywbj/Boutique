@@ -2,18 +2,57 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_get"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClickARouter"
-        android:text="OkGo"
+        android:onClick="onClickGet"
+        android:text="Get"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.03"/>
+
+    <Button
+        android:id="@+id/btn_callback"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:onClick="onClickCallback"
+        android:text="Callback"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/btn_get"
+        app:layout_constraintStart_toStartOf="@+id/btn_get"
+        app:layout_constraintTop_toBottomOf="@+id/btn_get"/>
+
+    <ImageView
+        android:id="@+id/image_url"
+        android:layout_width="@android:dimen/notification_large_icon_width"
+        android:layout_height="64dp"
+        android:layout_marginStart="32dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_callback"
+        app:layout_constraintStart_toEndOf="@+id/btn_callback"
+        app:layout_constraintTop_toTopOf="@+id/btn_callback"
+        app:layout_constraintVertical_bias="0.333"/>
+
+    <Button
+        android:id="@+id/btn_post"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Post"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/btn_callback"
+        app:layout_constraintStart_toStartOf="@+id/btn_callback"
+        app:layout_constraintTop_toBottomOf="@+id/btn_callback"
+        android:onClick="onClickPost"/>
 </android.support.constraint.ConstraintLayout>

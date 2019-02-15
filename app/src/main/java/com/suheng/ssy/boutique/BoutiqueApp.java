@@ -55,7 +55,7 @@ public class BoutiqueApp extends Application {
     }
 
     private void initOkGo() {
-        //------这里给出的是示例代码,告诉你可以这么传,实际使用的时候,根据需要传,不需要就不传------//
+        //-------------这里给出的是示例代码,实际使用的时候,根据需要传,不需要就不传-------------//
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.put("commonHeaderKey1", "commonHeaderValue1");//header不支持中文，不允许有特殊字符
         httpHeaders.put("commonHeaderKey2", "commonHeaderValue2");
@@ -79,6 +79,7 @@ public class BoutiqueApp extends Application {
         builder.cookieJar(new CookieJarImpl(new DBCookieStore(this)));
         //builder.cookieJar(new CookieJarImpl(new MemoryCookieStore()));
 
+        //-----------------------Https配置，以下几种方案根据需要设置-----------------------------//
         //方法一：信任所有证书,不安全有风险
         HttpsUtils.SSLParams sslParams1 = HttpsUtils.getSslSocketFactory();
         //方法二：自定义信任规则，校验服务端证书
@@ -94,6 +95,7 @@ public class BoutiqueApp extends Application {
         }
         builder.sslSocketFactory(sslParams1.sSLSocketFactory, sslParams1.trustManager);
         builder.hostnameVerifier(new SafeHostnameVerifier());
+        //----------------------------------------------------------------------------------------//
 
         OkGo.getInstance().init(this)//必须调用初始化
                 .setOkHttpClient(builder.build())//建议设置OkHttpClient，不设置会使用默认的
