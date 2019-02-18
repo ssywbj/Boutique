@@ -12,12 +12,17 @@ import com.lzy.okgo.callback.BitmapCallback;
 import com.lzy.okgo.callback.Callback;
 import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.cookie.store.CookieStore;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
+
+import okhttp3.Cookie;
+import okhttp3.HttpUrl;
 
 public class OkGoActivity extends BasicActivity {
 
@@ -29,6 +34,7 @@ public class OkGoActivity extends BasicActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ok_go);
+        this.initCookie();
     }
 
     public void onClickGet(View view) {
@@ -91,7 +97,7 @@ public class OkGoActivity extends BasicActivity {
 
                     @Override
                     public String convertResponse(okhttp3.Response response) throws Throwable {
-                        Log.d(mTag, "downloadProgress-->" + response);
+                        Log.d(mTag, "convertResponse-->" + response + "\n" + response.body().string());
                         return null;
                     }
                 });
@@ -117,6 +123,7 @@ public class OkGoActivity extends BasicActivity {
                     }
                 });
 
+        //http://ww1.sinaimg.cn/large/0065oQSqly1fs02a9b0nvj30sg10vk4z.jpg
         OkGo.<Bitmap>get("http://ww1.sinaimg.cn/large/0065oQSqly1fs02a9b0nvj30sg10vk4z.jpg").tag(this)
                 .execute(new BitmapCallback() {
                     @Override
@@ -126,7 +133,7 @@ public class OkGoActivity extends BasicActivity {
                     }
                 });
         //http://ww1.sinaimg.cn/large/0065oQSqly1fsb0lh7vl0j30go0ligni.jpg
-        OkGo.<File>get("").tag(this)
+        OkGo.<File>get("http://ww1.sinaimg.cn/large/0065oQSqly1fsb0lh7vl0j30go0ligni.jpg").tag(this)
                 .execute(new FileCallback() {
 
                     @Override
@@ -155,7 +162,50 @@ public class OkGoActivity extends BasicActivity {
     }
 
     public void onClickPost(View view) {
+        OkGo.<Bitmap>post("https://ws1.sinaimg.cn/large/0065oQSqgy1fxd7vcz86nj30qo0ybqc1.jpg").tag(this)
+                .execute(new BitmapCallback() {
 
+                    @Override
+                    public Bitmap convertResponse(okhttp3.Response response) throws Throwable {
+                        Bitmap bitmap = super.convertResponse(response);
+                        Log.d(mTag, "post, convertResponse-->" + response.code() + ", " + response.body() + ", " + bitmap);
+                        return bitmap;
+                    }
+
+                    @Override
+                    public void onSuccess(Response<Bitmap> response) {
+                        Log.d(mTag, "post, onSuccess-->" + response.code() + ", " + response.body());
+                        ((ImageView) findViewById(R.id.image_url)).setImageBitmap(response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<Bitmap> response) {
+                        super.onError(response);
+                        Log.d(mTag, "post, onError-->" + response.code() + ", " + response.message() + ", " + response.body());
+                    }
+                });
+    }
+
+    private void initCookie() {
+        HttpUrl httpUrl = HttpUrl.parse(URL_METHOD);
+        Cookie.Builder builder = new Cookie.Builder();
+        Cookie cookie = builder.name("myCookieKey1").value("myCookieValue1").domain(httpUrl.host()).build();
+        CookieStore cookieStore = OkGo.getInstance().getCookieJar().getCookieStore();
+        cookieStore.saveCookie(httpUrl, cookie);
+
+        cookieStore = OkGo.getInstance().getCookieJar().getCookieStore();
+        httpUrl = HttpUrl.parse(URL_METHOD);
+        List<Cookie> cookies = cookieStore.getCookie(httpUrl);
+        Log.d(mTag, httpUrl.host() + "对应的cookie如下：" + cookies.toString());
+        cookies = cookieStore.getAllCookie();
+        Log.d(mTag, "所有cookie如下：" + cookies.toString());
+    }
+
+    private void clearCookie() {
+        HttpUrl httpUrl = HttpUrl.parse(URL_METHOD);
+        CookieStore cookieStore = OkGo.getInstance().getCookieJar().getCookieStore();
+        cookieStore.removeCookie(httpUrl);
+        cookieStore.removeAllCookie();
     }
 
     @Override
@@ -165,5 +215,7 @@ public class OkGoActivity extends BasicActivity {
         //OkGo.getInstance().cancelAll();
         //OkGo.cancelAll(new OkHttpClient());
         //OkGo.cancelTag(new OkHttpClient(),this);
+
+        this.clearCookie();
     }
 }
