@@ -26,9 +26,8 @@ import okhttp3.HttpUrl;
 
 public class OkGoActivity extends BasicActivity {
 
-    public static final String SERVER = "http://server.jeasonlzy.com/OkHttpUtils/";
-    //public static final String SERVER = "http://192.168.1.121:8080/OkHttpUtils/";
-    public static final String URL_METHOD = "http://gank.io/api/data/福利/50/1";//SERVER + "method";
+    //public static final String URL_METHOD = "http://gank.io/api/data/福利/50/1";
+    public static final String URL_METHOD = "http://192.168.1.111:8080/1.01/";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,12 +123,25 @@ public class OkGoActivity extends BasicActivity {
                 });
 
         //http://ww1.sinaimg.cn/large/0065oQSqly1fs02a9b0nvj30sg10vk4z.jpg
-        OkGo.<Bitmap>get("http://ww1.sinaimg.cn/large/0065oQSqly1fs02a9b0nvj30sg10vk4z.jpg").tag(this)
+        OkGo.<Bitmap>get("http://192.168.1.111:8080/1.01/112318-798-carib-1080p_20190218234138.JPG").tag(this)
                 .execute(new BitmapCallback() {
                     @Override
                     public void onSuccess(Response<Bitmap> response) {
                         Log.d(mTag, "Bitmap, onSuccess-->" + response.code() + ", " + response.body());
                         ((ImageView) findViewById(R.id.image_url)).setImageBitmap(response.body());
+                    }
+
+
+                    @Override
+                    public void onError(Response<Bitmap> response) {
+                        super.onError(response);
+                        Log.d(mTag, "Bitmap, onError-->" + response.code() + ", " + response.body());
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        Log.d(mTag, "Bitmap, onFinish-->");
                     }
                 });
         //http://ww1.sinaimg.cn/large/0065oQSqly1fsb0lh7vl0j30go0ligni.jpg
