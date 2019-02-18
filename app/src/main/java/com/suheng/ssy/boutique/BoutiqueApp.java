@@ -75,6 +75,7 @@ public class BoutiqueApp extends Application {
         builder.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
         builder.connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
 
+        //自动管理cookie（或者叫session的保持），以下几种任选一种就行
         //builder.cookieJar(new CookieJarImpl(new SPCookieStore(this)));
         builder.cookieJar(new CookieJarImpl(new DBCookieStore(this)));
         //builder.cookieJar(new CookieJarImpl(new MemoryCookieStore()));
