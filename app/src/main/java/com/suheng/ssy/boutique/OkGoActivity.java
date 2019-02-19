@@ -2,6 +2,7 @@ package com.suheng.ssy.boutique;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -26,8 +27,8 @@ import okhttp3.HttpUrl;
 
 public class OkGoActivity extends BasicActivity {
 
-    //public static final String URL_METHOD = "http://gank.io/api/data/福利/50/1";
-    public static final String URL_METHOD = "http://192.168.1.111:8080/1.01/";
+    //public static final String URL = "http://gank.io/api/data/福利/50/1";
+    private static final String URL = "http://192.168.120.169:8080/TestJSP";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class OkGoActivity extends BasicActivity {
     }
 
     public void onClickGet(View view) {
-        OkGo.<String>get(URL_METHOD)
+        OkGo.<String>get(URL)
                 .tag(this)//请求的tag，主要用于取消对应的请求
                 //.isMultipart(true)//post请求方法的属性，表示是否强制使用multipart/form-data表单上传，因为该框架在有文件的时候，无论你是否设置这个参数，默认都是multipart/form-data格式上传，但是如果参数中不包含文件，默认使用application/x-www-form-urlencoded格式上传，如果你的服务器要求无论是否有文件，都要使用表单上传，那么可以用这个参数设置为true。
                 //.isSpliceUrl(true)//post请求方法的属性，表示是否强制将params的参数拼接到url后面，默认false不拼接。一般来说，post、put等有请求体的方法应该把参数都放在请求体中，不应该放在url上，但是有的服务端可能不太规范，url和请求体都需要传递参数，那么这时候就使用该参数，他会将你所有使用.params()方法传递的参数，自动拼接在url后面。
@@ -108,7 +109,7 @@ public class OkGoActivity extends BasicActivity {
     }
 
     public void onClickCallback(View view) {
-        OkGo.<String>get(URL_METHOD).tag(this)
+        OkGo.<String>get(URL).tag(this)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -123,7 +124,7 @@ public class OkGoActivity extends BasicActivity {
                 });
 
         //http://ww1.sinaimg.cn/large/0065oQSqly1fs02a9b0nvj30sg10vk4z.jpg
-        OkGo.<Bitmap>get("http://192.168.1.111:8080/1.01/112318-798-carib-1080p_20190218234138.JPG").tag(this)
+        OkGo.<Bitmap>get(URL + "/0065oQSqgy1fwgzx8n1syj30sg15h7ew.jpg").tag(this)
                 .execute(new BitmapCallback() {
                     @Override
                     public void onSuccess(Response<Bitmap> response) {
@@ -144,8 +145,36 @@ public class OkGoActivity extends BasicActivity {
                         Log.d(mTag, "Bitmap, onFinish-->");
                     }
                 });
-        //http://ww1.sinaimg.cn/large/0065oQSqly1fsb0lh7vl0j30go0ligni.jpg
-        OkGo.<File>get("http://ww1.sinaimg.cn/large/0065oQSqly1fsb0lh7vl0j30go0ligni.jpg").tag(this)
+    }
+
+    public void onClickPost(View view) {
+        OkGo.<Bitmap>post(URL + "/0065oQSqly1fvexaq313uj30qo0wldr4.jpg").tag(this)
+                .execute(new BitmapCallback() {
+
+                    @Override
+                    public Bitmap convertResponse(okhttp3.Response response) throws Throwable {
+                        Bitmap bitmap = super.convertResponse(response);
+                        Log.d(mTag, "post, convertResponse-->" + response.code() + ", " + response.body() + ", " + bitmap);
+                        return bitmap;
+                    }
+
+                    @Override
+                    public void onSuccess(Response<Bitmap> response) {
+                        Log.d(mTag, "post, onSuccess-->" + response.code() + ", " + response.body());
+                        ((ImageView) findViewById(R.id.image_url)).setImageBitmap(response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<Bitmap> response) {
+                        super.onError(response);
+                        Log.d(mTag, "post, onError-->" + response.code() + ", " + response.message() + ", " + response.body());
+                    }
+                });
+    }
+
+    public void onClickDownload(View view) {
+//http://ww1.sinaimg.cn/large/0065oQSqly1fsb0lh7vl0j30go0ligni.jpg
+        OkGo.<File>get(URL + "/【电影家园www.idyjy.com下载】摩登武圣DVD国语中英双字.mkv").tag(this)
                 .execute(new FileCallback() {
 
                     @Override
@@ -173,40 +202,68 @@ public class OkGoActivity extends BasicActivity {
                 });
     }
 
-    public void onClickPost(View view) {
-        OkGo.<Bitmap>post("https://ws1.sinaimg.cn/large/0065oQSqgy1fxd7vcz86nj30qo0ybqc1.jpg").tag(this)
-                .execute(new BitmapCallback() {
-
+    public void onClickUpload(View view) {
+        OkGo.<String>post(URL).tag(this)
+                .upString("Upload String data data data data data data data data data data!")
+                .execute(new StringCallback() {
                     @Override
-                    public Bitmap convertResponse(okhttp3.Response response) throws Throwable {
-                        Bitmap bitmap = super.convertResponse(response);
-                        Log.d(mTag, "post, convertResponse-->" + response.code() + ", " + response.body() + ", " + bitmap);
-                        return bitmap;
+                    public void onSuccess(Response<String> response) {
+                        Log.d(mTag, "Upload String, onSuccess-->" + response.code() + ", " + response.message());
                     }
 
                     @Override
-                    public void onSuccess(Response<Bitmap> response) {
-                        Log.d(mTag, "post, onSuccess-->" + response.code() + ", " + response.body());
-                        ((ImageView) findViewById(R.id.image_url)).setImageBitmap(response.body());
+                    public void uploadProgress(Progress progress) {
+                        super.uploadProgress(progress);
+                        Log.d(mTag, "Upload String, uploadProgress-->" + progress.totalSize + ", " + progress.speed + ", " + progress.currentSize);
                     }
 
                     @Override
-                    public void onError(Response<Bitmap> response) {
+                    public void onError(Response<String> response) {
                         super.onError(response);
-                        Log.d(mTag, "post, onError-->" + response.code() + ", " + response.message() + ", " + response.body());
+                        Log.d(mTag, "Upload String, onError-->" + response.code() + ", " + response.message() + ", " + response.body());
                     }
                 });
+
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            final File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+                    , "Screenshots" + File.separator + "Screenshot_20190219-142916.png");
+            if (file.exists()) {
+                OkGo.<String>post(URL).tag(this)
+                        .params("device", "Android")
+                        .params("file", file)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                Log.d(mTag, "Upload File, onSuccess-->" + response.code() + ", " + response.message());
+                            }
+
+                            @Override
+                            public void uploadProgress(Progress progress) {
+                                super.uploadProgress(progress);
+                                Log.d(mTag, "Upload File, uploadProgress-->" + progress.totalSize + ", " + progress.speed + ", " + progress.currentSize);
+                            }
+
+                            @Override
+                            public void onError(Response<String> response) {
+                                super.onError(response);
+                                Log.d(mTag, "Upload File, onError-->" + response.code() + ", " + response.message() + ", " + response.body());
+                            }
+                        });
+            } else {
+                Log.d(mTag, "需要上传的文件不存在");
+            }
+        }
     }
 
     private void initCookie() {
-        HttpUrl httpUrl = HttpUrl.parse(URL_METHOD);
+        HttpUrl httpUrl = HttpUrl.parse(URL);
         Cookie.Builder builder = new Cookie.Builder();
         Cookie cookie = builder.name("myCookieKey1").value("myCookieValue1").domain(httpUrl.host()).build();
         CookieStore cookieStore = OkGo.getInstance().getCookieJar().getCookieStore();
         cookieStore.saveCookie(httpUrl, cookie);
 
         cookieStore = OkGo.getInstance().getCookieJar().getCookieStore();
-        httpUrl = HttpUrl.parse(URL_METHOD);
+        httpUrl = HttpUrl.parse(URL);
         List<Cookie> cookies = cookieStore.getCookie(httpUrl);
         Log.d(mTag, httpUrl.host() + "对应的cookie如下：" + cookies.toString());
         cookies = cookieStore.getAllCookie();
@@ -214,7 +271,7 @@ public class OkGoActivity extends BasicActivity {
     }
 
     private void clearCookie() {
-        HttpUrl httpUrl = HttpUrl.parse(URL_METHOD);
+        HttpUrl httpUrl = HttpUrl.parse(URL);
         CookieStore cookieStore = OkGo.getInstance().getCookieJar().getCookieStore();
         cookieStore.removeCookie(httpUrl);
         cookieStore.removeAllCookie();

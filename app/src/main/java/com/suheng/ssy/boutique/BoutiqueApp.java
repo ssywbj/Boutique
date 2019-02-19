@@ -60,8 +60,8 @@ public class BoutiqueApp extends Application {
         httpHeaders.put("commonHeaderKey1", "commonHeaderValue1");//header不支持中文，不允许有特殊字符
         httpHeaders.put("commonHeaderKey2", "commonHeaderValue2");
         HttpParams httpParams = new HttpParams();
-        httpParams.put("commonParamsKey1", "commonParamsValue1");//param支持中文,直接传,不要自己编码
-        httpParams.put("commonParamsKey2", "这里支持中文参数");
+        httpParams.put("username", "commonParamsValue1");//param支持中文,直接传,不要自己编码
+        httpParams.put("password", "这里支持中文参数");
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         //----------------------------------------------------------------------------------------//
 
