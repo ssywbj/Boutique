@@ -29,6 +29,7 @@ public class OkGoActivity extends BasicActivity {
 
     //public static final String URL = "http://gank.io/api/data/福利/50/1";
     private static final String URL = "http://192.168.120.169:8080/TestJSP";
+    private static final String URL_SERVER = URL + "/ServletDemo";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,6 +107,24 @@ public class OkGoActivity extends BasicActivity {
         特别注意： 如果你的当前请求使用的是你传递的OkHttpClient对象的话，那么当你调用OkGo.getInstance().cancelTag(tag)的时候
         ，是取消不了这个请求的，因为OkGo只能取消使用全局配置的请求，不知道你这个请求是用你自己的OkHttpClient的，
         如果一定要取消，可以是使用OkGo提供的重载方法*/
+
+        OkGo.<String>get(URL_SERVER).tag(this)
+                .params("username", "ssy")
+                .params("password", "654321")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.d(mTag, "Upload params, onSuccess-->" + response.code() + "-->"
+                                + response.message() + "-->" + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        Log.d(mTag, "Upload params, onError-->" + response.code() + "-->" + response.message()
+                                + "-->" + response.body());
+                    }
+                });
     }
 
     public void onClickCallback(View view) {
@@ -170,6 +189,24 @@ public class OkGoActivity extends BasicActivity {
                         Log.d(mTag, "post, onError-->" + response.code() + ", " + response.message() + ", " + response.body());
                     }
                 });
+
+        OkGo.<String>post(URL_SERVER).tag(this)
+                .params("username", "Wbj")
+                .params("password", "123456")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.d(mTag, "post params, onSuccess-->" + response.code() + "-->" + response.message()
+                                + "-->" + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        Log.d(mTag, "post params, onError-->" + response.code() + "-->" + response.message()
+                                + "-->" + response.body());
+                    }
+                });
     }
 
     public void onClickDownload(View view) {
@@ -203,24 +240,39 @@ public class OkGoActivity extends BasicActivity {
     }
 
     public void onClickUpload(View view) {
-        OkGo.<String>post(URL).tag(this)
-                .upString("Upload String data data data data data data data data data data!")
+        OkGo.<String>post(URL_SERVER).tag(this)
+                .upString("---upload params中的参数设置是无效的---")//使用该方法时，params中的参数设置是无效的，所有参数均需要通过需要上传的文本中指定
+                .params("username", "Wbj")
+                .params("password", "123456")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.d(mTag, "Upload String, onSuccess-->" + response.code() + ", " + response.message());
-                    }
-
-                    @Override
-                    public void uploadProgress(Progress progress) {
-                        super.uploadProgress(progress);
-                        Log.d(mTag, "Upload String, uploadProgress-->" + progress.totalSize + ", " + progress.speed + ", " + progress.currentSize);
+                        Log.d(mTag, "Upload String, onSuccess-->" + response.code() + "-->" + response.message()
+                                + "-->" + response.body());
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Log.d(mTag, "Upload String, onError-->" + response.code() + ", " + response.message() + ", " + response.body());
+                        Log.d(mTag, "Upload String, onError-->" + response.code() + "-->" + response.message()
+                                + "-->" + response.body());
+                    }
+                });
+
+        OkGo.<String>post(URL_SERVER).tag(this)
+                .upString("username=Wbj&password=123456&data=---upload params中的参数设置是无效的---")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.d(mTag, "Upload params String, onSuccess-->" + response.code() + "-->" + response.message()
+                                + "-->" + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        Log.d(mTag, "Upload params String, onError-->" + response.code() + "-->" + response.message()
+                                + "-->" + response.body());
                     }
                 });
 
@@ -228,13 +280,15 @@ public class OkGoActivity extends BasicActivity {
             final File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
                     , "Screenshots" + File.separator + "Screenshot_20190219-142916.png");
             if (file.exists()) {
-                OkGo.<String>post(URL).tag(this)
-                        .params("device", "Android")
-                        .params("file", file)
+                OkGo.<String>post(URL_SERVER).tag(this)
+                        .params("username", "Wbj")
+                        .params("password", "123456")
+                        .upFile(file)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
-                                Log.d(mTag, "Upload File, onSuccess-->" + response.code() + ", " + response.message());
+                                Log.d(mTag, "Upload File, onSuccess-->" + response.code() + "-->" + response.message()
+                                        + "-->" + response.body());
                             }
 
                             @Override
@@ -246,7 +300,31 @@ public class OkGoActivity extends BasicActivity {
                             @Override
                             public void onError(Response<String> response) {
                                 super.onError(response);
-                                Log.d(mTag, "Upload File, onError-->" + response.code() + ", " + response.message() + ", " + response.body());
+                                Log.d(mTag, "Upload File, onError-->" + response.code() + "-->" + response.message() + "-->" + response.body());
+                            }
+                        });
+
+                OkGo.<String>post(URL_SERVER).tag(this)
+                        .params("username", "Wbj")
+                        .params("password", "123456")
+                        .params("file", file)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                Log.d(mTag, "params File, onSuccess-->" + response.code() + "-->" + response.message()
+                                        + "-->" + response.body());
+                            }
+
+                            @Override
+                            public void uploadProgress(Progress progress) {
+                                super.uploadProgress(progress);
+                                Log.d(mTag, "params File, uploadProgress-->" + progress.totalSize + ", " + progress.speed + ", " + progress.currentSize);
+                            }
+
+                            @Override
+                            public void onError(Response<String> response) {
+                                super.onError(response);
+                                Log.d(mTag, "params File, onError-->" + response.code() + "-->" + response.message() + "-->" + response.body());
                             }
                         });
             } else {
