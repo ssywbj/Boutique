@@ -1,0 +1,28 @@
+<resources>
+    <dimen name="main_layout_bar">60dip</dimen>
+    <dimen name="ml_bottom_text">18sp</dimen>
+    <dimen name="top_bar_height">50dp</dimen>
+    <dimen name="top_bar_divide_line_margin">10dp</dimen>
+    <dimen name="top_bar_margin_8dp">8dp</dimen>
+    <dimen name="top_bar_title_text">20sp</dimen>
+    <dimen name="top_bar_divide_line_width">0.5dp</dimen>
+    <dimen name="button_padding">6dp</dimen>
+    <dimen name="radius_4dip">4dp</dimen>
+    <dimen name="stroke_width">0.6dp</dimen>
+    <dimen name="top_bar_btn_text">18sp</dimen>
+    <dimen name="lv_item_photo_dimen">90dp</dimen>
+    <dimen name="test_size_14sp">14sp</dimen>
+    <dimen name="margin_2dp">2dp</dimen>
+    <dimen name="video_view_height">220dip</dimen>
+    <dimen name="sp_dimen">22.5sp</dimen>
+    <dimen name="px_dimen">22.6px</dimen>
+    <dimen name="dialog_width">240dp</dimen>
+    <dimen name="size_1dp">1dp</dimen>
+    <dimen name="expression_panel_view_pager">140dp</dimen>
+    <dimen name="expression_panel_view_pager_indicator">26dp</dimen>
+    <dimen name="expression_panel_height_total">-166dp
+    </dimen><!--注：expression_panel_height_total = -(expression_panel_view_pager+expression_panel_view_pager_indicator)-->
+    <dimen name="padding_12dp">12dp</dimen>
+    <dimen name="expression_float_bottom_margin">26dp</dimen>
+    <dimen name="expression_float_image_size">50dp</dimen>
+</resources>

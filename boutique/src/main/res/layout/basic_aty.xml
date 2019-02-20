@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/basic_aty_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_height"
+        android:layout_alignParentTop="true"
+        android:background="@color/top_bar_bg">
+
+        <ImageButton
+            android:id="@+id/top_bar_left_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/top_bar_margin_8dp"
+            android:background="@color/top_bar_bg"
+            android:onClick="clickLeftBtn"
+            android:src="@drawable/top_bar_back" />
+
+        <ImageView
+            android:id="@+id/top_bar_divide_line"
+            android:layout_width="@dimen/top_bar_divide_line_width"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/top_bar_divide_line_margin"
+            android:layout_marginTop="@dimen/top_bar_divide_line_margin"
+            android:layout_toRightOf="@id/top_bar_left_btn"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/top_bar_title"
+            style="@style/TextMarquee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/top_bar_margin_8dp"
+            android:layout_marginRight="@dimen/top_bar_margin_8dp"
+            android:layout_toRightOf="@id/top_bar_divide_line"
+            android:textColor="@color/white"
+            android:textSize="@dimen/top_bar_title_text" />
+
+        <TextView
+            android:id="@+id/top_bar_r_btn1"
+            style="@style/TextWrapContent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/top_bar_margin_8dp"
+            android:onClick="clickRightBtn"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</LinearLayout>

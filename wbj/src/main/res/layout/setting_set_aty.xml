@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF5F5F5"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.wbj.view.SettingItemView
+        xmlns:siv="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/number_dynamic_layout"
+        android:background="@android:color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        siv:mainTitle="@string/main_title"
+        siv:rightText="@string/right_text"/>
+
+    <com.wbj.view.SettingItemView
+        xmlns:siv="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/number_dynamic_layout"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        siv:mainTitle="@string/main_title"
+        siv:rightText="@string/right_text"
+        siv:subTitle="@string/sub_title"/>
+
+    <com.wbj.view.SettingItemView
+        xmlns:siv="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/number_dynamic_layout"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        siv:mainTitle="@string/main_title"
+        siv:rightDrawable="@drawable/arrow_right"
+        siv:rightText="@string/right_text"
+        siv:subTitle="@string/sub_title"/>
+
+    <com.wbj.view.SettingItemView
+        xmlns:siv="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/number_dynamic_layout"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        siv:leftDrawable="@drawable/setting_add"
+        siv:mainTitle="@string/main_title"
+        siv:rightDrawable="@drawable/arrow_right"
+        siv:rightText="@string/right_text"/>
+
+    <com.wbj.view.SettingItemView
+        xmlns:siv="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/number_dynamic_layout"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        siv:mainTitle="@string/main_title"
+        siv:rightDrawable="@drawable/arrow_right"/>
+
+    <com.wbj.view.SettingItemView
+        xmlns:siv="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/number_dynamic_layout"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        siv:mainTitle="@string/main_title"
+        siv:rightDrawable="@drawable/arrow_right"
+        siv:subTitle="@string/sub_title"/>
+
+</LinearLayout>

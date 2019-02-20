@@ -1,0 +1,66 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        applicationId "com.example.wbj"
+        minSdkVersion 21
+        targetSdkVersion 27
+        multiDexEnabled true
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            moduleName "JniTest"
+        }
+
+        sourceSets {
+            main {
+                jni.srcDirs = []//指定C/C++文件所在位置
+            }
+        }
+
+        dataBinding{
+            enabled = true
+        }
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"//显示Log
+            //buildConfigField "int", "FLAG", "0"//可自义字段
+        }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"//不显示Log
+            //buildConfigField "int", "FLAG", "0"//可自义字段
+            minifyEnabled false //不混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile('com.github.bumptech.glide:glide:4.7.1') {
+        exclude group: "com.android.support"
+    }
+    testCompile 'junit:junit:4.12'
+    compile files('libs/juniversalchardet-1.0.3.jar')
+    compile 'com.jakewharton:butterknife:8.5.1'
+    compile 'com.yipianfengye:MLog:1.0.0'
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.4'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.google.code.gson:gson:2.6.2'
+    provided 'org.glassfish:javax.annotation:10.0-b28'//添加java注解库
+}

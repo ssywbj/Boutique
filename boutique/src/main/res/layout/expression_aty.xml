@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/expression_aty_bg">
+
+    <ImageButton
+        android:id="@+id/ibtn_expression_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="@dimen/button_padding"
+        android:background="@drawable/expression_bg_send"
+        android:src="@drawable/expression_item_01" />
+
+    <ImageButton
+        android:id="@+id/ibtn_show_express_panel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/button_padding"
+        android:background="@drawable/expression_show_panel" />
+
+    <ying.jie.boutique.menu_function.ExpressionPanel
+        android:id="@+id/expression_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/expression_panel_height_total" />
+</RelativeLayout>
+
+

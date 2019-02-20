@@ -13,6 +13,8 @@ import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import ying.jie.boutique.MainActivity;
+
 public class BoutiqueActivity extends BasicActivity {
 
     @Override
@@ -78,6 +80,9 @@ public class BoutiqueActivity extends BasicActivity {
                         break;
                     case 8:
                         intent = new Intent(BoutiqueActivity.this, OkGoActivity.class);
+                        break;
+                    case 9:
+                        intent = new Intent(BoutiqueActivity.this, MainActivity.class);
                         break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);

@@ -1,0 +1,32 @@
+<resources>
+    <dimen name="vertical_progress_bar_radius">10dp</dimen>
+    <dimen name="vertical_progress_w">90dp</dimen>
+    <dimen name="vertical_progress_h">120dp</dimen>
+    <dimen name="image_browser_grid_padding">1dp</dimen>
+    <dimen name="number_dynamic_layout">52dp</dimen>
+    <dimen name="setting_main_title">16sp</dimen>
+    <dimen name="setting_right_text">15sp</dimen>
+    <dimen name="setting_sub_title">14sp</dimen>
+    <dimen name="setting_left_image">22dp</dimen>
+    <dimen name="setting_right_image">14dp</dimen>
+    <dimen name="setting_text_max_width">160dp</dimen>
+
+    <dimen name="dialog_padding">8dp</dimen>
+    <dimen name="dialog_margin_lr">32dp</dimen>
+    <dimen name="dialog_corner_radius">6dp</dimen>
+    <dimen name="dialog_line_width">2px</dimen>
+    <dimen name="dialog_text_title">18sp</dimen>
+    <dimen name="dialog_text_content">17sp</dimen>
+
+    <dimen name="drag_item_normal_height">48dip</dimen>
+    <dimen name="drag_item_expand_height">96dip</dimen>
+
+    <dimen name="adapter_bottom_text_height">40dip</dimen>
+    <dimen name="adapter_title_text">28dip</dimen>
+
+    <dimen name="title_bar_height">44dp</dimen>
+    <dimen name="title_bar_btn_size">22dp</dimen>
+    <dimen name="title_bar_btn_edge_margin">8dp</dimen>
+    <dimen name="title_bar_text">16sp</dimen>
+    <dimen name="checkbox_size">19dp</dimen>
+</resources>

@@ -1,0 +1,72 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="FullScreen" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/blue</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="VerticalProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/vertical_progress_bar</item>
+    </style>
+
+    <!--windowIsFloating为true，可以有让Dialog自带背景、布局自动居中、自带填充效果等功能-->
+    <style name="BasicDialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <!--windowAnimationStyle为Dialog的填充动画-->
+    <style name="TempDialog" parent="BasicDialog">
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+
+    <style name="DialogTextStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/dialog_text_title</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+    </style>
+
+    <style name="TitleBarBtn">
+        <item name="android:layout_width">@dimen/title_bar_btn_size</item>
+        <item name="android:layout_height">@dimen/title_bar_btn_size</item>
+        <item name="android:layout_marginLeft">@dimen/title_bar_btn_edge_margin</item>
+        <item name="android:layout_marginRight">@dimen/title_bar_btn_edge_margin</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="TitleBarEditText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/title_bar_text</item>
+        <item name="android:paddingLeft">@dimen/title_bar_btn_edge_margin</item>
+        <item name="android:paddingRight">@dimen/title_bar_btn_edge_margin</item>
+    </style>
+
+    <style name="CheckBoxStyle">
+        <item name="android:layout_width">@dimen/checkbox_size</item>
+        <item name="android:layout_height">@dimen/checkbox_size</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:focusable">false</item>
+        <item name="android:button">@drawable/checkbox_selector</item>
+        <item name="android:background">@null</item>
+    </style>
+
+</resources>

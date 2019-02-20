@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--左右侧边栏可滑动菜单：注意自定义命名空间ssy的引入方法-->
+<ying.jie.view.SideSlidingMenu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ssy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/menu_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:scrollbars="none"
+    ssy:rightPadding="100dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <!--左菜单：默认情况下隐藏-->
+        <RelativeLayout
+            android:id="@+id/boutique_side_menu_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/side_menu_bg">
+
+            <ListView
+                android:id="@+id/boutique_side_menu_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+
+        <!--主菜单：默认情况下显示-->
+        <include
+            layout="@layout/boutique_main_menu_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</ying.jie.view.SideSlidingMenu>

@@ -1,0 +1,60 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '26.0.2'
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            moduleName "JniTest"
+            cFlags "-DANDROID_NDK -D_RELEASE"
+            ldLibs "log", "z", "m"
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+        }
+
+        sourceSets {
+            main {
+                //AIDL自定义数据通讯需要添加的事项:start
+                java.srcDirs = ['src/main/java', 'src/main/aidl']
+                resources.srcDirs = ['src/main/java', 'src/main/aidl']
+                aidl.srcDirs = ['src/main/aidl']
+                //AIDL自定义数据通讯需要添加的事项:end
+
+                jni.srcDirs = []//指定C/C++文件所在位置
+            }
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false//关闭混淆（默认也是关闭）
+            zipAlignEnabled true//Zipalign优化
+            //shrinkResources true//移除无用的resource文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    testCompile 'junit:junit:4.12'
+    compile files('src/main/libs/tts.jar')
+    compile files('src/main/libs/nineoldandroids-2.4.0.jar')
+    compile files('src/main/libs/netty-all-4.0.37.Final.jar')
+    compile files('src/main/libs/eventbus.jar')
+    compile files('src/main/libs/protobuf-java-2.5.0.jar')
+    compile 'com.google.code.gson:gson:2.6.2'
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="completely_transparent">#00000000</color>
+    <color name="top_bar_bg">#5FA245</color>
+    <color name="top_bar_btn">#08c08e</color>
+    <color name="side_menu_bg">#42F976</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="stroke_color">#ACACAC</color>
+    <color name="view_divide_line">#CCCCCC</color>
+    <color name="blue">#8D9DFD</color>
+    <color name="red">#FF0000</color>
+    <color name="led_text">#00FF00</color>
+    <color name="loading_dialog_bg">#88000000</color>
+    <color name="main_menu_divide_line">#dbdfe1</color>
+    <color name="main_menu_frg_bg">#f9f9fb</color>
+    <color name="main_menu_btm_text_normal">#b2b2b2</color>
+    <color name="main_menu_btm_text_selected">#3676ee</color>
+</resources>

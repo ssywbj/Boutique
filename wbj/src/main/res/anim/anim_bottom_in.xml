@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:duration="600"
+     android:fillAfter="true"
+     android:interpolator="@android:anim/linear_interpolator">
+    <!--fillAfter：动画结束后，视图停留在最后的位置-->
+
+    <translate
+        android:fromYDelta="62%p"
+        android:toYDelta="0"/>
+    <!--fromYDelta为原始位置，“0”表示在原点，即控件在布局文件中的原始位置；
+        toYDelta为移动到的位置，“80%p”表示以父层View为参照，移动的距离为父层View80%的高度（有可能
+        移到父层View的外面）；“80%”表示以自己为参照，移动的距离为自身80%的高度；负数表示在原点的上方，
+        正数表示在原点的下方；
+    -->
+
+    <alpha
+        android:fromAlpha="0"
+        android:toAlpha="1"/>
+</set>

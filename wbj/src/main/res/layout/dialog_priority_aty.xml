@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:padding="2dp">
+
+    <Button
+        android:id="@+id/btn_priority_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="优先级1"/>
+
+    <Button
+        android:id="@+id/btn_priority_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="优先级2"/>
+
+    <Button
+        android:id="@+id/btn_priority_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="优先级3"/>
+
+    <Button
+        android:id="@+id/btn_priority_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="优先级4"/>
+</LinearLayout>

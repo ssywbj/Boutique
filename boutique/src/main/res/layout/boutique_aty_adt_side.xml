@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/side_menu_item"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/top_bar_height"
+        android:gravity="center_vertical"
+        android:padding="@dimen/radius_4dip"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/top_bar_title_text" />
+</RelativeLayout>
+

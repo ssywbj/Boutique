@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/led_aty_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ying.jie.view.LedTextView
+        android:id="@+id/text_count_down"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/radius_4dip"
+        android:gravity="center"
+        android:shadowColor="@color/red"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="6"
+        android:singleLine="true"
+        android:textColor="@color/led_text"
+        android:textSize="50sp" />
+
+    <include
+        android:id="@+id/view_divide_line"
+        layout="@layout/view_divide_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_divide_line_width"
+        android:layout_below="@id/text_count_down"
+        android:layout_marginBottom="@dimen/radius_4dip"
+        android:layout_marginTop="@dimen/radius_4dip" />
+
+    <TextView
+        android:id="@+id/text_count_down2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_divide_line"
+        android:layout_margin="@dimen/radius_4dip"
+        android:gravity="center"
+        android:shadowColor="@color/led_text"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="6"
+        android:singleLine="true"
+        android:textColor="@color/red"
+        android:textSize="50sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_count_down2"
+        android:layout_margin="@dimen/radius_4dip"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/text_status"
+            style="@style/TextWrapContent"
+            android:layout_marginRight="@dimen/top_bar_divide_line_margin"
+            android:text="@string/begin" />
+
+        <TextView
+            android:id="@+id/text_reset"
+            style="@style/TextWrapContent"
+            android:layout_marginLeft="@dimen/top_bar_divide_line_margin"
+            android:enabled="false"
+            android:text="@string/text_reset" />
+    </LinearLayout>
+</RelativeLayout>
+
+

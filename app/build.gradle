@@ -61,4 +61,6 @@ dependencies {
     if (!rootProject.ext.isModule2Independent) {
         implementation project(':module2')
     }
+
+    implementation project(':boutique')
 }

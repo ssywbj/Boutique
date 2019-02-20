@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_call_cpp"
+        style="@style/TextWrapContent"
+        android:layout_margin="6dip"
+        android:text="@string/jui_call_cpp" />
+
+    <TextView
+        android:id="@+id/text_call_java_static"
+        style="@style/TextWrapContent"
+        android:layout_margin="@dimen/button_padding"
+        android:text="@string/jui_call_java_static" />
+
+    <TextView
+        android:id="@+id/text_call_java_instance"
+        style="@style/TextWrapContent"
+        android:layout_margin="@dimen/button_padding"
+        android:text="@string/jui_call_java_instance" />
+
+</LinearLayout>

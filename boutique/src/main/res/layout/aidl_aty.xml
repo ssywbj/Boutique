@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/led_aty_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_aidl"
+        style="@style/TextWrapContent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="6dp"
+        android:gravity="center"
+        android:onClick="callAidl"
+        android:text="@string/text_aidl"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/text_custom_data"
+        style="@style/TextWrapContent"
+        android:layout_below="@+id/text_aidl"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="6dp"
+        android:gravity="center"
+        android:onClick="transmitCustomData"
+        android:text="@string/custom_data"
+        android:textSize="22sp" />
+
+    <include
+        android:id="@+id/view_divide_line"
+        layout="@layout/view_divide_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_divide_line_width"
+        android:layout_below="@id/text_custom_data"
+        android:layout_marginBottom="@dimen/top_bar_margin_8dp"
+        android:layout_marginTop="@dimen/top_bar_margin_8dp" />
+
+    <TextView
+        android:id="@+id/text_other_context"
+        style="@style/TextWrapContent"
+        android:layout_below="@id/view_divide_line"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="6dp"
+        android:gravity="center"
+        android:onClick="getOtherAppContext"
+        android:text="@string/other_app_context"
+        android:textSize="22sp" />
+
+</RelativeLayout>
+
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VideoViewActivity">
+
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/video_view_height"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
+
+    <ScrollView
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/video_view"
+        android:layout_margin="4dip">
+
+        <TextView
+            android:id="@+id/text_describe_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/video_describe"
+            android:textSize="@dimen/top_bar_btn_text" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_take_video_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
+        android:gravity="center"
+        android:padding="@dimen/button_padding"
+        android:text="@string/take_video_picture"
+        android:textSize="@dimen/top_bar_btn_text"
+        android:visibility="gone" />
+</RelativeLayout>

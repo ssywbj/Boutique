@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--创建Activity时，系统会为Activity默认创建一个id为"android.R.id.content"的FrameLayout布局-->
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/main_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</merge>

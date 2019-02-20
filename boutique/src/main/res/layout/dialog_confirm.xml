@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/loading_dialog_bg" >
+
+    <RelativeLayout
+        android:layout_width="@dimen/dialog_width"
+        android:layout_height="170dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/radius_bg" >
+
+        <TextView
+            android:id="@+id/text_title"
+            style="@style/DialogTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="38dip"
+            android:layout_alignParentTop="true" />
+
+        <View
+            android:id="@+id/text_title_divide"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_bar_divide_line_width"
+            android:layout_below="@id/text_title"
+            android:background="@color/stroke_color" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_layout_divide"
+            android:layout_below="@id/text_title_divide"
+            android:layout_centerInParent="true" >
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dip"
+                android:gravity="center"
+                android:textSize="18sp" />
+        </ScrollView>
+
+        <View
+            android:id="@+id/btn_layout_divide"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_bar_divide_line_width"
+            android:layout_above="@+id/btn_layout"
+            android:background="@color/stroke_color" />
+
+        <LinearLayout
+            android:id="@+id/btn_layout"
+            android:layout_width="match_parent"
+            android:layout_height="42dip"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/btn_ok"
+                style="@style/DialogTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_lb_bg" />
+
+            <View
+                android:layout_width="@dimen/top_bar_divide_line_width"
+                android:layout_height="match_parent"
+                android:background="@color/stroke_color" />
+
+            <TextView
+                android:id="@+id/btn_cancel"
+                style="@style/DialogTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_rb_bg" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

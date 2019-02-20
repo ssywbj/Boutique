@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>webview</title>
+    <script type="text/javascript">
+        function show(jsondata){
+            alert("运行" + jsondata);
+            var jsonobjs = eval(jsondata);
+            var table = document.getElementById("personTable");
+            <!--for(var y=0; y<jsonobjs.length; y++){-->
+                <!--var tr = table.insertRow(table.rows.length);-->
+                <!--var td1 = tr.insertCell(0);-->
+                <!--var td2 = tr.insertCell(1);-->
+                <!--td2.align = "center";-->
+                <!--var td3 = tr.insertCell(2);-->
+                <!--td3.align = "center";-->
+                <!--alert(jsonobjs[y].id);-->
+                <!--td1.innerHTML = jsonobjs[y].id;-->
+                <!--td2.innerHTML = jsonobjs[y].name;-->
+                <!--//td3.innerHTML = jsonobjs[y].mobile;-->
+                <!--td3.innerHTML = "<a href='javascript:contact.call(\""+jsonobjs[y].mobile+"\")';-->
+            <!--}-->
+        }
+    </script>
+</head>
+
+<body onload="javascript:contact.getContacts()">
+<table border="0" width="100%" id="personTable" cellpadding="0">
+    <tr>
+        <td width="15%">编号</td>
+        <td width="20%" align="center">姓名</td>
+        <td aligh="center">电话</td>
+    </tr>
+</table>
+[url=javascript:window.location.reload()]刷新[/url]
+</body>
+</html>

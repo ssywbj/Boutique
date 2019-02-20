@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/fl_lvitem_bg"
+    android:padding="@dimen/radius_4dip">
+
+    <ImageView
+        android:id="@+id/main_lView_iView"
+        android:layout_width="@dimen/lv_item_photo_dimen"
+        android:layout_height="@dimen/lv_item_photo_dimen"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/lv_person_turing" />
+
+    <TextView
+        android:id="@+id/main_lView_textName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/main_lView_iView"
+        android:layout_margin="@dimen/margin_2dp"
+        android:layout_toRightOf="@id/main_lView_iView"
+        android:layout_toLeftOf="@+id/main_lView_btnWorks"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/main_lView_btnWorks"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/main_lView_textName"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/radius_bg_clickable"
+        android:focusable="false"
+        android:text="@string/lv_person_upload"
+        android:textSize="@dimen/test_size_14sp" />
+
+    <TextView
+        android:id="@+id/main_lView_mail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/main_lView_textName"
+        android:layout_below="@id/main_lView_textName"
+        android:layout_marginBottom="@dimen/margin_2dp"
+        android:text="@string/lv_person_mail"
+        android:textSize="@dimen/test_size_14sp" />
+
+    <!--
+    若不设置属性android:shadowColor， 则阴影默认的颜色是白色 ；
+    若不配合属性android:shadowRadius使用，则看不到阴影效果，且数值越大阴影越模糊。
+    -->
+    <TextView
+        android:id="@+id/main_lView_mail_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/main_lView_mail_title"
+        android:layout_toRightOf="@id/main_lView_mail_title"
+        android:shadowColor="@color/blue"
+        android:shadowDx="5.0"
+        android:shadowDy="3.0"
+        android:shadowRadius="0.5"
+        android:singleLine="true"
+        android:textSize="@dimen/test_size_14sp" />
+
+    <TextView
+        android:id="@+id/main_lView_textPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/main_lView_mail_title"
+        android:layout_below="@id/main_lView_mail_title"
+        android:layout_marginBottom="@dimen/margin_2dp"
+        android:autoLink="phone"
+        android:singleLine="true"
+        android:textSize="@dimen/test_size_14sp" />
+
+    <TextView
+        android:id="@+id/main_lView_textHot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/main_lView_iView"
+        android:layout_alignLeft="@id/main_lView_textPhone"
+        android:layout_below="@id/main_lView_textPhone"
+        android:layout_marginBottom="@dimen/margin_2dp"
+        android:text="@string/lv_person_hot"
+        android:textSize="@dimen/test_size_14sp" />
+
+    <RatingBar
+        android:id="@+id/main_lView_ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/main_lView_textHot"
+        android:layout_marginTop="@dimen/margin_2dp"
+        android:layout_toRightOf="@id/main_lView_textHot"
+        android:rating="0.5" />
+
+    <TextView
+        android:id="@+id/main_lView_textAds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/radius_4dip"
+        android:layout_toRightOf="@id/main_lView_ratingBar"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:textColor="#2E5531"
+        android:textSize="@dimen/test_size_14sp" />
+
+</RelativeLayout>

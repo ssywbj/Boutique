@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.wbj.view.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/main_picture_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_bar"
+        android:paddingBottom="@dimen/image_browser_grid_padding"
+        android:paddingLeft="@dimen/image_browser_grid_padding"
+        android:paddingTop="@dimen/image_browser_grid_padding"/>
+
+    <TextView
+        android:id="@+id/grid_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="空空如也~~"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="18sp"
+        android:visibility="gone"/>
+</RelativeLayout>

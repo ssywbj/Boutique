@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/led_aty_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_open_service"
+        style="@style/TextWrapContent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="6dp"
+        android:gravity="center"
+        android:text="@string/open_service"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/text_aidl"
+        style="@style/TextWrapContent"
+        android:layout_below="@id/text_open_service"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="6dp"
+        android:gravity="center"
+        android:text="@string/service_update_ui"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/text_update"
+        style="@style/TextWrapContent"
+        android:layout_below="@id/text_aidl"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="6dp"
+        android:gravity="center"
+        android:text="@string/service_update_ui"
+        android:textSize="22sp" />
+
+</RelativeLayout>
+
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="vertical_progress_bar_bg">#88000000</color>
+    <color name="vertical_progress_bar">#00000000</color>
+    <color name="blue">#4691DE</color>
+    <color name="theme_blue">#3CA8FF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="temp_dialog_bg">#88FF0000</color>
+    <color name="dialog_divide_line">#CCCCCC</color>
+    <color name="dialog_btn_press">#DEDEDE</color>
+    <color name="dialog_text_content">#ACACAC</color>
+
+    <color name="completely_transparent">#00000000</color>
+    <color name="view_divide_line">#CCCCCC</color>
+    <color name="red">#FF0000</color>
+</resources>

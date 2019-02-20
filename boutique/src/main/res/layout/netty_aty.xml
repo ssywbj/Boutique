@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_connect_netty"
+        style="@style/TextWrapContent"
+        android:layout_margin="@dimen/button_padding"
+        android:text="@string/connect_netty" />
+
+    <TextView
+        android:id="@+id/text_send_data"
+        style="@style/TextWrapContent"
+        android:layout_margin="@dimen/button_padding"
+        android:text="@string/send_data_to_netty" />
+
+    <TextView
+        android:id="@+id/text_send_json_data"
+        style="@style/TextWrapContent"
+        android:layout_margin="@dimen/button_padding"
+        android:text="@string/send_bean_data_to_netty" />
+
+    <TextView
+        android:id="@+id/text_send_list_data"
+        style="@style/TextWrapContent"
+        android:layout_margin="@dimen/button_padding"
+        android:text="@string/send_list_data_to_netty" />
+
+    <TextView
+        android:id="@+id/text_disconnect_netty"
+        style="@style/TextWrapContent"
+        android:layout_margin="@dimen/button_padding"
+        android:text="@string/disconnect_netty" />
+</LinearLayout>
+
+

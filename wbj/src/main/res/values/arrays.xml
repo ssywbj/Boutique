@@ -1,0 +1,15 @@
+<resources>
+    <array name="main_item_list">
+        <item>WebView</item>
+        <item>UploadView</item>
+        <item>图片浏览器</item>
+        <item>对话框优先级管理器</item>
+        <item>数字动态改变效果</item>
+        <item>RecyclerView</item>
+        <item>经典设置项集合</item>
+        <item>监听剪贴板的复制操作</item>
+        <item>DragSortListView</item>
+        <item>MVC模式与MVP模式</item>
+        <item>RxJava2</item>
+    </array>
+</resources>
