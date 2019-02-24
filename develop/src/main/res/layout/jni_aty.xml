@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".JNIActivity" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="6dip"
+        android:gravity="center"
+        android:text="08:43:02"
+        android:textColor="#00FF00"
+        android:textSize="40sp" />
+
+    <jie.example.widget.LedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="6dip"
+        android:gravity="center"
+        android:text="08:43:02"
+        android:textColor="#00FF00"
+        android:textSize="40sp" />
+
+    <jie.example.widget.LedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="6dip"
+        android:gravity="center"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="6"
+        android:shadowColor="#FF0000"
+        android:text="08:43:02"
+        android:textColor="#00FF00"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/text_encode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="6dip"
+        android:background="@drawable/radius_bg_clickable"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="setOnClick"
+        android:padding="@dimen/global_button_padding"
+        android:text="@string/jui_call_cpp"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/text_call_java_static"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="6dip"
+        android:background="@drawable/radius_bg_clickable"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="setOnClick"
+        android:padding="@dimen/global_button_padding"
+        android:text="@string/jui_call_java_static"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/text_call_java_instance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="6dip"
+        android:background="@drawable/radius_bg_clickable"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="setOnClick"
+        android:padding="@dimen/global_button_padding"
+        android:text="@string/jui_call_java_instance"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/eagle_one"
+    tools:context=".fragment.FragmentOne" >
+
+    <Button
+        android:id="@+id/fo_btn_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/radius_bg_clickable"
+        android:paddingLeft="@dimen/global_button_padding"
+        android:paddingRight="@dimen/global_button_padding"
+        android:text="FragmentOne" />
+
+</RelativeLayout>

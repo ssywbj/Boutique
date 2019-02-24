@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VideoViewActivity"
+    android:background="@color/activity_bg" >
+
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
+
+    <ScrollView
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/video_view"
+        android:layout_margin="4dip" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我们在一起在一起在一起我们在一起在一起在一起我们在一起在一起在一起我们在一起在一起在一起我们在一起在一起在一起我们在一起在一起在一起我们在一起在一起在一起我们在一起在一起在一起我们在一起在一起在一起"
+            android:textSize="18sp" />
+    </ScrollView>
+
+</RelativeLayout>

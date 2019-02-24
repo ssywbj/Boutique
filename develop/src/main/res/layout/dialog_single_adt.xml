@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_content_item_bg" >
+
+    <TextView
+        android:id="@+id/text_content_item"
+        style="@style/DialogTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="48dip"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/dialog_rb"
+        android:clickable="false"
+        android:gravity="center_vertical|left" />
+
+    <RadioButton
+        android:id="@+id/dialog_rb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="6dip"
+        android:focusable="false" />
+
+</RelativeLayout>

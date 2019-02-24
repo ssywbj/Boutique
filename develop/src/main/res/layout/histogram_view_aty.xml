@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:histogram="http://schemas.android.com/apk/res/jie.example.boutique"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HistogramViewActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:id="@+id/histogram_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hv_container_height"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" >
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_refresh_histogram_view"
+            style="@style/WrapContentButtonStyle"
+            android:layout_below="@id/histogram_view_container"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="4dip"
+            android:text="@string/histogram_view_refrech" />
+
+        <jie.example.widget.HistogramView
+            android:id="@+id/histogram_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hv_container_height"
+            android:layout_below="@id/btn_refresh_histogram_view"
+            android:layout_centerHorizontal="true"
+            histogram:rightMaxScale="120"
+            histogram:rightScaleNum="6"
+            histogram:showAverageLine="true"
+            histogram:showBrokenLine="true"
+            histogram:showLeftTitle="true"
+            histogram:showRightScale="true"
+            histogram:showTopSubTitle="true"
+            histogram:topMainTitle="@string/hv_top_main_title_month"
+            histogram:topSubTitle="@string/hv_top_sub_title_month"
+            histogram:yPivotMaxScale="100"
+            histogram:yPivotScaleNum="5" />
+    </RelativeLayout>
+
+</ScrollView>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    android:weightSum="2"
+    tools:context=".HandleClientRequestActivity" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+
+        <fragment
+            android:id="@+id/hcra_f_one"
+            android:name="jie.example.boutique.fragment.FragmentOne"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <fragment
+            android:id="@+id/hcra_f_two"
+            android:name="jie.example.boutique.fragment.FragmentTwo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <fragment
+            android:id="@+id/hcra_f_three"
+            android:name="jie.example.boutique.fragment.FragmentThree"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <fragment
+            android:id="@+id/hcra_f_four"
+            android:name="jie.example.boutique.fragment.FragmentFour"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/hcra_fl_fragment_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:background="@color/actionbar_divide_line"
+        android:padding="1dip" >
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/actionbar_height"
+    android:background="@color/actionbar_bg" >
+
+    <ImageButton
+        android:id="@+id/actionbar_back"
+        android:layout_width="@dimen/actionbar_height"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@color/actionbar_bg"
+        android:contentDescription="@string/actionbar_back"
+        android:onClick="setLeftBtnClick"
+        android:src="@drawable/actionbar_left_ibtn_back" />
+
+    <ImageView
+        android:id="@+id/actionbar_divide_line"
+        android:layout_width="@dimen/actionbar_divide_line_width"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/actionbar_divide_line_margin"
+        android:layout_marginTop="@dimen/actionbar_divide_line_margin"
+        android:layout_toRightOf="@id/actionbar_back"
+        android:background="@color/actionbar_divide_line"
+        android:contentDescription="@string/actionbar_divide_line" />
+
+    <TextView
+        android:id="@+id/actionbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/actionbar_title_margin"
+        android:layout_marginRight="@dimen/actionbar_title_margin"
+        android:layout_toRightOf="@id/actionbar_divide_line"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/actionbar_title_text_size" />
+
+    <Button
+        android:id="@+id/actionbar_r_btn"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:background="@drawable/radius_bg_clickable"
+        android:onClick="setRightBtnClick"
+        android:paddingLeft="@dimen/global_button_padding"
+        android:paddingRight="@dimen/global_button_padding"
+        android:text="@string/sign_panel"
+        android:textColor="@color/black"
+        android:textSize="@dimen/actionbar_title_text_size"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapViewActivity" >
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:layout_margin="4dip"
+        android:background="@drawable/radius_bg_transparent"
+        android:orientation="vertical"
+        android:padding="0.5dip" >
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical" >
+
+            <RadioButton
+                android:id="@+id/map_type_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="setOnClick"
+                android:text="@string/map_type_normal"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/map_type_statellite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setOnClick"
+                android:text="@string/map_type_statellite"
+                android:textColor="@color/white" />
+        </RadioGroup>
+
+        <include layout="@layout/view_divide_line" />
+
+        <CheckBox
+            android:id="@+id/cb_trafficmap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"
+            android:checked="false"
+            android:onClick="setOnClick"
+            android:text="@string/map_traffic"
+            android:textColor="@color/white" />
+
+        <CheckBox
+            android:id="@+id/cb_heatmap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:checked="false"
+            android:onClick="setOnClick"
+            android:text="@string/map_heat"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_show_pos"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:layout_gravity="bottom"
+        android:background="@color/loading_dialog_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ProgressBar
+            android:id="@+id/pb_show_pos"
+            style="@style/ProgressBarStyle"
+            android:layout_marginLeft="@dimen/global_button_padding" />
+
+        <TextView
+            android:id="@+id/text_show_pos"
+            style="@style/TextMarquee"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/locating" />
+    </LinearLayout>
+
+</merge>
