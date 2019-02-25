@@ -1,16 +1,5 @@
 package jie.example.boutique;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
-import jie.example.constant.Constant;
-import jie.example.utils.LogUtil;
-import jie.example.utils.ToastUtil;
-import jie.example.utils.Utils;
-import jie.example.widget.WaterWaveViewLayout;
-import jie.example.widget.WaterWaveViewLayout.OnPunshCardListener;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -35,6 +24,15 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher.ViewFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import jie.example.constant.Constant;
+import jie.example.utils.LogUtil;
+import jie.example.utils.ToastUtil;
+import jie.example.widget.WaterWaveViewLayout;
+import jie.example.widget.WaterWaveViewLayout.OnPunshCardListener;
 
 /**
  * 精品首页
@@ -151,9 +149,6 @@ public class BoutiqueActivity extends BasicActivity {
 
 		punchView.setPunshCardListener(punshListener);
 		punchView.onCreate();
-
-		PushManager.startWork(this, PushConstants.LOGIN_TYPE_API_KEY,
-				Utils.getMetaValue(this, "api_key"));
 
 		mTextSwitcherOval.setFactory(new ViewFactory() {
 			@Override
