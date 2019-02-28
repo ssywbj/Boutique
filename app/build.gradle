@@ -63,4 +63,6 @@ dependencies {
     }
 
     implementation project(':boutique')
+
+    implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
 }
