@@ -40,6 +40,7 @@
         <activity android:name=".ARouterActivity"/>
         <activity android:name=".UnitTestActivity"/>
         <activity android:name=".OkGoActivity"/>
+        <activity android:name=".WebActivity"/>
     </application>
 
 </manifest>
