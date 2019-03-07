@@ -1,6 +1,9 @@
 package com.suheng.ssy.boutique.fragment;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableField;
+import android.databinding.ObservableList;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -53,6 +56,10 @@ public class RecyclerFragment extends BasicFragment {
         return mViewBinding.getRoot();
     }
 
+    //List<ItemModel> itemModels = new ArrayList<>();
+    ObservableList<ItemModel> modelObservableList = new ObservableArrayList<>();
+    MyAdapter adapter;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -63,7 +70,14 @@ public class RecyclerFragment extends BasicFragment {
         mViewBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));//设置布局管理器
         mViewBinding.recyclerView.addItemDecoration(new RecyclerDivider(getContext(), LinearLayoutManager.VERTICAL));
         mViewBinding.recyclerView.setItemAnimator(new DefaultItemAnimator());
-        mViewBinding.recyclerView.setAdapter(new MyAdapter(Arrays.asList(getResources().getStringArray(R.array.main_item))));//设置adapter
+        List<String> stringList = Arrays.asList(getResources().getStringArray(R.array.main_item));
+
+        for (String str : stringList) {
+            //itemModels.add(new ItemModel(str, this));
+            modelObservableList.add(new ItemModel(str, this));
+        }
+        adapter = new MyAdapter(modelObservableList);
+        mViewBinding.recyclerView.setAdapter(adapter);//设置adapter
     }
 
     @Override
@@ -90,13 +104,13 @@ public class RecyclerFragment extends BasicFragment {
         Log.d(mTag, this + ", onDetach");
     }
 
-    private class MyAdapter extends RecyclerBindingAdapter<String> {
+    private class MyAdapter extends RecyclerBindingAdapter<ItemModel> {
 
         private static final int VIEW_TYPE_BLACK = 0;
         private static final int VIEW_TYPE_RED = 1;
 
-        public MyAdapter(List<String> dataList) {
-            super(dataList);
+        public MyAdapter(ObservableList<ItemModel> modelObservableList) {
+            super(modelObservableList);
         }
 
         @Override
@@ -114,11 +128,7 @@ public class RecyclerFragment extends BasicFragment {
 
         @Override
         public int getVariableId(@NonNull RecyclerBindingHolder bindingHolder) {
-            if (bindingHolder.getItemViewType() == VIEW_TYPE_BLACK) {
-                return BR.item;
-            } else {
-                return BR.textInfo;
-            }
+            return BR.itemModel;
         }
 
         class BlackHolder extends RecyclerBindingHolder {
@@ -133,6 +143,26 @@ public class RecyclerFragment extends BasicFragment {
             public RedHolder(View view) {
                 super(view);
             }
+        }
+    }
+
+    public static class ItemModel {
+        private ObservableField<String> title = new ObservableField<>();
+        private RecyclerFragment recyclerFragment;
+
+        public ItemModel(String title, RecyclerFragment recyclerFragment) {
+            this.title.set(title);
+            this.recyclerFragment = recyclerFragment;
+        }
+
+        public void onClickItem(ItemModel itemModel) {
+            Log.d("WBJ", "item: " + itemModel.title.get());
+            recyclerFragment.modelObservableList.remove(itemModel);
+            recyclerFragment.adapter.notifyDataSetChanged();
+        }
+
+        public ObservableField<String> getTitle() {
+            return title;
         }
     }
 

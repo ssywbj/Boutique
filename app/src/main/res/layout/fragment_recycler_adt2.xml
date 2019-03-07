@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="textInfo"
-            type="String" />
+            name="itemModel"
+            type="com.suheng.ssy.boutique.fragment.RecyclerFragment.ItemModel" />
     </data>
 
     <LinearLayout
@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@{textInfo}"
+            android:text="@{itemModel.title}"
+            android:onClick="@{()->itemModel.onClickItem(itemModel)}"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="17sp"
             tools:text="ItemInfo" />

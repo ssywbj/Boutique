@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 
+import com.gyf.barlibrary.ImmersionBar;
+
 public class WebActivity extends BasicActivity {
 
     private WebView mWebView;
@@ -14,10 +16,10 @@ public class WebActivity extends BasicActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        /*ImmersionBar.with(this).navigationBarColor(R.color.colorPrimary).init();
+        ImmersionBar.with(this).navigationBarColor(R.color.colorPrimary).init();
         ImmersionBar.with(this).titleBar(R.id.toolbar)
                 .keyboardEnable(true)
-                .init();*/
+                .init();
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
