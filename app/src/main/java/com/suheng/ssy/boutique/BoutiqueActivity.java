@@ -13,6 +13,8 @@ import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import ying.jie.boutique.MainActivity;
+
 public class BoutiqueActivity extends BasicActivity {
 
     @Override
@@ -80,8 +82,11 @@ public class BoutiqueActivity extends BasicActivity {
                         intent = new Intent(BoutiqueActivity.this, OkGoActivity.class);
                         break;
                     case 9:
-                        intent = new Intent(BoutiqueActivity.this, WebActivity.class);
-                        //intent = new Intent(BoutiqueActivity.this, MainActivity.class);
+                        //intent = new Intent(BoutiqueActivity.this, WebActivity.class);
+                        intent = new Intent(BoutiqueActivity.this, MainActivity.class);
+                        break;
+                    case 10:
+                        intent = new Intent(BoutiqueActivity.this, RxJava2Activity.class);
                         break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
@@ -95,7 +100,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, FragmentRecyclerActivity.class));
+        startActivity(new Intent(this, RxJava2Activity.class));
     }
 
 }

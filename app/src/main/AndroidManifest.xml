@@ -41,6 +41,7 @@
         <activity android:name=".UnitTestActivity"/>
         <activity android:name=".OkGoActivity"/>
         <activity android:name=".WebActivity"/>
+        <activity android:name=".RxJava2Activity"/>
     </application>
 
 </manifest>

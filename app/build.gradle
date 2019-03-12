@@ -64,5 +64,9 @@ dependencies {
 
     implementation project(':boutique')
 
-    implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
+    implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'//沉浸式状态栏
+
+    //RxJava
+    implementation 'io.reactivex:rxjava:1.0.14'
+    implementation 'io.reactivex:rxandroid:1.0.1'
 }

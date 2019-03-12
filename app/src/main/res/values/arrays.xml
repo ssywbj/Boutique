@@ -10,5 +10,6 @@
         <item>单元测试</item>
         <item>OkGo</item>
         <item>BoutiqueModule</item>
+        <item>RxJava2</item>
     </array>
 </resources>
