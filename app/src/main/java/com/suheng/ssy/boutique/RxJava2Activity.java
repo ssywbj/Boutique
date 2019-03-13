@@ -2,10 +2,13 @@ package com.suheng.ssy.boutique;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 public class RxJava2Activity extends BasicActivity {
 
@@ -16,35 +19,35 @@ public class RxJava2Activity extends BasicActivity {
 
         Observer<String> observer = new Observer<String>() {
             @Override
-            public void onCompleted() {
+            public void onNext(String s) {
+                Log.d(mTag, "observer, onNext: " + s);
+            }
 
+            @Override
+            public void onCompleted() {
+                Log.d(mTag, "observer, onCompleted==");
             }
 
             @Override
             public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(String s) {
-
+                Log.d(mTag, "observer, onError: " + e);
             }
         };
 
         Subscriber<String> subscriber = new Subscriber<String>() {
             @Override
-            public void onCompleted() {
+            public void onNext(String s) {
+                Log.d(mTag, "subscriber, onNext: " + s);
+            }
 
+            @Override
+            public void onCompleted() {
+                Log.d(mTag, "subscriber, onCompleted---");
             }
 
             @Override
             public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(String s) {
-
+                Log.d(mTag, "subscriber, onError: " + e);
             }
         };
 
@@ -60,10 +63,35 @@ public class RxJava2Activity extends BasicActivity {
         });
 
         Observable<String> observable1 = Observable.just("Hello", "Hi", "Aloha");
-        Observable<String> observable2 = Observable.from(new String[]{""});
+        Observable<String> observable2 = Observable.from(new String[]{"Hello", "Hi", "Aloha"});
 
         observable.subscribe(observer);
-        observable.subscribe(subscriber);
+        observable1.subscribe(subscriber);
+
+        Action1<String> onNextAction = new Action1<String>() {
+            @Override
+            public void call(String s) {
+
+            }
+        };
+
+
+        Action0 onCompletedAction = new Action0() {
+            @Override
+            public void call() {
+
+            }
+        };
+
+        Action1<Throwable> onErrorAction = new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+
+            }
+        };
+        observable2.subscribe(onNextAction);
+        observable2.subscribe(onNextAction, onErrorAction);
+        observable2.subscribe(onNextAction, onErrorAction, onCompletedAction);
 
     }
 
