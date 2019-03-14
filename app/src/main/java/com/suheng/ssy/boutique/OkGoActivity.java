@@ -29,7 +29,9 @@ public class OkGoActivity extends BasicActivity {
 
     //public static final String URL = "http://gank.io/api/data/福利/50/1";
     private static final String URL = "http://192.168.120.169:8080/TestJSP";
-    private static final String URL_SERVER = URL + "/ServletDemo";
+    private static final String SERVER_ADDRESS = URL + "/ServletDemo";
+    private static final String PICTURE_ADDRESS = URL + "/Pictures";
+    private static final String VIDEO_ADDRESS = URL + "/Videos";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,7 +110,7 @@ public class OkGoActivity extends BasicActivity {
         ，是取消不了这个请求的，因为OkGo只能取消使用全局配置的请求，不知道你这个请求是用你自己的OkHttpClient的，
         如果一定要取消，可以是使用OkGo提供的重载方法*/
 
-        OkGo.<String>get(URL_SERVER).tag(this)
+        OkGo.<String>get(SERVER_ADDRESS).tag(this)
                 .params("username", "ssy")
                 .params("password", "654321")
                 .execute(new StringCallback() {
@@ -143,7 +145,7 @@ public class OkGoActivity extends BasicActivity {
                 });
 
         //http://ww1.sinaimg.cn/large/0065oQSqly1fs02a9b0nvj30sg10vk4z.jpg
-        OkGo.<Bitmap>get(URL + "/0065oQSqgy1fwgzx8n1syj30sg15h7ew.jpg").tag(this)
+        OkGo.<Bitmap>get(PICTURE_ADDRESS + "/0065oQSqly1fymj13tnjmj30r60zf79k.jpg").tag(this)
                 .execute(new BitmapCallback() {
                     @Override
                     public void onSuccess(Response<Bitmap> response) {
@@ -167,7 +169,7 @@ public class OkGoActivity extends BasicActivity {
     }
 
     public void onClickPost(View view) {
-        OkGo.<Bitmap>post(URL + "/0065oQSqly1fvexaq313uj30qo0wldr4.jpg").tag(this)
+        OkGo.<Bitmap>post(PICTURE_ADDRESS + "/0065oQSqgy1ft4kqrmb9bj30sg10fdzq.jpg").tag(this)
                 .execute(new BitmapCallback() {
 
                     @Override
@@ -190,7 +192,7 @@ public class OkGoActivity extends BasicActivity {
                     }
                 });
 
-        OkGo.<String>post(URL_SERVER).tag(this)
+        OkGo.<String>post(SERVER_ADDRESS).tag(this)
                 .params("username", "Wbj")
                 .params("password", "123456")
                 .execute(new StringCallback() {
@@ -210,8 +212,7 @@ public class OkGoActivity extends BasicActivity {
     }
 
     public void onClickDownload(View view) {
-//http://ww1.sinaimg.cn/large/0065oQSqly1fsb0lh7vl0j30go0ligni.jpg
-        OkGo.<File>get(URL + "/【电影家园www.idyjy.com下载】摩登武圣DVD国语中英双字.mkv").tag(this)
+        OkGo.<File>get(VIDEO_ADDRESS + "/【电影家园www.idyjy.com下载】一个字头的诞生.DVD国粤双语中英双字.avi").tag(this)
                 .execute(new FileCallback() {
 
                     @Override
@@ -240,7 +241,7 @@ public class OkGoActivity extends BasicActivity {
     }
 
     public void onClickUpload(View view) {
-        OkGo.<String>post(URL_SERVER).tag(this)
+        OkGo.<String>post(SERVER_ADDRESS).tag(this)
                 .upString("---upload params中的参数设置是无效的---")//使用该方法时，params中的参数设置是无效的，所有参数均需要通过需要上传的文本中指定
                 .params("username", "Wbj")
                 .params("password", "123456")
@@ -259,7 +260,7 @@ public class OkGoActivity extends BasicActivity {
                     }
                 });
 
-        OkGo.<String>post(URL_SERVER).tag(this)
+        OkGo.<String>post(SERVER_ADDRESS).tag(this)
                 .upString("username=Wbj&password=123456&data=---upload params中的参数设置是无效的---")
                 .execute(new StringCallback() {
                     @Override
@@ -280,7 +281,7 @@ public class OkGoActivity extends BasicActivity {
             final File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
                     , "Screenshots" + File.separator + "Screenshot_20190219-142916.png");
             if (file.exists()) {
-                OkGo.<String>post(URL_SERVER).tag(this)
+                OkGo.<String>post(SERVER_ADDRESS).tag(this)
                         .params("username", "Wbj")
                         .params("password", "123456")
                         .upFile(file)
@@ -304,7 +305,7 @@ public class OkGoActivity extends BasicActivity {
                             }
                         });
 
-                OkGo.<String>post(URL_SERVER).tag(this)
+                OkGo.<String>post(SERVER_ADDRESS).tag(this)
                         .params("username", "Wbj")
                         .params("password", "123456")
                         .params("file", file)

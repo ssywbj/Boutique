@@ -75,7 +75,6 @@ public class RxJava2Activity extends BasicActivity {
             }
         };
 
-
         Action0 onCompletedAction = new Action0() {
             @Override
             public void call() {
@@ -89,10 +88,10 @@ public class RxJava2Activity extends BasicActivity {
 
             }
         };
+
         observable2.subscribe(onNextAction);
         observable2.subscribe(onNextAction, onErrorAction);
         observable2.subscribe(onNextAction, onErrorAction, onCompletedAction);
-
     }
 
 }
