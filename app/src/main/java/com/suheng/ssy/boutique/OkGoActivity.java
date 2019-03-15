@@ -30,7 +30,7 @@ public class OkGoActivity extends BasicActivity {
     //public static final String URL = "http://gank.io/api/data/福利/50/1";
     private static final String URL = "http://192.168.120.169:8080/TestJSP";
     private static final String SERVER_ADDRESS = URL + "/ServletDemo";
-    private static final String PICTURE_ADDRESS = URL + "/Pictures";
+    private static final String PICTURE_ADDRESS = URL + "/pictures";
     private static final String VIDEO_ADDRESS = URL + "/Videos";
 
     @Override
