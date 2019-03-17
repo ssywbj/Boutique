@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class RxJava2Activity extends BasicActivity {
@@ -151,6 +156,91 @@ public class RxJava2Activity extends BasicActivity {
                         Log.d(mTag, "chain invoke, onNext: " + s + ", " + Thread.currentThread().getName());
                     }
                 });
+
+        Observable.just(9, 36).map(new Func1<Integer, String>() {
+            @Override
+            public String call(Integer integer) {
+                return String.valueOf(Math.sqrt(integer));
+            }
+        }).subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                Log.d(mTag, "事件一对一变换map, call: " + s + ", " + Thread.currentThread().getName());
+            }
+        });
+
+
+        List<Student> studentList = new ArrayList<>();
+        studentList.add(new Student(Arrays.asList(new Course("111"), new Course("222"))));
+        studentList.add(new Student(Arrays.asList(new Course("333"), new Course("444"))));
+        studentList.add(new Student(Arrays.asList(new Course("555"), new Course("666"))));
+        studentList.add(new Student(Arrays.asList(new Course("777"), new Course("888"))));
+        Observable.from(studentList).subscribe(new Subscriber<Student>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(Student student) {
+                List<Course> courses = student.getCourseList();
+                for (int i = 0; i < courses.size(); i++) {
+                    Course course = courses.get(i);
+                    Log.d(mTag, "用循环一对一变换：" + course.toString());
+                }
+
+            }
+        });
+        Observable.from(studentList).flatMap(new Func1<Student, Observable<Course>>() {
+            @Override
+            public Observable<Course> call(Student student) {
+                return Observable.from(student.getCourseList());
+            }
+        }).subscribe(new Subscriber<Course>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Course course) {
+                Log.d(mTag, "用flatMap一对一变换：" + course.toString());
+            }
+        });
     }
 
+    class Student {
+        List<Course> courseList;
+
+        public Student(List<Course> courseList) {
+            this.courseList = courseList;
+        }
+
+        public List<Course> getCourseList() {
+            return courseList;
+        }
+    }
+
+    class Course {
+        String name;
+
+        public Course(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "Course{" +
+                    "name='" + name + '\'' +
+                    '}';
+        }
+    }
 }
