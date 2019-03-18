@@ -4,19 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 public class RxJava2Activity extends BasicActivity {
 
@@ -25,7 +18,7 @@ public class RxJava2Activity extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rx_java2);
 
-        Observer<String> observer = new Observer<String>() {
+        /*Observer<String> observer = new Observer<String>() {
             @Override
             public void onNext(String s) {
                 Log.d(mTag, "observer, onNext: " + s + ", " + Thread.currentThread().getName());
@@ -259,6 +252,37 @@ public class RxJava2Activity extends BasicActivity {
                     @Override
                     public void call(Integer integer) {
                         Log.w(mTag, "用flatMap一对多变换，解决多层代码嵌套：" + integer + ", call3，线程：" + Thread.currentThread().getName());
+                    }
+                });*/
+
+        Observable.just(1, 2, 4, 6, 8, 9)
+                .filter(new Func1<Integer, Boolean>() {
+                    @Override
+                    public Boolean call(Integer integer) {
+                        return integer > 3;
+                    }
+                })
+                .filter(new Func1<Integer, Boolean>() {
+                    @Override
+                    public Boolean call(Integer integer) {
+                        return integer < 9;
+                    }
+                })
+                .map(new Func1<Integer, String>() {
+                    @Override
+                    public String call(Integer integer) {
+                        return String.valueOf(integer * integer);
+                    }
+                })
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String result) {
+                        Log.w(mTag, "filter if ：" + result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.w(mTag, "filter else ：" + throwable);
                     }
                 });
     }
