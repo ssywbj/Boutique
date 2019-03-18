@@ -7,6 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import rx.Observable;
 import rx.Observer;
@@ -169,7 +170,6 @@ public class RxJava2Activity extends BasicActivity {
             }
         });
 
-
         List<Student> studentList = new ArrayList<>();
         studentList.add(new Student(Arrays.asList(new Course("111"), new Course("222"))));
         studentList.add(new Student(Arrays.asList(new Course("333"), new Course("444"))));
@@ -189,9 +189,8 @@ public class RxJava2Activity extends BasicActivity {
                 List<Course> courses = student.getCourseList();
                 for (int i = 0; i < courses.size(); i++) {
                     Course course = courses.get(i);
-                    Log.d(mTag, "用循环一对一变换：" + course.toString());
+                    Log.d(mTag, "用循环一对多变换：" + course.toString());
                 }
-
             }
         });
         Observable.from(studentList).flatMap(new Func1<Student, Observable<Course>>() {
@@ -212,9 +211,56 @@ public class RxJava2Activity extends BasicActivity {
 
             @Override
             public void onNext(Course course) {
-                Log.d(mTag, "用flatMap一对一变换：" + course.toString());
+                Log.d(mTag, "用flatMap一对多变换：" + course.toString());
             }
         });
+        Observable.from(studentList)
+                .flatMap(new Func1<Student, Observable<Course>>() {
+                    @Override
+                    public Observable<Course> call(Student student) {
+                        Log.d(mTag, "用flatMap一对多变换，call1，线程：" + Thread.currentThread().getName());
+                        return Observable.from(student.courseList);
+                    }
+                })
+                .flatMap(new Func1<Course, Observable<Integer>>() {
+                    @Override
+                    public Observable<Integer> call(Course course) {
+                        Log.d(mTag, "用flatMap一对多变换，call2，线程：" + Thread.currentThread().getName());
+                        return Observable.from(course.getScore());
+                    }
+                })
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        Log.d(mTag, "用flatMap一对多变换，解决多层代码嵌套：" + integer + ", call3，线程：" + Thread.currentThread().getName());
+                    }
+                });
+
+        Observable.from(studentList)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap(new Func1<Student, Observable<Course>>() {
+                    @Override
+                    public Observable<Course> call(Student student) {
+                        Log.w(mTag, "用flatMap一对多变换，call1，线程：" + Thread.currentThread().getName());
+                        return Observable.from(student.courseList);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Func1<Course, Observable<Integer>>() {
+                    @Override
+                    public Observable<Integer> call(Course course) {
+                        Log.w(mTag, "用flatMap一对多变换，call2，线程：" + Thread.currentThread().getName());
+                        return Observable.from(course.getScore());
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        Log.w(mTag, "用flatMap一对多变换，解决多层代码嵌套：" + integer + ", call3，线程：" + Thread.currentThread().getName());
+                    }
+                });
     }
 
     class Student {
@@ -234,6 +280,10 @@ public class RxJava2Activity extends BasicActivity {
 
         public Course(String name) {
             this.name = name;
+        }
+
+        public Integer[] getScore() {
+            return new Integer[]{new Random().nextInt(3), new Random().nextInt(110)};
         }
 
         @Override
