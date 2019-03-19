@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Random;
 
 import rx.Observable;
+import rx.Observer;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.observables.GroupedObservable;
 
 public class RxJava2Activity extends BasicActivity {
 
@@ -255,7 +257,8 @@ public class RxJava2Activity extends BasicActivity {
                     }
                 });*/
 
-        Observable.just(1, 2, 4, 6, 8, 9)
+        /*Observable<Integer> observable = Observable.just(1, 2, 4, 6, 8, 9);//if...else...
+        observable
                 .filter(new Func1<Integer, Boolean>() {
                     @Override
                     public Boolean call(Integer integer) {
@@ -265,7 +268,7 @@ public class RxJava2Activity extends BasicActivity {
                 .filter(new Func1<Integer, Boolean>() {
                     @Override
                     public Boolean call(Integer integer) {
-                        return integer < 9;
+                        return integer < 8;
                     }
                 })
                 .map(new Func1<Integer, String>() {
@@ -279,12 +282,71 @@ public class RxJava2Activity extends BasicActivity {
                     public void call(String result) {
                         Log.w(mTag, "filter if ：" + result);
                     }
-                }, new Action1<Throwable>() {
+                });
+        observable
+                .filter(new Func1<Integer, Boolean>() {
                     @Override
-                    public void call(Throwable throwable) {
-                        Log.w(mTag, "filter else ：" + throwable);
+                    public Boolean call(Integer integer) {
+                        return integer < 3 || integer > 8;
+                    }
+                })
+                .map(new Func1<Integer, Double>() {
+                    @Override
+                    public Double call(Integer integer) {
+                        return 1.0 * integer * integer * integer;
+                    }
+                })
+                .subscribe(new Action1<Double>() {
+                    @Override
+                    public void call(Double result) {
+                        Log.w(mTag, "filter else ：" + result);
+                    }
+                });*/
+
+        Observable.range(0, 7).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                Log.d(mTag, "range, call = " + integer);
+            }
+        });
+
+        Observable.range(0, 10).groupBy(new Func1<Integer, Integer>() {
+            @Override
+            public Integer call(Integer integer) {
+                Log.d(mTag, "groupBy call：" + integer);
+                //return integer % 3;
+                return 5;
+            }
+        }).subscribe(new Observer<GroupedObservable<Integer, Integer>>() {
+            @Override
+            public void onCompleted() {
+                Log.d(mTag, "------>onCompleted()");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(final GroupedObservable<Integer, Integer> integerIntegerGroupedObservable) {
+                integerIntegerGroupedObservable.subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d(mTag, "------>inner onCompleted()");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d(mTag, "------>group:" + integerIntegerGroupedObservable.getKey() + "  value:" + integer);
                     }
                 });
+            }
+        });
     }
 
     class Student {
