@@ -18,4 +18,5 @@ ext {//若引用该变量，需要在同级目录下build.gradler的文件添加
     isModule2Independent = false
 
     okGoVersion = '3.0.4'
+    roomVersion = '1.0.0'
 }

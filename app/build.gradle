@@ -69,4 +69,12 @@ dependencies {
     //RxJava
     implementation 'io.reactivex:rxjava:1.0.14'
     implementation 'io.reactivex:rxandroid:1.0.1'
+
+    //database
+    /*implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"*///androidx暂不了解
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+    //添加测试支持，可以对数据库进行AndroidTest
+    implementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
 }

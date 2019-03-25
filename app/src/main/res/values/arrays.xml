@@ -11,5 +11,6 @@
         <item>OkGo</item>
         <item>BoutiqueModule</item>
         <item>RxJava2</item>
+        <item>Room</item>
     </array>
 </resources>
