@@ -31,6 +31,7 @@ public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long insert(UserEntity userEntity);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     List<Long> insert(List<UserEntity> userEntityList);
 
     //update
