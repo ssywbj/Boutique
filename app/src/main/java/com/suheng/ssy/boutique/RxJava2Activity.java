@@ -4,14 +4,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.observables.GroupedObservable;
+import rx.schedulers.Schedulers;
 
 public class RxJava2Activity extends BasicActivity {
 
@@ -163,14 +168,14 @@ public class RxJava2Activity extends BasicActivity {
             public void call(String s) {
                 Log.d(mTag, "事件一对一变换map, call: " + s + ", " + Thread.currentThread().getName());
             }
-        });
+        });*/
 
         List<Student> studentList = new ArrayList<>();
         studentList.add(new Student(Arrays.asList(new Course("111"), new Course("222"))));
         studentList.add(new Student(Arrays.asList(new Course("333"), new Course("444"))));
         studentList.add(new Student(Arrays.asList(new Course("555"), new Course("666"))));
         studentList.add(new Student(Arrays.asList(new Course("777"), new Course("888"))));
-        Observable.from(studentList).subscribe(new Subscriber<Student>() {
+        /*Observable.from(studentList).subscribe(new Subscriber<Student>() {
             @Override
             public void onCompleted() {
             }
@@ -187,7 +192,7 @@ public class RxJava2Activity extends BasicActivity {
                     Log.d(mTag, "用循环一对多变换：" + course.toString());
                 }
             }
-        });
+        });*/
         Observable.from(studentList).flatMap(new Func1<Student, Observable<Course>>() {
             @Override
             public Observable<Course> call(Student student) {
@@ -255,7 +260,7 @@ public class RxJava2Activity extends BasicActivity {
                     public void call(Integer integer) {
                         Log.w(mTag, "用flatMap一对多变换，解决多层代码嵌套：" + integer + ", call3，线程：" + Thread.currentThread().getName());
                     }
-                });*/
+                });
 
         /*Observable<Integer> observable = Observable.just(1, 2, 4, 6, 8, 9);//if...else...
         observable
@@ -303,7 +308,7 @@ public class RxJava2Activity extends BasicActivity {
                     }
                 });*/
 
-        Observable.range(0, 7).subscribe(new Action1<Integer>() {
+        /*Observable.range(0, 7).subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
                 Log.d(mTag, "range, call = " + integer);
@@ -346,7 +351,7 @@ public class RxJava2Activity extends BasicActivity {
                     }
                 });
             }
-        });
+        });*/
     }
 
     class Student {
