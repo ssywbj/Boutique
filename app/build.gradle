@@ -77,4 +77,10 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
     //添加测试支持，可以对数据库进行AndroidTest
     implementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
+
+    //PermissionsDispatcher
+    implementation("com.github.hotchemi:permissionsdispatcher:$rootProject.permissionsDispatcher") {
+        exclude group: "com.android.support"
+    }
+    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:$rootProject.permissionsDispatcher"
 }

@@ -91,6 +91,9 @@ public class BoutiqueActivity extends BasicActivity {
                     case 11:
                         intent = new Intent(BoutiqueActivity.this, RoomActivity.class);
                         break;
+                    case 12:
+                        intent = new Intent(BoutiqueActivity.this, PermissionApplyActivity.class);
+                        break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
                         break;
@@ -103,7 +106,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, RoomActivity.class));
+        startActivity(new Intent(this, PermissionApplyActivity.class));
     }
 
 }

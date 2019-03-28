@@ -25,7 +25,7 @@ import java.util.List;
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 
-public class OkGoActivity extends BasicActivity {
+public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
 
     //public static final String URL = "http://gank.io/api/data/福利/50/1";
     private static final String URL = "http://192.168.120.169:8080/TestJSP";
@@ -153,7 +153,6 @@ public class OkGoActivity extends BasicActivity {
                         ((ImageView) findViewById(R.id.image_url)).setImageBitmap(response.body());
                     }
 
-
                     @Override
                     public void onError(Response<Bitmap> response) {
                         super.onError(response);
@@ -212,7 +211,12 @@ public class OkGoActivity extends BasicActivity {
     }
 
     public void onClickDownload(View view) {
-        OkGo.<File>get(VIDEO_ADDRESS + "/【电影家园www.idyjy.com下载】一个字头的诞生.DVD国粤双语中英双字.avi").tag(this)
+        PermissionApplyActivityPermissionsDispatcher.requestExternalStoragePermissionWithCheck(this, 2);
+    }
+
+    private void downloadFile() {
+        //OkGo.<File>get(VIDEO_ADDRESS + "/【电影家园www.idyjy.com下载】一个字头的诞生.DVD国粤双语中英双字.avi").tag(this)
+        OkGo.<File>get(PICTURE_ADDRESS + "/0065oQSqly1fymj13tnjmj30r60zf79k.jpg").tag(this)
                 .execute(new FileCallback() {
 
                     @Override
@@ -241,6 +245,20 @@ public class OkGoActivity extends BasicActivity {
     }
 
     public void onClickUpload(View view) {
+        PermissionApplyActivityPermissionsDispatcher.requestExternalStoragePermissionWithCheck(this, 1);
+    }
+
+    @Override
+    public void requestExternalStoragePermission(int requestCode) {
+        super.requestExternalStoragePermission(requestCode);
+        if (requestCode == 1) {
+            this.uploadFile();
+        } else if (requestCode == 2) {
+            this.downloadFile();
+        }
+    }
+
+    private void uploadFile() {
         OkGo.<String>post(SERVER_ADDRESS).tag(this)
                 .upString("---upload params中的参数设置是无效的---")//使用该方法时，params中的参数设置是无效的，所有参数均需要通过需要上传的文本中指定
                 .params("username", "Wbj")

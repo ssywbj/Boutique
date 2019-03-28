@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.suheng.ssy.boutique.fragment.RecyclerFragment;
 
-public class FragmentRecyclerActivity extends BasicActivity {
+public class FragmentRecyclerActivity extends PermissionApplyActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -18,4 +18,8 @@ public class FragmentRecyclerActivity extends BasicActivity {
                 (RecyclerFragment) ARouter.getInstance().build("/app/activity/fragment_recycler").navigation()).commit();*/
     }
 
+    @Override
+    public void requestExternalStoragePermission(int requestCode) {
+        super.requestExternalStoragePermission(requestCode);
+    }
 }
