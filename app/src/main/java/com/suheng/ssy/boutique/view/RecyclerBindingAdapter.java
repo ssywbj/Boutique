@@ -30,5 +30,9 @@ public abstract class RecyclerBindingAdapter<T> extends RecyclerView.Adapter<Rec
         return mDataList == null ? 0 : mDataList.size();
     }
 
+    public List<T> getDataList() {
+        return mDataList;
+    }
+
     public abstract int getVariableId(@NonNull RecyclerBindingHolder bindingHolder);
 }

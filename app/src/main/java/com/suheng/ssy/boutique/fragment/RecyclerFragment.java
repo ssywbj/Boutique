@@ -1,9 +1,7 @@
 package com.suheng.ssy.boutique.fragment;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
-import android.databinding.ObservableList;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +16,7 @@ import android.view.ViewGroup;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.suheng.ssy.boutique.BR;
 import com.suheng.ssy.boutique.BoutiqueApp;
+import com.suheng.ssy.boutique.FragmentRecyclerActivity;
 import com.suheng.ssy.boutique.R;
 import com.suheng.ssy.boutique.dagger.ActEntity;
 import com.suheng.ssy.boutique.dagger.DaggerActivityComponent;
@@ -26,8 +25,11 @@ import com.suheng.ssy.boutique.view.RecyclerBindingAdapter;
 import com.suheng.ssy.boutique.view.RecyclerBindingHolder;
 import com.suheng.ssy.boutique.view.RecyclerDivider;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -39,8 +41,10 @@ public class RecyclerFragment extends BasicFragment {
 
     @Inject
     ActEntity mActEntity;
-
     private FragmentRecyclerBinding mViewBinding;
+    private List<ItemModel> mItemModels = new ArrayList<>();
+    private MyAdapter mMyAdapter;
+    private ItemModel mCurrentItem;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,10 +60,6 @@ public class RecyclerFragment extends BasicFragment {
         return mViewBinding.getRoot();
     }
 
-    //List<ItemModel> itemModels = new ArrayList<>();
-    ObservableList<ItemModel> modelObservableList = new ObservableArrayList<>();
-    MyAdapter adapter;
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -73,11 +73,11 @@ public class RecyclerFragment extends BasicFragment {
         List<String> stringList = Arrays.asList(getResources().getStringArray(R.array.main_item));
 
         for (String str : stringList) {
-            //itemModels.add(new ItemModel(str, this));
-            modelObservableList.add(new ItemModel(str, this));
+            mItemModels.add(new ItemModel(str, (new Random().nextInt(5) % 3 == 0)
+                    ? ItemModel.VIEW_TYPE_RED : ItemModel.VIEW_TYPE_BLACK, this));
         }
-        adapter = new MyAdapter(modelObservableList);
-        mViewBinding.recyclerView.setAdapter(adapter);//设置adapter
+        mMyAdapter = new MyAdapter(mItemModels);
+        mViewBinding.recyclerView.setAdapter(mMyAdapter);//设置adapter
     }
 
     @Override
@@ -104,26 +104,50 @@ public class RecyclerFragment extends BasicFragment {
         Log.d(mTag, this + ", onDetach");
     }
 
+    public void clickItem(ItemModel itemModel) {
+        Log.d(mTag, "item: " + itemModel.title.get());
+        if (itemModel.getItemType() == ItemModel.VIEW_TYPE_BLACK) {
+            if (mItemModels.contains(itemModel)) {
+                mItemModels.remove(itemModel);
+                mMyAdapter.notifyDataSetChanged();
+            }
+        } else if (itemModel.getItemType() == ItemModel.VIEW_TYPE_RED) {
+            mCurrentItem = itemModel;
+            if (getActivity() instanceof FragmentRecyclerActivity) {//Fragment调用Activity权限管理的方法之一
+                if (mItemModels.contains(mCurrentItem)) {
+                    if (mItemModels.indexOf(mCurrentItem) == 2) {
+                        ((FragmentRecyclerActivity) getActivity()).queryCallPhonePermission();
+                    } else {
+                        ((FragmentRecyclerActivity) getActivity()).queryExternalStoragePermission(0x10);
+                    }
+                }
+            }
+        }
+    }
+
+    public void saveInfoInFile() {
+        if (mCurrentItem != null) {
+            Log.d(mTag, "saveInfoInFile: " + mCurrentItem.title.get());
+        }
+    }
+
     private class MyAdapter extends RecyclerBindingAdapter<ItemModel> {
 
-        private static final int VIEW_TYPE_BLACK = 0;
-        private static final int VIEW_TYPE_RED = 1;
-
-        public MyAdapter(ObservableList<ItemModel> modelObservableList) {
-            super(modelObservableList);
+        public MyAdapter(List<ItemModel> itemModelList) {
+            super(itemModelList);
         }
 
         @Override
         public int getItemViewType(int position) {
-            return position % 2 == 0 ? VIEW_TYPE_BLACK : VIEW_TYPE_RED;
+            return getDataList().get(position).getItemType();
         }
 
         @NonNull
         @Override//在RecyclerView的adapter中使用DataBinding
         public RecyclerBindingHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             ViewDataBinding dataBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(),
-                    (viewType == VIEW_TYPE_BLACK ? R.layout.fragment_recycler_adt : R.layout.fragment_recycler_adt2), parent, false);
-            return (viewType == VIEW_TYPE_BLACK ? new BlackHolder(dataBinding.getRoot()) : new RedHolder(dataBinding.getRoot()));//实例化ViewHolder
+                    (viewType == ItemModel.VIEW_TYPE_BLACK ? R.layout.fragment_recycler_adt : R.layout.fragment_recycler_adt2), parent, false);
+            return (viewType == ItemModel.VIEW_TYPE_BLACK ? new BlackHolder(dataBinding.getRoot()) : new RedHolder(dataBinding.getRoot()));//实例化ViewHolder
         }
 
         @Override
@@ -147,22 +171,28 @@ public class RecyclerFragment extends BasicFragment {
     }
 
     public static class ItemModel {
+        public static final int VIEW_TYPE_BLACK = 0;
+        public static final int VIEW_TYPE_RED = 1;
         private ObservableField<String> title = new ObservableField<>();
-        private RecyclerFragment recyclerFragment;
+        private WeakReference<RecyclerFragment> mWeakReference;
+        private int mItemType;
 
-        public ItemModel(String title, RecyclerFragment recyclerFragment) {
+        public ItemModel(String title, int itemType, RecyclerFragment recyclerFragment) {
             this.title.set(title);
-            this.recyclerFragment = recyclerFragment;
+            mItemType = itemType;
+            mWeakReference = new WeakReference<>(recyclerFragment);
         }
 
         public void onClickItem(ItemModel itemModel) {
-            Log.d("WBJ", "item: " + itemModel.title.get());
-            recyclerFragment.modelObservableList.remove(itemModel);
-            recyclerFragment.adapter.notifyDataSetChanged();
+            mWeakReference.get().clickItem(itemModel);
         }
 
         public ObservableField<String> getTitle() {
             return title;
+        }
+
+        public int getItemType() {
+            return mItemType;
         }
     }
 
