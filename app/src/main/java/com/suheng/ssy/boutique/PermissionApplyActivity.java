@@ -34,7 +34,7 @@ public class PermissionApplyActivity extends BasicActivity {
     }
 
     public void onClickCallPhone(View view) {
-        PermissionApplyActivityPermissionsDispatcher.requestCallPhonePermissionWithCheck(this);
+        PermissionApplyActivityPermissionsDispatcher.requestCallPhonePermissionWithCheck(this, "18819059959");
     }
 
     @Override//必须覆写此方法
@@ -83,13 +83,13 @@ public class PermissionApplyActivity extends BasicActivity {
 
     //单个权限
     @NeedsPermission(Manifest.permission.CALL_PHONE)
-    public void requestCallPhonePermission() {
+    public void requestCallPhonePermission(String phoneNumber) {
         Log.d(mTag, "requestCallPhonePermission");
         /*Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "18819059959"));//拨号，让用户自主选择拨打
         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//Activity启动另一个Activity，可以不加此标识；如果在Context启动，则需要。
         startActivity(intent);*/
 
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "18819059959"));//直接拨号
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));//直接拨号
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//不这么写，会提示“Call requires permission which may be rejected。。。”警告，程序能跑，但看着不舒服！
             if (checkSelfPermission(Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 startActivity(intent);

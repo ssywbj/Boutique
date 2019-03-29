@@ -116,7 +116,7 @@ public class RecyclerFragment extends BasicFragment {
             if (getActivity() instanceof FragmentRecyclerActivity) {//Fragment调用Activity权限管理的方法之一
                 if (mItemModels.contains(mCurrentItem)) {
                     if (mItemModels.indexOf(mCurrentItem) == 2) {
-                        ((FragmentRecyclerActivity) getActivity()).queryCallPhonePermission();
+                        ((FragmentRecyclerActivity) getActivity()).queryCallPhonePermission("18819059959");
                     } else {
                         ((FragmentRecyclerActivity) getActivity()).queryExternalStoragePermission(0x10);
                     }

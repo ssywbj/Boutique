@@ -25,8 +25,8 @@ public class FragmentRecyclerActivity extends PermissionApplyActivity {
         PermissionApplyActivityPermissionsDispatcher.requestExternalStoragePermissionWithCheck(this, requestCode);
     }
 
-    public void queryCallPhonePermission() {
-        PermissionApplyActivityPermissionsDispatcher.requestCallPhonePermissionWithCheck(this);
+    public void queryCallPhonePermission(String phoneNumber) {
+        PermissionApplyActivityPermissionsDispatcher.requestCallPhonePermissionWithCheck(this, phoneNumber);
     }
 
     @Override
