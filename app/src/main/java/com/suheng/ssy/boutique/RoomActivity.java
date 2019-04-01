@@ -13,12 +13,12 @@ import com.suheng.ssy.boutique.db.UserEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
+/*import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import rx.schedulers.Schedulers;*/
 
 public class RoomActivity extends BasicActivity {
 
@@ -33,7 +33,7 @@ public class RoomActivity extends BasicActivity {
     }
 
     public void onClickInsertOne(View view) {
-        Observable.just(new UserEntity(1210214142, "Weeee", "Baaaajie"))
+        /*Observable.just(new UserEntity(1210214142, "Weeee", "Baaaajie"))
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<UserEntity, Long>() {
                     @Override
@@ -49,7 +49,7 @@ public class RoomActivity extends BasicActivity {
                     public void call(Long aLong) {
                         Log.d(mTag, "InsertOne, subscribe: " + Thread.currentThread().getName());
                     }
-                });
+                });*/
     }
 
     public void onClickInsertList(View view) {
@@ -57,7 +57,7 @@ public class RoomActivity extends BasicActivity {
         for (int i = 0; i < 3; i++) {
             userEntityList.add(new UserEntity(1210214142 + i, "Wiii" + i, "Bangjeee" + i));
         }
-        Observable.from(userEntityList)
+        /*Observable.from(userEntityList)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<UserEntity, Long>() {
                     @Override
@@ -105,7 +105,7 @@ public class RoomActivity extends BasicActivity {
                             Log.i(mTag, "InsertList2, thread: " + Thread.currentThread().getName() + ", " + userId);
                         }
                     }
-                });
+                });*/
     }
 
     public void onClickQueryOne(View view) {
@@ -119,7 +119,7 @@ public class RoomActivity extends BasicActivity {
     }
 
     public void onClickQueryList(View view) {
-        Observable
+        /*Observable
                 .create(new Observable.OnSubscribe<List<UserEntity>>() {
                     @Override
                     public void call(Subscriber<? super List<UserEntity>> subscriber) {
@@ -143,11 +143,11 @@ public class RoomActivity extends BasicActivity {
                             Log.d(mTag, "QueryList, thread: " + Thread.currentThread().getName() + ", " + userEntity);
                         }
                     }
-                });
+                });*/
     }
 
     public void onClickQueryUsers(View view) {
-        Observable
+        /*Observable
                 .create(new Observable.OnSubscribe<long[]>() {
                     @Override
                     public void call(Subscriber<? super long[]> subscriber) {
@@ -174,7 +174,7 @@ public class RoomActivity extends BasicActivity {
                             Log.d(mTag, "Query Users, thread: " + Thread.currentThread().getName() + ", " + userEntity);
                         }
                     }
-                });
+                });*/
     }
 
     public void onClickUpdateOne(View view) {
@@ -182,7 +182,7 @@ public class RoomActivity extends BasicActivity {
     }
 
     public void onClickUpdateList(View view) {
-        Observable
+        /*Observable
                 .create(new Observable.OnSubscribe<List<UserEntity>>() {
                     @Override
                     public void call(Subscriber<? super List<UserEntity>> subscriber) {
@@ -205,11 +205,11 @@ public class RoomActivity extends BasicActivity {
                     public void call(Integer integer) {
                         Log.d(mTag, "UpdateList : " + integer);
                     }
-                });
+                });*/
     }
 
     public void onClickDeleteOne(View view) {
-        Observable.just(new UserEntity(1210214142, "Weeee", "Baaaajie"), new UserEntity(33, "hggh", "uuuuu"))
+        /*Observable.just(new UserEntity(1210214142, "Weeee", "Baaaajie"), new UserEntity(33, "hggh", "uuuuu"))
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<UserEntity, Integer>() {
                     @Override
@@ -222,11 +222,11 @@ public class RoomActivity extends BasicActivity {
                     public void call(Integer integer) {
                         Log.d(mTag, "DeleteOne : " + integer);
                     }
-                });
+                });*/
     }
 
     public void onClickDeleteList(View view) {
-        Observable
+        /*Observable
                 .create(new Observable.OnSubscribe<List<UserEntity>>() {
                     @Override
                     public void call(Subscriber<? super List<UserEntity>> subscriber) {
@@ -249,7 +249,7 @@ public class RoomActivity extends BasicActivity {
                     public void call(Integer integer) {
                         Log.d(mTag, "DeleteList : " + integer);
                     }
-                });
+                });*/
     }
 
 }

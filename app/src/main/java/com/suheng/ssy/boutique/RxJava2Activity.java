@@ -4,19 +4,29 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.jakewharton.rxbinding2.view.RxView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+
+/*import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import rx.schedulers.Schedulers;*/
 
 public class RxJava2Activity extends BasicActivity {
 
@@ -25,6 +35,7 @@ public class RxJava2Activity extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rx_java2);
 
+        //****************************RxJava1********************************
         /*Observer<String> observer = new Observer<String>() {
             @Override
             public void onNext(String s) {
@@ -193,7 +204,7 @@ public class RxJava2Activity extends BasicActivity {
                 }
             }
         });*/
-        Observable.from(studentList).flatMap(new Func1<Student, Observable<Course>>() {
+        /*Observable.from(studentList).flatMap(new Func1<Student, Observable<Course>>() {
             @Override
             public Observable<Course> call(Student student) {
                 return Observable.from(student.getCourseList());
@@ -260,7 +271,7 @@ public class RxJava2Activity extends BasicActivity {
                     public void call(Integer integer) {
                         Log.w(mTag, "用flatMap一对多变换，解决多层代码嵌套：" + integer + ", call3，线程：" + Thread.currentThread().getName());
                     }
-                });
+                });*/
 
         /*Observable<Integer> observable = Observable.just(1, 2, 4, 6, 8, 9);//if...else...
         observable
@@ -352,7 +363,45 @@ public class RxJava2Activity extends BasicActivity {
                 });
             }
         });*/
+        //****************************RxJava1********************************
+
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) {
+                e.onNext("fffff");
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+                Log.d(mTag, "------>Consumer:" + s);
+            }
+        });
+
+        RxView.clicks(findViewById(R.id.btn_map))
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Observer<Object>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(mTag, "clicks, onSubscribe:" + d + ", thread: " + Thread.currentThread().getName());
+                    }
+
+                    @Override
+                    public void onNext(Object value) {
+                        Log.d(mTag, "clicks, onNext:" + value + ", thread: " + Thread.currentThread().getName());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(mTag, "clicks, onError:" + e + ", thread: " + Thread.currentThread().getName());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(mTag, "clicks, onComplete:" + ", thread: " + Thread.currentThread().getName());
+                    }
+                });
     }
+
 
     class Student {
         List<Course> courseList;

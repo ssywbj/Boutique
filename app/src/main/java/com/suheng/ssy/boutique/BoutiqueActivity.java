@@ -106,7 +106,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, PermissionApplyActivity.class));
+        startActivity(new Intent(this, RxJava2Activity.class));
     }
 
 }

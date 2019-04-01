@@ -1,6 +1,8 @@
 package com.suheng.ssy.boutique;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.lzy.okgo.OkGo;
@@ -35,8 +37,15 @@ public class BoutiqueApp extends Application {
     private static AppComponent sAppComponent;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
         sAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();//强调：AppComponent只能初始化一次
 
         //if (isDebug()) {
