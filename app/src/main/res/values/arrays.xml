@@ -10,7 +10,7 @@
         <item>单元测试</item>
         <item>OkGo</item>
         <item>BoutiqueModule</item>
-        <item>RxJava2</item>
+        <item>RxJava2、RxBinding</item>
         <item>Room</item>
         <item>权限管理</item>
     </array>
