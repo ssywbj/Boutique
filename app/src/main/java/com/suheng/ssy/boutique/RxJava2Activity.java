@@ -15,9 +15,14 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
 
 /*import rx.Observable;
 import rx.Observer;
@@ -365,17 +370,58 @@ public class RxJava2Activity extends BasicActivity {
         });*/
         //****************************RxJava1********************************
 
+        //RxJava2警告：The result of subscribe is not used。。。
         Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> e) {
-                e.onNext("fffff");
+                Log.d(mTag, "create, thread: " + Thread.currentThread().getName());
+                e.onNext("FFFFFF");
             }
         }).subscribe(new Consumer<String>() {
             @Override
-            public void accept(String s) {
-                Log.d(mTag, "------>Consumer:" + s);
+            public void accept(String result) {
+                Log.d(mTag, "------>subscribe, Consumer:" + result + ", thread: " + Thread.currentThread().getName());
             }
         });
+
+        //解决RxJava2警告“The result of subscribe is not used。。。”
+        getCompositeDisposable().add(Observable.just("2013")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(String source) {
+                        return source.matches("\\d+");
+                    }
+                })
+                .map(new Function<String, Integer>() {
+                    @Override
+                    public Integer apply(String source) {
+                        Log.d(mTag, "map, Function:" + source + ", thread: " + Thread.currentThread().getName());
+                        return Integer.parseInt(source);
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .filter(new Predicate<Integer>() {
+                    @Override
+                    public boolean test(Integer integer) {
+                        return integer > 10;
+                    }
+                })
+                .flatMap(new Function<Integer, ObservableSource<Integer>>() {
+                    @Override
+                    public ObservableSource<Integer> apply(Integer integer) {
+                        Log.d(mTag, "flatMap, Function:" + integer * 2 + ", thread: " + Thread.currentThread().getName());
+                        return Observable.fromArray(new Integer[]{new Random().nextInt(199), new Random().nextInt(1000)});
+                    }
+                })
+                .observeOn(Schedulers.newThread())
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) {
+                        Log.d(mTag, "subscribe, Consumer:" + integer + ", thread: " + Thread.currentThread().getName());
+                    }
+                }));
 
         RxView.clicks(findViewById(R.id.btn_map))
                 .throttleFirst(1000, TimeUnit.MILLISECONDS)
