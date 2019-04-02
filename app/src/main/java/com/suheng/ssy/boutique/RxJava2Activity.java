@@ -19,6 +19,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -385,7 +386,7 @@ public class RxJava2Activity extends BasicActivity {
         });
 
         //解决RxJava2警告“The result of subscribe is not used。。。”
-        getCompositeDisposable().add(Observable.just("2013")
+        addDisposable(Observable.just("2013")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(new Predicate<String>() {
@@ -420,6 +421,46 @@ public class RxJava2Activity extends BasicActivity {
                     @Override
                     public void accept(Integer integer) {
                         Log.d(mTag, "subscribe, Consumer:" + integer + ", thread: " + Thread.currentThread().getName());
+                    }
+                }));
+
+        /*Observable.interval(5, TimeUnit.SECONDS).subscribe(new Consumer<Long>() {
+            @Override
+            public void accept(Long aLong) {
+                Log.d(mTag, "interval, Consumer:" + aLong + ", thread: " + Thread.currentThread().getName());//已经默认在非主线程
+            }
+        });*///注意：如果这样写而不手动调用取消订阅的方法，那么退出Activity或一直按返回键退出应用到后台后，interval还会定时发送事件
+
+        /*addDisposable(Observable.interval(5, TimeUnit.SECONDS).subscribe(new Consumer<Long>() {
+            @Override
+            public void accept(Long aLong) {
+                Log.d(mTag, "interval, Consumer:" + aLong + ", thread: " + Thread.currentThread().getName());
+            }
+        }));*/
+
+        final int countdown = 10;
+        addDisposable(Observable.interval(1, 1, TimeUnit.SECONDS)
+                .take(countdown)
+                .map(new Function<Long, Long>() {
+                    @Override
+                    public Long apply(Long aLong) {
+                        Log.d(mTag, "interval, map:" + aLong + ", thread: " + Thread.currentThread().getName());
+                        return aLong;
+                    }
+                })
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) {
+                        Log.d(mTag, "interval, Consumer:" + aLong + ", thread: " + Thread.currentThread().getName());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() {
+                        Log.d(mTag, "interval, Action, thread: " + Thread.currentThread().getName());
                     }
                 }));
 

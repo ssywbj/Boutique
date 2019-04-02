@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public abstract class BasicActivity extends AppCompatActivity {
 
@@ -23,7 +24,7 @@ public abstract class BasicActivity extends AppCompatActivity {
         mCompositeDisposable.dispose();
     }
 
-    public CompositeDisposable getCompositeDisposable() {
-        return mCompositeDisposable;
+    public boolean addDisposable(Disposable disposable) {
+        return mCompositeDisposable.add(disposable);
     }
 }
