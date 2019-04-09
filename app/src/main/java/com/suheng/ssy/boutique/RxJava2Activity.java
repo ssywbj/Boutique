@@ -3,6 +3,8 @@ package com.suheng.ssy.boutique;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -438,32 +440,6 @@ public class RxJava2Activity extends BasicActivity {
             }
         }));*/
 
-        final int countdown = 10;
-        addDisposable(Observable.interval(1, 1, TimeUnit.SECONDS)
-                .take(countdown)
-                .map(new Function<Long, Long>() {
-                    @Override
-                    public Long apply(Long aLong) {
-                        Log.d(mTag, "interval, map:" + aLong + ", thread: " + Thread.currentThread().getName());
-                        return aLong;
-                    }
-                })
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long aLong) {
-                        Log.d(mTag, "interval, Consumer:" + aLong + ", thread: " + Thread.currentThread().getName());
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                    }
-                }, new Action() {
-                    @Override
-                    public void run() {
-                        Log.d(mTag, "interval, Action, thread: " + Thread.currentThread().getName());
-                    }
-                }));
-
         RxView.clicks(findViewById(R.id.btn_map))
                 .throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .subscribe(new Observer<Object>() {
@@ -487,8 +463,65 @@ public class RxJava2Activity extends BasicActivity {
                         Log.d(mTag, "clicks, onComplete:" + ", thread: " + Thread.currentThread().getName());
                     }
                 });
+
+        /*final int countdown = 10;
+        addDisposable(Observable.interval(1, 1, TimeUnit.SECONDS)//延迟1秒，每1秒执行一次
+                .take(countdown)//最大计数
+                .map(new Function<Long, Long>() {
+                    @Override
+                    public Long apply(Long count) {//count：累计计数：从0开始，默认在子线程
+                        Log.e(mTag, "interval, count:" + count + ", thread: " + Thread.currentThread().getName());
+                        return countdown - (count + 1);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long countdown) {
+                        Log.e(mTag, "interval, countdown:" + countdown + ", thread: " + Thread.currentThread().getName());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() {
+                        Log.e(mTag, "interval, Action, thread: " + Thread.currentThread().getName());
+                    }
+                }));*/
     }
 
+    private Button mBtnCountdown;
+
+    public void onClickCountdown(View view) {
+        mBtnCountdown = findViewById(R.id.btn_countdown);
+
+        //removeDisposable();
+        final int countdown = 10;
+        mBtnCountdown.setText(countdown + "s");
+        addDisposable(Observable.interval(1, 1, TimeUnit.SECONDS)//延迟1秒，每1秒执行一次
+                .take(countdown)//最大计数
+                .map(new Function<Long, Long>() {
+                    @Override
+                    public Long apply(Long count) {//count：累计计数：从0开始，默认在子线程
+                        Log.d(mTag, "interval, count:" + count + ", thread: " + Thread.currentThread().getName());
+                        return countdown - (count + 1);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long countdown) {
+                        Log.i(mTag, "interval, countdown:" + countdown + ", thread: " + Thread.currentThread().getName());
+                        if (countdown > 0) {
+                            mBtnCountdown.setText(countdown + "s");
+                        } else {
+                            mBtnCountdown.setText("时间到");
+                        }
+                    }
+                }));
+    }
 
     class Student {
         List<Course> courseList;
