@@ -13,5 +13,6 @@
         <item>RxJava2、RxBinding</item>
         <item>Room</item>
         <item>权限管理</item>
+        <item>红点管理、沉浸式状态栏</item>
     </array>
 </resources>

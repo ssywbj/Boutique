@@ -90,4 +90,7 @@ dependencies {
 
     //解决Error:The number of method references in a .dex file cannot exceed 64K.
     implementation "com.android.support:multidex:$rootProject.multidexVersion"
+
+    //小圆点
+    implementation 'q.rorbin:badgeview:1.1.3'
 }

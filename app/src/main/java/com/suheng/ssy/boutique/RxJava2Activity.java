@@ -42,6 +42,7 @@ public class RxJava2Activity extends BasicActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rx_java2);
+        mBtnCountdown = findViewById(R.id.btn_countdown);
 
         //****************************RxJava1********************************
         /*Observer<String> observer = new Observer<String>() {
@@ -464,7 +465,7 @@ public class RxJava2Activity extends BasicActivity {
                     }
                 });
 
-        /*final int countdown = 10;
+        final int countdown = 10;
         addDisposable(Observable.interval(1, 1, TimeUnit.SECONDS)//延迟1秒，每1秒执行一次
                 .take(countdown)//最大计数
                 .map(new Function<Long, Long>() {
@@ -489,18 +490,19 @@ public class RxJava2Activity extends BasicActivity {
                     public void run() {
                         Log.e(mTag, "interval, Action, thread: " + Thread.currentThread().getName());
                     }
-                }));*/
+                }));
     }
 
     private Button mBtnCountdown;
+    private Disposable mDisposableCountdown;
 
     public void onClickCountdown(View view) {
-        mBtnCountdown = findViewById(R.id.btn_countdown);
-
-        //removeDisposable();
+        if (mDisposableCountdown != null) {
+            getCompositeDisposable().remove(mDisposableCountdown);//可了解下CompositeDisposable的remove、delete、clear、dispose等方法的作用与区别
+        }
         final int countdown = 10;
         mBtnCountdown.setText(countdown + "s");
-        addDisposable(Observable.interval(1, 1, TimeUnit.SECONDS)//延迟1秒，每1秒执行一次
+        mDisposableCountdown = Observable.interval(1, 1, TimeUnit.SECONDS)//延迟1秒，每1秒执行一次
                 .take(countdown)//最大计数
                 .map(new Function<Long, Long>() {
                     @Override
@@ -520,7 +522,8 @@ public class RxJava2Activity extends BasicActivity {
                             mBtnCountdown.setText("时间到");
                         }
                     }
-                }));
+                });
+        getCompositeDisposable().add(mDisposableCountdown);
     }
 
     class Student {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/top_bar_btn"
+        app:title="Toolbar"
+        app:titleTextColor="@color/red"/>
+
+    <TextView
+        android:id="@+id/btn_msg"
+        android:layout_width="42dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="left|center_vertical"
+        android:onClick="onClickMsg"
+        android:text="消息"
+        android:textSize="15sp"/>
+
+</LinearLayout>

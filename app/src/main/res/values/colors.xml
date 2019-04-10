@@ -11,4 +11,5 @@
     <color name="text_switch_login_type">#3090f7</color>
     <color name="text_obtain_sms_enabled">@color/login_btn_enabled</color>
     <color name="text_obtain_sms_disabled">#999999</color>
+    <color name="transparent">#00000000</color>
 </resources>

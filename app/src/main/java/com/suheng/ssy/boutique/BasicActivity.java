@@ -22,14 +22,13 @@ public abstract class BasicActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mCompositeDisposable.dispose();
-        this.removeDisposable();
     }
 
     public boolean addDisposable(Disposable disposable) {
         return mCompositeDisposable.add(disposable);
     }
 
-    public void removeDisposable() {
-        mCompositeDisposable.dispose();
+    public CompositeDisposable getCompositeDisposable() {
+        return mCompositeDisposable;
     }
 }

@@ -41,7 +41,7 @@
         <activity android:name=".ARouterActivity"/>
         <activity android:name=".UnitTestActivity"/>
         <activity android:name=".OkGoActivity"/>
-        <activity android:name=".WebActivity"/>
+        <activity android:name=".RedDotActivity"/>
         <activity android:name=".RxJava2Activity"/>
         <activity android:name=".RoomActivity"/>
         <activity android:name=".PermissionApplyActivity"/>
