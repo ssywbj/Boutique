@@ -8,6 +8,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.gyf.barlibrary.ImmersionBar;
 
@@ -24,7 +26,7 @@ public class RedDotActivity extends BasicActivity {
         setContentView(R.layout.activity_red_dot);
 
         //ImmersionBar.with(this).init();//默认为透明色状态栏和黑色导航栏且Toolbar会盖住状态栏
-        ImmersionBar.with(this).fitsSystemWindows(true)//使用该属性,必须指定状态栏颜色
+        ImmersionBar.with(this).fitsSystemWindows(true)//使用该属性,必须指定状态栏颜色（解决状态栏被盖住的方法之一）
                 .statusBarColor(R.color.text_switch_login_type).init();
 
         mToolbar = findViewById(R.id.toolbar);
@@ -36,6 +38,13 @@ public class RedDotActivity extends BasicActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        ((Switch) findViewById(R.id.switch_toggle)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.i(mTag, "buttonView = " + buttonView + ", isChecked = " + isChecked);
             }
         });
     }
