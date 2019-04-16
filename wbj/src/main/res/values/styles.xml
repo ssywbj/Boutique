@@ -69,4 +69,7 @@
         <item name="android:background">@null</item>
     </style>
 
+    <style name="ProgressBarStyle" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:minHeight">8dip</item>
+    </style>
 </resources>
