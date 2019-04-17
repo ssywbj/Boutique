@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -10,9 +11,9 @@
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="10dp"/>
 
-    <ProgressBar
+    <com.wbj.view.SmoothProgressBar
         android:id="@+id/progress_bar1"
         style="@style/ProgressBarStyle"
         android:layout_width="match_parent"
@@ -20,13 +21,13 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        android:progressDrawable="@drawable/progress_red" />
+        android:progressDrawable="@drawable/progress_red"/>
 
     <com.wbj.view.UploadView
         android:id="@+id/upload_view"
         android:layout_width="86dp"
         android:layout_height="110dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -34,7 +35,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="18dp"
         android:onClick="upload"
-        android:text="Upload" />
+        android:text="Upload"/>
 
 
     <com.wbj.view.SmoothProgressBar
@@ -42,7 +43,7 @@
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:layout_marginTop="18dp" />
+        android:layout_marginTop="18dp"/>
 
     <Button
         android:id="@+id/btn_ends"
@@ -53,6 +54,6 @@
         android:onClick="reduceBothEnds"
         android:text="Reduce"
         android:textColor="@android:color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"/>
 
 </LinearLayout>
