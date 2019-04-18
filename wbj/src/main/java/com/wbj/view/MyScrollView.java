@@ -4,12 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
 
-/**
- * Created by jkloshhm on 2017/11/24.
- *
- * @author jkloshhm
- */
-
 public class MyScrollView extends ScrollView {
 
     private OnScrollListener mOnScrollListener;
@@ -37,17 +31,12 @@ public class MyScrollView extends ScrollView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-        if (null != mOnScrollListener) {
+        computeHorizontalScrollRange();
+        if (mOnScrollListener != null) {
             mOnScrollListener.onScroll(t);
         }
     }
 
-
-    /**
-     * 设置滚动接口
-     *
-     * @param listener
-     */
     public void setOnScrollListener(OnScrollListener listener) {
         this.mOnScrollListener = listener;
     }
@@ -62,6 +51,6 @@ public class MyScrollView extends ScrollView {
          * @param scrollY
          */
         void onScroll(int scrollY);
-
     }
+
 }

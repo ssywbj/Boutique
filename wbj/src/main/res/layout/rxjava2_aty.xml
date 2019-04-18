@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -15,32 +16,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:text="返回" />
+            android:text="返回"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="微博正文" />
+            android:text="微博正文"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="16dp"
-            android:text="分享" />
+            android:text="分享"/>
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#999999" />
+        android:background="#999999"/>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <com.wbj.view.MyScrollView
             android:id="@+id/my_scrollview"
@@ -62,19 +62,17 @@
                     android:background="@color/white"
                     android:gravity="center"
                     android:text="我是微博正文"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
-                <LinearLayout
-                    android:id="@+id/ll_tabView"
+                <FrameLayout
+                    android:id="@+id/parent_layout_title"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="50dp">
 
                     <LinearLayout
-                        android:id="@+id/tv_topView"
+                        android:id="@+id/child_layout_title"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="match_parent"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -93,7 +91,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="转发112"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -104,7 +102,7 @@
                                 android:text="评论238"
                                 android:textColor="@android:color/black"
                                 android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -112,15 +110,15 @@
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:text="赞55"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"/>
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1px"
-                            android:background="#c4c4c4" />
+                            android:background="#c4c4c4"/>
                     </LinearLayout>
-                </LinearLayout>
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/tv_contentView"
@@ -131,15 +129,14 @@
                     android:gravity="top|center_horizontal"
                     android:paddingTop="160dp"
                     android:text="我是评论1111\n\n\n\n\n\n\n\n\n我是评论2222\n\n\n\n\n\n\n\n\n我是评论3333\n\n\n\n\n\n\n\n\n我是评论4444\n\n\n\n\n\n\n\n\n我是评论5555\n\n\n\n\n\n\n\n\n"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
             </LinearLayout>
 
         </com.wbj.view.MyScrollView>
 
-        <LinearLayout
-            android:id="@+id/ll_tabTopView"
+        <FrameLayout
+            android:id="@+id/prepare_layout_title"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="vertical" />
+            android:layout_height="50dp"/>
     </FrameLayout>
 </LinearLayout>

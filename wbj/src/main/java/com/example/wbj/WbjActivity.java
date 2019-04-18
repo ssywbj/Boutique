@@ -37,10 +37,10 @@ public class WbjActivity extends AppCompatActivity {
         //sAtyArray.put(9, "com.example.wbj.MVCLoginActivity");
         sAtyArray.put(10, "com.example.wbj.RxJava2Activity");
 
-        FrameLayout rootLayout = (FrameLayout) findViewById(android.R.id.content);
+        FrameLayout rootLayout = findViewById(android.R.id.content);
         Log.i(TAG, "rootLayout: " + rootLayout);
 
-        mListView = (ListView) findViewById(R.id.main_lv);
+        mListView = findViewById(R.id.main_lv);
         final String[] listItems = getResources().getStringArray(R.array.main_item_list);
         mListView.setAdapter(new BaseAdapter() {
             @Override
@@ -68,7 +68,7 @@ public class WbjActivity extends AppCompatActivity {
             }
         });
 
-        openActivity(1);
+        openActivity(10);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pst, long id) {
