@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,7 +13,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
+import cn.lemon.view.Direction;
+import cn.lemon.view.GuideView;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -127,4 +131,69 @@ public class PermissionApplyActivity extends BasicActivity {
         });
         builder.create().show();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showGuideViews();
+            }
+        });
+    }
+
+    private GuideView mGVOne, mGuideViewTwo;
+
+    private void showGuideViews() {
+        TextView hintText = new TextView(this);
+        hintText.setText("hello word");
+        hintText.setTextSize(15);
+        hintText.setTextColor(Color.WHITE);
+
+        mGVOne = new GuideView.Builder(this)
+                .setTargetView(R.id.button8)
+                .setHintView(hintText)
+                .setHintViewDirection(Direction.BOTTOM)
+                .setTransparentOvalPadding(1)
+                .setHintViewMarginTop(10)
+                .setHintViewMarginLeft(100)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mGVOne.hide();
+                        mGuideViewTwo.show();
+                    }
+                }).create();
+        mGVOne.show();
+
+        hintText = new TextView(this);
+        hintText.setText("HHHHHH");
+        hintText.setTextSize(15);
+        hintText.setTextColor(Color.WHITE);
+        mGuideViewTwo = new GuideView.Builder(this)
+                .setTargetView(R.id.button4)
+                .setHintView(hintText)
+                .setHintViewDirection(Direction.BOTTOM)
+                .setTransparentOvalPadding(1)
+                .setHintViewMarginTop(10)
+                .setHintViewMarginLeft(100)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mGuideViewTwo.hide();
+                    }
+                }).create();
+    }
+
+    /*@Override
+    public void onBackPressed() {
+        if (mGVOne.isShowing()) {
+            mGVOne.hide();
+        } else if (mGuideViewTwo.isShowing()) {
+            mGuideViewTwo.hide();
+        } else {
+            super.onBackPressed();
+        }
+    }*/
 }

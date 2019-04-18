@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.wbj.view.MyScrollView
+        <com.wbj.view.ChangedScrollView
             android:id="@+id/my_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -132,7 +132,7 @@
                     android:textSize="14sp"/>
             </LinearLayout>
 
-        </com.wbj.view.MyScrollView>
+        </com.wbj.view.ChangedScrollView>
 
         <FrameLayout
             android:id="@+id/prepare_layout_title"

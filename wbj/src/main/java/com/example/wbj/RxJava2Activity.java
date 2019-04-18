@@ -5,18 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ViewGroup;
 
-import com.wbj.view.MyScrollView;
+import com.wbj.view.ChangedScrollView;
 
-public class RxJava2Activity extends AppCompatActivity implements MyScrollView.OnScrollListener {
+public class RxJava2Activity extends AppCompatActivity implements ChangedScrollView.OnScrollListener {
     private static final String TAG = "WBJ";
     private ViewGroup mPrepareLayoutTitle;//固定在顶部的Layout
-    /**
-     * 跟随ScrollView的TabViewLayout
-     */
     private ViewGroup mParentLayoutTitle;
-    /**
-     * 要悬浮在顶部的View的子View
-     */
     private ViewGroup mChildLayoutTitle;
 
     @Override
@@ -27,11 +21,11 @@ public class RxJava2Activity extends AppCompatActivity implements MyScrollView.O
         mParentLayoutTitle = findViewById(R.id.parent_layout_title);
         mChildLayoutTitle = findViewById(R.id.child_layout_title);
         mPrepareLayoutTitle = findViewById(R.id.prepare_layout_title);
-        ((MyScrollView) findViewById(R.id.my_scrollview)).setOnScrollListener(this);//滑动监听
+        ((ChangedScrollView) findViewById(R.id.my_scrollview)).setOnScrollListener(this);//滑动监听
     }
 
     @Override
-    public void onScroll(int scrollY) {
+    public void onScroll(int scrollY, boolean isToBottom) {
         final int height = mParentLayoutTitle.getTop();
         Log.d(TAG, "scrollY = " + scrollY + ", height = " + height);
         if (scrollY > 0 && scrollY >= height) {
@@ -45,6 +39,11 @@ public class RxJava2Activity extends AppCompatActivity implements MyScrollView.O
                 mParentLayoutTitle.addView(mChildLayoutTitle);
             }
         }
+
+        if (isToBottom) {
+            Log.i(TAG, "------scroll to bottom------");
+        }
     }
+
 
 }
