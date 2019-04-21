@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.suheng.ssy.boutique.view.GuideView;
+import com.suheng.ssy.boutique.view.GuideViewQueue;
 
 import easily.tech.guideview.lib.GuideViewFragment;
 import permissions.dispatcher.NeedsPermission;
@@ -77,12 +78,12 @@ public class PermissionApplyActivity extends BasicActivity {
     private GuideView guideView1, guideView2, guideView3;
 
     private void initGuide() {
-        View inflate = View.inflate(this, R.layout.guideview, null);
-        /*RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+        /*View inflate = View.inflate(this, R.layout.guideview, null);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         View inflate = this.createTextView("YYYYYYYY");*/
-        guideView1 = new GuideView.Builder(this)
+        /*guideView1 = new GuideView.Builder(this)
                 .setTargetView(R.id.button7)
                 .setHintView(inflate)
                 .setHintViewDirection(GuideView.Direction.ABOVE)
@@ -96,7 +97,7 @@ public class PermissionApplyActivity extends BasicActivity {
                 }).create();
         guideView1.show();
 
-        inflate =  View.inflate(this, R.layout.guideview2, null);
+        inflate = View.inflate(this, R.layout.guideview2, null);
         guideView2 = new GuideView.Builder(this)
                 .setTargetView(R.id.button4)
                 .setHintView(inflate)
@@ -110,7 +111,7 @@ public class PermissionApplyActivity extends BasicActivity {
                     }
                 }).create();
 
-        inflate =  View.inflate(this, R.layout.guideview3, null);
+        inflate = View.inflate(this, R.layout.guideview3, null);
         guideView3 = new GuideView.Builder(this)
                 .setTargetView(R.id.button8)
                 .setHintView(inflate)
@@ -121,7 +122,25 @@ public class PermissionApplyActivity extends BasicActivity {
                     public void onClick(View v) {
                         guideView3.hide();
                     }
-                }).create();
+                }).create();*/
+
+        GuideViewQueue.getInstance()
+                .addBuilder(new GuideView.Builder(this)
+                        .setTargetView(R.id.button7)
+                        .setHintView(View.inflate(this, R.layout.guideview, null))
+                        .setHintViewDirection(GuideView.Direction.BOTTOM)
+                        .setForm(GuideView.Form.RECTANGLE))
+                .addBuilder(new GuideView.Builder(this)
+                        .setTargetView(R.id.button4)
+                        .setHintView(View.inflate(this, R.layout.guideview2, null))
+                        .setHintViewDirection(GuideView.Direction.BOTTOM)
+                        .setForm(GuideView.Form.RECTANGLE))
+                .addBuilder(new GuideView.Builder(this)
+                        .setTargetView(R.id.button8)
+                        .setHintView(View.inflate(this, R.layout.guideview3, null))
+                        .setHintViewDirection(GuideView.Direction.BOTTOM)
+                        .setForm(GuideView.Form.RECTANGLE))
+                .show();
     }
 
     public void onClickWriteExternalStorage(View view) {
@@ -312,9 +331,8 @@ public class PermissionApplyActivity extends BasicActivity {
 
     @Override
     public void onBackPressed() {
-        if (guideView1.isShowing()) {
-            guideView1.hide();
-            guideView2.show();
+        if (GuideViewQueue.getInstance().hasNext()) {
+            GuideViewQueue.getInstance().onNext();
         } else {
             super.onBackPressed();
         }

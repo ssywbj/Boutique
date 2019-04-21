@@ -70,6 +70,7 @@ public class GuideView extends RelativeLayout {
     private View mHintView;
     private View mTargetView;
     private FrameLayout mDecorView;
+    private Builder mBuilder;
 
     public GuideView(Context context) {
         this(context, null);
@@ -325,6 +326,14 @@ public class GuideView extends RelativeLayout {
         }
     }
 
+    public Builder getBuilder() {
+        return mBuilder;
+    }
+
+    public void setBuilder(Builder mBuilder) {
+        this.mBuilder = mBuilder;
+    }
+
     public static class Builder {
         private static class GuideViewParams {
             View mTargetView;
@@ -491,6 +500,10 @@ public class GuideView extends RelativeLayout {
             return this;
         }
 
+        public OnClickListener getOnClickListener() {
+            return mParams.mClickListener;
+        }
+
         public GuideView create() {
             if (mParams.mTargetView == null) {
                 throw new RuntimeException("please set a targetView");
@@ -499,6 +512,7 @@ public class GuideView extends RelativeLayout {
             guideView.initParams(mParams);
             guideView.setOnClickListener(mParams.mClickListener);
             guideView.getTargetViewPosition(); //获取TargetView的位置
+            guideView.setBuilder(this);
             return guideView;
         }
     }
