@@ -98,7 +98,7 @@ dependencies {
 
     implementation 'com.github.easilycoder:GuideView:0.0.1'
 
-    implementation 'com.github.huburt-Hu:NewbieGuide:v2.4.0'
+    implementation 'com.github.huburt-Hu:NewbieGuide:v2.4.2'
 
     implementation 'com.isanwenyu.highlight:highlight:1.8.0'
 }

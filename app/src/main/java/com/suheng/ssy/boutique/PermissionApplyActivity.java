@@ -128,7 +128,7 @@ public class PermissionApplyActivity extends BasicActivity {
                 .addBuilder(new GuideView.Builder(this)
                         .setTargetView(R.id.button7)
                         .setHintView(View.inflate(this, R.layout.guideview, null))
-                        .setHintViewDirection(GuideView.Direction.BOTTOM)
+                        .setHintViewDirection(GuideView.Direction.ABOVE)
                         .setForm(GuideView.Form.RECTANGLE))
                 .addBuilder(new GuideView.Builder(this)
                         .setTargetView(R.id.button4)
@@ -139,6 +139,11 @@ public class PermissionApplyActivity extends BasicActivity {
                         .setTargetView(R.id.button8)
                         .setHintView(View.inflate(this, R.layout.guideview3, null))
                         .setHintViewDirection(GuideView.Direction.BOTTOM)
+                        .setForm(GuideView.Form.RECTANGLE))
+                .addBuilder(new GuideView.Builder(this)
+                        .setTargetView(R.id.button6)
+                        .setHintView(View.inflate(this, R.layout.guideview4, null))
+                        .setHintViewDirection(GuideView.Direction.ABOVE)
                         .setForm(GuideView.Form.RECTANGLE))
                 .show();
     }

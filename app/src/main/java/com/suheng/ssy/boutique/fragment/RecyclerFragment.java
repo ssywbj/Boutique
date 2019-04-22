@@ -9,14 +9,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.app.hubert.guide.NewbieGuide;
 import com.app.hubert.guide.model.GuidePage;
+import com.app.hubert.guide.model.RelativeGuide;
 import com.suheng.ssy.boutique.BR;
 import com.suheng.ssy.boutique.BoutiqueApp;
 import com.suheng.ssy.boutique.FragmentRecyclerActivity;
@@ -37,9 +38,6 @@ import java.util.Random;
 import javax.inject.Inject;
 
 import zhy.com.highlight.HighLight;
-import zhy.com.highlight.interfaces.HighLightInterface;
-import zhy.com.highlight.position.OnLeftPosCallback;
-import zhy.com.highlight.shape.RectLightShape;
 
 /**
  * Created by wbj on 2018/12/11.
@@ -88,10 +86,14 @@ public class RecyclerFragment extends BasicFragment {
         mViewBinding.recyclerView.setAdapter(mMyAdapter);//设置adapter
 
         NewbieGuide.with(this)
+                .anchor(getActivity().getWindow().getDecorView())
                 .setLabel(System.nanoTime() + "")
                 .addGuidePage(GuidePage.newInstance()
-                        .addHighLight(getActivity().findViewById(R.id.button_two))
-                        .setLayoutRes(R.layout.guideview))
+                        .addHighLight(getActivity().findViewById(R.id.button_two), new RelativeGuide(R.layout.view_guide_simple,
+                                Gravity.TOP, 10)))
+                .addGuidePage(GuidePage.newInstance()
+                        .addHighLight(getActivity().findViewById(R.id.button_one), new RelativeGuide(R.layout.view_guide_simple,
+                                Gravity.LEFT)))
                 .show();
     }
 
@@ -125,8 +127,8 @@ public class RecyclerFragment extends BasicFragment {
      * @author isanwenyu@163.com
      */
     public void showNextTipViewOnCreated() {
-        mHightLight = new HighLight(getActivity())//
-                 /*.anchor(getActivity().findViewById(R.id.id_container))//如果是Activity上增加引导层，不需要设置anchor*/
+        /*mHightLight = new HighLight(getActivity())//
+         *//*.anchor(getActivity().findViewById(R.id.id_container))//如果是Activity上增加引导层，不需要设置anchor*//*
                 .autoRemove(false)
                 .enableNext()
                 .setOnLayoutCallback(new HighLightInterface.OnLayoutCallback() {
@@ -134,8 +136,8 @@ public class RecyclerFragment extends BasicFragment {
                     public void onLayouted() {
                         //界面布局完成添加tipview
                         mHightLight.addHighLight(R.id.button_one, R.layout.guideview, new OnLeftPosCallback(45), new RectLightShape())
-                                /*.addHighLight(R.id.btn_light,R.layout.info_gravity_left_down,new OnRightPosCallback(5),new CircleLightShape())
-                                .addHighLight(R.id.btn_bottomLight,R.layout.info_gravity_left_down,new OnTopPosCallback(),new CircleLightShape())*/;
+                                *//*.addHighLight(R.id.btn_light,R.layout.info_gravity_left_down,new OnRightPosCallback(5),new CircleLightShape())
+                                .addHighLight(R.id.btn_bottomLight,R.layout.info_gravity_left_down,new OnTopPosCallback(),new CircleLightShape())*//*;
                         //然后显示高亮布局
                         mHightLight.show();
                     }
@@ -146,7 +148,20 @@ public class RecyclerFragment extends BasicFragment {
                         Toast.makeText(getActivity(), "clicked and show next tip view by yourself", Toast.LENGTH_SHORT).show();
                         mHightLight.next();
                     }
-                });
+                });*/
+
+        /*new MaterialIntroView.Builder(getActivity())
+                //.enableDotAnimation(true)
+                //.enableIcon(false)
+                .setFocusGravity(FocusGravity.CENTER)
+                .setFocusType(Focus.MINIMUM)
+                .setDelayMillis(200)
+                .enableFadeAnimation(true)
+                .performClick(true)
+                .setTarget(getActivity().findViewById(R.id.button_two))
+                .setShape(ShapeType.RECTANGLE)
+                .setUsageId(System.nanoTime() + "") //THIS SHOULD BE UNIQUE ID
+                .show();*/
     }
 
     @Override
