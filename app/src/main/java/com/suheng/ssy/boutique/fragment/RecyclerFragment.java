@@ -12,8 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.app.hubert.guide.NewbieGuide;
+import com.app.hubert.guide.model.GuidePage;
 import com.suheng.ssy.boutique.BR;
 import com.suheng.ssy.boutique.BoutiqueApp;
 import com.suheng.ssy.boutique.FragmentRecyclerActivity;
@@ -32,6 +35,11 @@ import java.util.List;
 import java.util.Random;
 
 import javax.inject.Inject;
+
+import zhy.com.highlight.HighLight;
+import zhy.com.highlight.interfaces.HighLightInterface;
+import zhy.com.highlight.position.OnLeftPosCallback;
+import zhy.com.highlight.shape.RectLightShape;
 
 /**
  * Created by wbj on 2018/12/11.
@@ -78,12 +86,67 @@ public class RecyclerFragment extends BasicFragment {
         }
         mMyAdapter = new MyAdapter(mItemModels);
         mViewBinding.recyclerView.setAdapter(mMyAdapter);//设置adapter
+
+        NewbieGuide.with(this)
+                .setLabel(System.nanoTime() + "")
+                .addGuidePage(GuidePage.newInstance()
+                        .addHighLight(getActivity().findViewById(R.id.button_two))
+                        .setLayoutRes(R.layout.guideview))
+                .show();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.d(mTag, this + ", onResume");
+        this.showNextTipViewOnCreated();
+        /*getActivity().findViewById(R.id.button_one).post(new Runnable() {
+            @Override
+            public void run() {
+                GuideViewQueue.getInstance()
+                        .addBuilder(new GuideView.Builder(getActivity())
+                                .setTargetView(R.id.button_one)
+                                .setHintView(View.inflate(getActivity(), R.layout.guideview, null))
+                                .setHintViewDirection(GuideView.Direction.BOTTOM)
+                                .setForm(GuideView.Form.RECTANGLE))
+                        .show();
+            }
+        });*/
+    }
+
+    private HighLight mHightLight;
+
+    /**
+     * 当界面布局完成显示next模式提示布局
+     * 显示方法必须在onLayouted中调用
+     * 适用于Activity及Fragment中使用
+     * 可以直接在onCreated方法中调用
+     *
+     * @author isanwenyu@163.com
+     */
+    public void showNextTipViewOnCreated() {
+        mHightLight = new HighLight(getActivity())//
+                 /*.anchor(getActivity().findViewById(R.id.id_container))//如果是Activity上增加引导层，不需要设置anchor*/
+                .autoRemove(false)
+                .enableNext()
+                .setOnLayoutCallback(new HighLightInterface.OnLayoutCallback() {
+                    @Override
+                    public void onLayouted() {
+                        //界面布局完成添加tipview
+                        mHightLight.addHighLight(R.id.button_one, R.layout.guideview, new OnLeftPosCallback(45), new RectLightShape())
+                                /*.addHighLight(R.id.btn_light,R.layout.info_gravity_left_down,new OnRightPosCallback(5),new CircleLightShape())
+                                .addHighLight(R.id.btn_bottomLight,R.layout.info_gravity_left_down,new OnTopPosCallback(),new CircleLightShape())*/;
+                        //然后显示高亮布局
+                        mHightLight.show();
+                    }
+                })
+                .setClickCallback(new HighLight.OnClickCallback() {
+                    @Override
+                    public void onClick() {
+                        Toast.makeText(getActivity(), "clicked and show next tip view by yourself", Toast.LENGTH_SHORT).show();
+                        mHightLight.next();
+                    }
+                });
     }
 
     @Override
