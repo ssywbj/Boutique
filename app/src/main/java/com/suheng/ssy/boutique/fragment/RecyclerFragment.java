@@ -37,8 +37,6 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-import zhy.com.highlight.HighLight;
-
 /**
  * Created by wbj on 2018/12/11.
  */
@@ -84,84 +82,22 @@ public class RecyclerFragment extends BasicFragment {
         }
         mMyAdapter = new MyAdapter(mItemModels);
         mViewBinding.recyclerView.setAdapter(mMyAdapter);//设置adapter
-
-        NewbieGuide.with(this)
-                .anchor(getActivity().getWindow().getDecorView())
-                .setLabel(System.nanoTime() + "")
-                .addGuidePage(GuidePage.newInstance()
-                        .addHighLight(getActivity().findViewById(R.id.button_two), new RelativeGuide(R.layout.view_guide_simple,
-                                Gravity.TOP, 10)))
-                .addGuidePage(GuidePage.newInstance()
-                        .addHighLight(getActivity().findViewById(R.id.button_one), new RelativeGuide(R.layout.view_guide_simple,
-                                Gravity.LEFT)))
-                .show();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.d(mTag, this + ", onResume");
-        this.showNextTipViewOnCreated();
-        /*getActivity().findViewById(R.id.button_one).post(new Runnable() {
-            @Override
-            public void run() {
-                GuideViewQueue.getInstance()
-                        .addBuilder(new GuideView.Builder(getActivity())
-                                .setTargetView(R.id.button_one)
-                                .setHintView(View.inflate(getActivity(), R.layout.guideview, null))
-                                .setHintViewDirection(GuideView.Direction.BOTTOM)
-                                .setForm(GuideView.Form.RECTANGLE))
-                        .show();
-            }
-        });*/
-    }
-
-    private HighLight mHightLight;
-
-    /**
-     * 当界面布局完成显示next模式提示布局
-     * 显示方法必须在onLayouted中调用
-     * 适用于Activity及Fragment中使用
-     * 可以直接在onCreated方法中调用
-     *
-     * @author isanwenyu@163.com
-     */
-    public void showNextTipViewOnCreated() {
-        /*mHightLight = new HighLight(getActivity())//
-         *//*.anchor(getActivity().findViewById(R.id.id_container))//如果是Activity上增加引导层，不需要设置anchor*//*
-                .autoRemove(false)
-                .enableNext()
-                .setOnLayoutCallback(new HighLightInterface.OnLayoutCallback() {
-                    @Override
-                    public void onLayouted() {
-                        //界面布局完成添加tipview
-                        mHightLight.addHighLight(R.id.button_one, R.layout.guideview, new OnLeftPosCallback(45), new RectLightShape())
-                                *//*.addHighLight(R.id.btn_light,R.layout.info_gravity_left_down,new OnRightPosCallback(5),new CircleLightShape())
-                                .addHighLight(R.id.btn_bottomLight,R.layout.info_gravity_left_down,new OnTopPosCallback(),new CircleLightShape())*//*;
-                        //然后显示高亮布局
-                        mHightLight.show();
-                    }
-                })
-                .setClickCallback(new HighLight.OnClickCallback() {
-                    @Override
-                    public void onClick() {
-                        Toast.makeText(getActivity(), "clicked and show next tip view by yourself", Toast.LENGTH_SHORT).show();
-                        mHightLight.next();
-                    }
-                });*/
-
-        /*new MaterialIntroView.Builder(getActivity())
-                //.enableDotAnimation(true)
-                //.enableIcon(false)
-                .setFocusGravity(FocusGravity.CENTER)
-                .setFocusType(Focus.MINIMUM)
-                .setDelayMillis(200)
-                .enableFadeAnimation(true)
-                .performClick(true)
-                .setTarget(getActivity().findViewById(R.id.button_two))
-                .setShape(ShapeType.RECTANGLE)
-                .setUsageId(System.nanoTime() + "") //THIS SHOULD BE UNIQUE ID
-                .show();*/
+        NewbieGuide.with(this)
+                .anchor(getActivity().getWindow().getDecorView())
+                .setLabel(System.nanoTime() + "")
+                .addGuidePage(GuidePage.newInstance()
+                        .addHighLight(getActivity().findViewById(R.id.button_one), new RelativeGuide(R.layout.guide_left_center,
+                                Gravity.LEFT)))
+                .addGuidePage(GuidePage.newInstance()
+                        .addHighLight(getActivity().findViewById(R.id.button_two), new RelativeGuide(R.layout.guide_bottom_center,
+                                Gravity.BOTTOM, 10)))
+                .show();
     }
 
     @Override

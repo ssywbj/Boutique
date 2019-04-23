@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,12 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
-import com.suheng.ssy.boutique.view.GuideView;
-import com.suheng.ssy.boutique.view.GuideViewQueue;
-
-import easily.tech.guideview.lib.GuideViewFragment;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -29,123 +23,10 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions//注解在需要调用运行时权限的Activity或Fragment上(必须使用的注解)
 public class PermissionApplyActivity extends BasicActivity {
 
-    GuideViewFragment guideViewFragment;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_apply);
-        //this.showGuideViews();
-
-        findViewById(R.id.button4).post(new Runnable() {
-            @Override
-            public void run() {
-                initGuide();
-            }
-        });
-        int space = 2;
-        /*GuideViewBundle.Builder jjjjjjj = new GuideViewBundle.Builder()
-                .setTargetView(findViewById(R.id.button7))
-                .setHintView(this.createTextView("JJJJJJJ"))
-                .setDismissOnClicked(true)
-                .setHintViewMargin(0, 10, 0, 0)
-                .setTransparentSpace(space, space, space, space)
-                .setOutlineType(TYPE_RECT)
-                .setHintViewDirection(GuideViewBundle.Direction.BOTTOM);
-        guideViewFragment = new GuideViewFragment.Builder()
-                .addGuidViewBundle(new GuideViewBundle.Builder()
-                        .setTargetView(findViewById(R.id.button4))
-                        .setHintView(this.createTextView("HHHHHHH"))
-                        .setDismissOnClicked(true)
-                        .setHintViewMargin(0, 10, 0, 0)
-                        .setTransparentSpace(space, space, space, space)
-                        .setOutlineType(TYPE_RECT)
-                        .setHintViewDirection(GuideViewBundle.Direction.BOTTOM).build())
-                .addGuidViewBundle(jjjjjjj.build())
-                .addGuidViewBundle(new GuideViewBundle.Builder()
-                        .setTargetView(findViewById(R.id.button8))
-                        .setHintView(this.createTextView("KKKKKKKKKK"))
-                        .setDismissOnClicked(true)
-                        .setHintViewMargin(0, 10, 0, 0)
-                        .setTransparentSpace(space, space, space, space)
-                        .setOutlineType(TYPE_RECT)
-                        .setHintViewDirection(GuideViewBundle.Direction.BOTTOM).build())
-                .setCancelable(true)
-                .build();
-        guideViewFragment.show(getSupportFragmentManager(), "hit");*/
-    }
-
-    private GuideView guideView1, guideView2, guideView3;
-
-    private void initGuide() {
-        /*View inflate = View.inflate(this, R.layout.guideview, null);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-        View inflate = this.createTextView("YYYYYYYY");*/
-        /*guideView1 = new GuideView.Builder(this)
-                .setTargetView(R.id.button7)
-                .setHintView(inflate)
-                .setHintViewDirection(GuideView.Direction.ABOVE)
-                .setForm(GuideView.Form.RECTANGLE)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        guideView1.hide();
-                        guideView2.show();
-                    }
-                }).create();
-        guideView1.show();
-
-        inflate = View.inflate(this, R.layout.guideview2, null);
-        guideView2 = new GuideView.Builder(this)
-                .setTargetView(R.id.button4)
-                .setHintView(inflate)
-                .setHintViewDirection(GuideView.Direction.BOTTOM)
-                .setForm(GuideView.Form.RECTANGLE)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        guideView2.hide();
-                        guideView3.show();
-                    }
-                }).create();
-
-        inflate = View.inflate(this, R.layout.guideview3, null);
-        guideView3 = new GuideView.Builder(this)
-                .setTargetView(R.id.button8)
-                .setHintView(inflate)
-                .setHintViewDirection(GuideView.Direction.BOTTOM)
-                .setForm(GuideView.Form.RECTANGLE)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        guideView3.hide();
-                    }
-                }).create();*/
-
-        GuideViewQueue.getInstance()
-                .addBuilder(new GuideView.Builder(this)
-                        .setTargetView(R.id.button7)
-                        .setHintView(View.inflate(this, R.layout.guideview, null))
-                        .setHintViewDirection(GuideView.Direction.ABOVE)
-                        .setForm(GuideView.Form.RECTANGLE))
-                .addBuilder(new GuideView.Builder(this)
-                        .setTargetView(R.id.button4)
-                        .setHintView(View.inflate(this, R.layout.guideview2, null))
-                        .setHintViewDirection(GuideView.Direction.BOTTOM)
-                        .setForm(GuideView.Form.RECTANGLE))
-                .addBuilder(new GuideView.Builder(this)
-                        .setTargetView(R.id.button8)
-                        .setHintView(View.inflate(this, R.layout.guideview3, null))
-                        .setHintViewDirection(GuideView.Direction.BOTTOM)
-                        .setForm(GuideView.Form.RECTANGLE))
-                .addBuilder(new GuideView.Builder(this)
-                        .setTargetView(R.id.button6)
-                        .setHintView(View.inflate(this, R.layout.guideview4, null))
-                        .setHintViewDirection(GuideView.Direction.ABOVE)
-                        .setForm(GuideView.Form.RECTANGLE))
-                .show();
     }
 
     public void onClickWriteExternalStorage(View view) {
@@ -247,107 +128,4 @@ public class PermissionApplyActivity extends BasicActivity {
         builder.create().show();
     }
 
-    private GuideView mGVOne, mGuideViewTwo;
-/*    GuideView guideView;
-
-    private void showGuideViews() {
-        TextView hintText = new TextView(this);
-        hintText.setText("hello word");
-        hintText.setTextSize(15);
-        hintText.setTextColor(Color.WHITE);
-
-        *//*mGVOne = new GuideView.Builder(this)
-                .setTargetView(R.id.button8)
-                .setHintView(hintText)
-                .setHintViewDirection(Direction.BOTTOM)
-                .setTransparentOvalPadding(1)
-                .setHintViewMarginTop(10)
-                .setHintViewMarginLeft(100)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mGVOne.hide();
-                        mGuideViewTwo.show();
-                    }
-                }).create();
-        mGVOne.show();
-
-        hintText = new TextView(this);
-        hintText.setText("HHHHHH");
-        hintText.setTextSize(15);
-        hintText.setTextColor(Color.WHITE);
-        mGuideViewTwo = new GuideView.Builder(this)
-                .setTargetView(R.id.button4)
-                .setHintView(hintText)
-                .setHintViewDirection(Direction.BOTTOM)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mGuideViewTwo.hide();
-                    }
-                }).create();*//*
-        final GuideView guideView1 = new GuideView.Builder(this)
-                .targetView(R.id.button8)
-//                .targetView(R.id.ll3)
-//                .isShouldClickFocus(false)
-//                .isRealClickFocus(true)
-                .tipsView(this.createTextView())
-                //.tipsView(R.layout.layout_linearlayout)
-                .offsetX(0)
-                .offsetY(0)
-//                .shape(GuideView.SHAPE_RECTANGLE)
-//                .shape(GuideView.SHAPE_OVAL)
-//                .focusToShake(true)
-                .radian(10)
-                .roundRectOffset(10)
-//                .layoutGravity(Gravity.TOP)
-                .layoutGravity(Gravity.BOTTOM)
-//                .layoutGravity(Gravity.RIGHT)
-//                .layoutGravity(Gravity.LEFT)
-//                .onDismissListener(new GuideView.OnDismissListener() {
-//                    @Override
-//                    public void onDismiss() {
-//                        Log.e("setOnDismissListener","dismiss");
-//                    }
-//                })
-//                .bgColor(Color.parseColor("#b0239823"))
-                .blurRadius(5)
-                .create();
-        //guideView1.show();
-
-        guideView = new GuideView.Builder(this).targetView(R.id.button8).tipsView(createTextView())
-                .shape(GuideView.SHAPE_OVAL).layoutGravity(Gravity.BOTTOM).focusToShake(true).create();
-        guideView.show();
-        //use GuideViewQueue
-        *//*GuideViewQueue.add(new GuideView.Builder(this).targetView(R.id.button4).tipsView(createTextView())
-                .shape(GuideView.SHAPE_OVAL).layoutGravity(Gravity.BOTTOM).focusToShake(true).create());
-        GuideViewQueue.add(new GuideView.Builder(this).targetView(R.id.button5).tipsView(createTextView())
-                .layoutGravity(Gravity.BOTTOM).create());
-        GuideViewQueue.add(new GuideView.Builder(this).targetView(R.id.button7).tipsView(createTextView())
-                .shape(GuideView.SHAPE_RECTANGLE).layoutGravity(Gravity.BOTTOM).radian(10).roundRectOffset(10).create());
-        GuideViewQueue.setOnCompleteDismissListener(new GuideViewQueue.OnCompleteDismissListener() {
-            @Override
-            public void onDismiss() {
-                Log.e("GuideViewQueue", "finally dimiss");
-            }
-        });
-        GuideViewQueue.show();*//*
-    }*/
-
-    @Override
-    public void onBackPressed() {
-        if (GuideViewQueue.getInstance().hasNext()) {
-            GuideViewQueue.getInstance().onNext();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    private TextView createTextView(String text) {
-        TextView textView = new TextView(this);
-        textView.setTextColor(Color.WHITE);
-        textView.setTextSize(30f);
-        textView.setText(text);
-        return textView;
-    }
 }
