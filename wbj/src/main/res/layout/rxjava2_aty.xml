@@ -42,15 +42,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--https://blog.csdn.net/yanzi1225627/article/details/52163460：解决ScrollView的子View高度match_parent无效-->
         <com.wbj.view.ChangedScrollView
             android:id="@+id/my_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#f6f6f6">
+            android:background="#f6f6f6"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
@@ -123,12 +125,12 @@
                 <TextView
                     android:id="@+id/tv_contentView"
                     android:layout_width="match_parent"
-                    android:layout_height="1500dp"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:background="@color/white"
                     android:gravity="top|center_horizontal"
-                    android:paddingTop="160dp"
-                    android:text="我是评论1111\n\n\n\n\n\n\n\n\n我是评论2222\n\n\n\n\n\n\n\n\n我是评论3333\n\n\n\n\n\n\n\n\n我是评论4444\n\n\n\n\n\n\n\n\n我是评论5555\n\n\n\n\n\n\n\n\n"
+                    android:paddingTop="16dp"
+                    android:text="我是评论1111\n\n\n\n\n\n\n\n\n我是评论2222\n\n\n\n\n\n\n\n\n我是评论3333\n\n\n\n\n\n\n\n\n"
                     android:textSize="14sp"/>
             </LinearLayout>
 
