@@ -13,9 +13,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.app.hubert.guide.NewbieGuide;
+import com.app.hubert.guide.core.Controller;
+import com.app.hubert.guide.listener.OnLayoutInflatedListener;
 import com.app.hubert.guide.model.GuidePage;
 import com.app.hubert.guide.model.RelativeGuide;
 import com.suheng.ssy.boutique.BR;
@@ -84,11 +87,17 @@ public class RecyclerFragment extends BasicFragment {
         mViewBinding.recyclerView.setAdapter(mMyAdapter);//设置adapter
     }
 
+    private Controller mController;
+
     @Override
     public void onResume() {
         super.onResume();
         Log.d(mTag, this + ", onResume");
-        NewbieGuide.with(this)
+        if (mController != null) {
+            mController.remove();
+        }
+
+        mController = NewbieGuide.with(this)
                 .anchor(getActivity().getWindow().getDecorView())
                 .setLabel(System.nanoTime() + "")
                 .addGuidePage(GuidePage.newInstance()
@@ -96,8 +105,33 @@ public class RecyclerFragment extends BasicFragment {
                                 Gravity.LEFT)))
                 .addGuidePage(GuidePage.newInstance()
                         .addHighLight(getActivity().findViewById(R.id.button_two), new RelativeGuide(R.layout.guide_bottom_center,
-                                Gravity.BOTTOM, 10)))
+                                Gravity.BOTTOM, 10)).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                            @Override
+                            public void onLayoutInflated(View view, Controller controller) {
+                                ((TextView) view.findViewById(R.id.text_mm)).setText("代码中RelativeGuide的文案");//这样设置为什么会无效？
+                            }
+                        }))
+                .addGuidePage(GuidePage.newInstance()
+                        .addHighLight(getActivity().findViewById(R.id.button_two))
+                        .setLayoutRes(R.layout.guide_bottom_center)
+                        .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                            @Override
+                            public void onLayoutInflated(View view, Controller controller) {
+                                ((TextView) view.findViewById(R.id.text_mm)).setText("代码中动态设置的文案");
+                            }
+                        }))
                 .show();
+    }
+
+    public boolean hasNext() {
+        return (mController != null && mController.isShowing());
+    }
+
+    public void onNext() {
+        if (mController != null) {
+            int current = mController.getCurrent();
+            mController.showPage(++current);
+        }
     }
 
     @Override
