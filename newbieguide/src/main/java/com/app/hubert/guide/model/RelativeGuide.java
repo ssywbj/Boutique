@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.app.hubert.guide.core.Controller;
-import com.app.hubert.guide.util.LogUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -74,7 +73,6 @@ public class RelativeGuide {
         onLayoutInflated(view, controller);
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) view.getLayoutParams();
         MarginInfo marginInfo = getMarginInfo(gravity, viewGroup, view);
-        LogUtil.e(marginInfo.toString());
         offsetMargin(marginInfo, viewGroup, view);
         layoutParams.gravity = marginInfo.gravity;
         layoutParams.leftMargin += marginInfo.leftMargin;

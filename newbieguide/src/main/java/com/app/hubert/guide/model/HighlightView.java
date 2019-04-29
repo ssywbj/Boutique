@@ -4,7 +4,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.View;
 
-import com.app.hubert.guide.util.LogUtil;
 import com.app.hubert.guide.util.ViewUtils;
 
 /**
@@ -68,7 +67,6 @@ public class HighlightView implements HighLight {
         } else if (options != null && options.fetchLocationEveryTime) {
             rectF = fetchLocation(target);
         }
-        LogUtil.i(mHole.getClass().getSimpleName() + "'s location:" + rectF);
         return rectF;
     }
 

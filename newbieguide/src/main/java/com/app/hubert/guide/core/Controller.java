@@ -16,7 +16,6 @@ import com.app.hubert.guide.lifecycle.V4ListenerFragment;
 import com.app.hubert.guide.listener.OnGuideChangedListener;
 import com.app.hubert.guide.listener.OnPageChangedListener;
 import com.app.hubert.guide.model.GuidePage;
-import com.app.hubert.guide.util.LogUtil;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -130,6 +129,7 @@ public class Controller {
                     onGuideChangedListener.onRemoved(Controller.this);
                 }
                 removeListenerFragment();
+                remove();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -156,8 +156,9 @@ public class Controller {
     /**
      * 显示当前引导页的前一页
      */
-    public void showPreviewPage() {
-        showPage(--current);
+    public void showNext() {
+        int tempCurrent = current;
+        showPage(++tempCurrent);
     }
 
     /**
@@ -259,7 +260,6 @@ public class Controller {
             listenerFragment.setFragmentLifecycle(new FragmentLifecycleAdapter() {
                 @Override
                 public void onDestroyView() {
-                    LogUtil.i("ListenerFragment.onDestroyView");
                     remove();
                 }
             });
@@ -275,7 +275,6 @@ public class Controller {
             v4ListenerFragment.setFragmentLifecycle(new FragmentLifecycleAdapter() {
                 @Override
                 public void onDestroyView() {
-                    LogUtil.i("v4ListenerFragment.onDestroyView");
                     remove();
                 }
             });

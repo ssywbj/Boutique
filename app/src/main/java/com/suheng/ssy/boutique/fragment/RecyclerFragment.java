@@ -52,6 +52,7 @@ public class RecyclerFragment extends BasicFragment {
     private List<ItemModel> mItemModels = new ArrayList<>();
     private MyAdapter mMyAdapter;
     private ItemModel mCurrentItem;
+    private Controller mController;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,8 +88,6 @@ public class RecyclerFragment extends BasicFragment {
         mViewBinding.recyclerView.setAdapter(mMyAdapter);//设置adapter
     }
 
-    private Controller mController;
-
     @Override
     public void onResume() {
         super.onResume();
@@ -123,14 +122,13 @@ public class RecyclerFragment extends BasicFragment {
                 .show();
     }
 
-    public boolean hasNext() {
+    public boolean hasNextNewbie() {
         return (mController != null && mController.isShowing());
     }
 
-    public void onNext() {
+    public void onNextNewbie() {
         if (mController != null) {
-            int current = mController.getCurrent();
-            mController.showPage(++current);
+            mController.showNext();
         }
     }
 

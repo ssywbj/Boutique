@@ -1,16 +1,8 @@
 package com.app.hubert.guide.lifecycle;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 
-import com.app.hubert.guide.util.LogUtil;
-
-/**
- * Created by hubert
- * <p>
- * Created on 2017/9/13.
- */
-
-public class V4ListenerFragment extends Fragment {
+public class ListenerFragment extends Fragment {
 
     FragmentLifecycle mFragmentLifecycle;
 
@@ -21,7 +13,6 @@ public class V4ListenerFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        LogUtil.d("onStart: ");
         if (mFragmentLifecycle != null) mFragmentLifecycle.onStart();
     }
 
@@ -40,7 +31,6 @@ public class V4ListenerFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LogUtil.d("onDestroy: ");
         if (mFragmentLifecycle != null) mFragmentLifecycle.onDestroy();
     }
 }

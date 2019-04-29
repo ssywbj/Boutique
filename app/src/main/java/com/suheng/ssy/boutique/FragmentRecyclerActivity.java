@@ -2,7 +2,6 @@ package com.suheng.ssy.boutique;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.suheng.ssy.boutique.fragment.RecyclerFragment;
 
@@ -38,9 +37,8 @@ public class FragmentRecyclerActivity extends PermissionApplyActivity {
 
     @Override
     public void onBackPressed() {
-        if (mRecyclerFragment.hasNext()) {
-            Log.d("WBJ", "mRecyclerFragment.isShowingNewbieLayer() = " + mRecyclerFragment.hasNext());
-            mRecyclerFragment.onNext();
+        if (mRecyclerFragment.hasNextNewbie()) {
+            mRecyclerFragment.onNextNewbie();
         } else {
             super.onBackPressed();
         }

@@ -35,9 +35,7 @@ public class ViewUtils {
             return result;
         }
         while (tmp != decorView && tmp != parent) {
-            LogUtil.i("tmp class:" + tmp.getClass().getSimpleName());
             tmp.getHitRect(tmpRect);
-            LogUtil.i("tmp hit Rect:" + tmpRect);
             if (!tmp.getClass().equals(FRAGMENT_CON)) {
                 result.left += tmpRect.left;
                 result.top += tmpRect.top;
@@ -50,13 +48,11 @@ public class ViewUtils {
             if (tmp.getParent() instanceof ScrollView) {
                 ScrollView scrollView = (ScrollView) tmp.getParent();
                 int scrollY = scrollView.getScrollY();
-                LogUtil.i("scrollY:" + scrollY);
                 result.top -= scrollY;
             }
             if (tmp.getParent() instanceof HorizontalScrollView) {
                 HorizontalScrollView horizontalScrollView = (HorizontalScrollView) tmp.getParent();
                 int scrollX = horizontalScrollView.getScrollX();
-                LogUtil.i("scrollX:" + scrollX);
                 result.left -= scrollX;
             }
 
