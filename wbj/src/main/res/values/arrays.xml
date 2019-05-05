@@ -10,6 +10,6 @@
         <item>监听剪贴板的复制操作</item>
         <item>DragSortListView</item>
         <item>MVC模式与MVP模式</item>
-        <item>RxJava2</item>
+        <item>TitleScrollView</item>
     </array>
 </resources>

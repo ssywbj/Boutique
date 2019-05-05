@@ -35,7 +35,7 @@ public class WbjActivity extends AppCompatActivity {
         sAtyArray.put(8, "com.wbj.view.DragListActivity");
         sAtyArray.put(9, "com.example.wbj.MVPLoginActivity");
         //sAtyArray.put(9, "com.example.wbj.MVCLoginActivity");
-        sAtyArray.put(10, "com.example.wbj.RxJava2Activity");
+        sAtyArray.put(10, "com.example.wbj.TitleScrollViewActivity");
 
         FrameLayout rootLayout = findViewById(android.R.id.content);
         Log.i(TAG, "rootLayout: " + rootLayout);
@@ -98,7 +98,6 @@ public class WbjActivity extends AppCompatActivity {
             }
 
             /**
-             * @param absListView
              * @param firstVisibleItem 屏幕里第一个Item(部分显示的也算)在ListView中的位置
              * @param visibleItemCount 屏幕里可以见到的Item(部分显示的也算)数量
              * @param totalItemCount Item总数

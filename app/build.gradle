@@ -12,7 +12,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [moduleName: project.getName()/*ARouter*/, "room.schemaLocation": "$projectDir/schemas".toString()]
+                arguments = [moduleName: project.getName()/*ARouter配置*/, "room.schemaLocation": "$projectDir/schemas".toString()/*room配置*/]
             }
         }
 

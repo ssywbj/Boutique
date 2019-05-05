@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.wbj.view.ChangedScrollView;
 
-public class RxJava2Activity extends AppCompatActivity implements ChangedScrollView.OnScrollListener {
+public class TitleScrollViewActivity extends AppCompatActivity implements ChangedScrollView.OnScrollListener {
     private static final String TAG = "WBJ";
     private ViewGroup mPrepareLayoutTitle;//固定在顶部的Layout
     private ViewGroup mParentLayoutTitle;
@@ -16,7 +16,7 @@ public class RxJava2Activity extends AppCompatActivity implements ChangedScrollV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.rxjava2_aty);
+        setContentView(R.layout.title_scroll_view);
 
         mParentLayoutTitle = findViewById(R.id.parent_layout_title);
         mChildLayoutTitle = findViewById(R.id.child_layout_title);
@@ -26,9 +26,11 @@ public class RxJava2Activity extends AppCompatActivity implements ChangedScrollV
 
     @Override
     public void onScroll(int scrollY, boolean isToBottom) {
-        final int height = mParentLayoutTitle.getTop();
+        /*原理：当滚动到头部时，把固定的头部从父布局中移除，添加到最外层布局（和ScrollView平级的Layout）里面；
+        当滚动返回时， 又把最外层的头部移除，重新添加到原来的父布局里面*/
+        final int height = mParentLayoutTitle.getTop();//头部父布局到ScrollView顶部的高度
         Log.d(TAG, "scrollY = " + scrollY + ", height = " + height);
-        if (scrollY > 0 && scrollY >= height) {
+        if (scrollY > 0 && scrollY >= height) {//滚动到头部父布局的位置
             if (mChildLayoutTitle.getParent() != mPrepareLayoutTitle) {
                 mParentLayoutTitle.removeView(mChildLayoutTitle);
                 mPrepareLayoutTitle.addView(mChildLayoutTitle);

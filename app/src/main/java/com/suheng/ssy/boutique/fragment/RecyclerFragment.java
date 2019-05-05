@@ -96,6 +96,7 @@ public class RecyclerFragment extends BasicFragment {
             mController.remove();
         }
 
+        //NewbieGuide框架：https://github.com/huburt-Hu/NewbieGuide
         mController = NewbieGuide.with(this)
                 .anchor(getActivity().getWindow().getDecorView())
                 .setLabel(System.nanoTime() + "")
