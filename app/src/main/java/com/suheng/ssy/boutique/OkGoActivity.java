@@ -50,8 +50,8 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                 .cacheTime(10 * 1000)
                 .headers("header1", "headValue1")//传递服务端需要的http请求头
                 .headers("header2", "headValue2")
-                .params("param1", "paramValue1", false)//传递键值对参数，格式也是http协议中的格式，最后一个isReplace为可选参数,默认为true，即代表相同key的时候，后添加的会覆盖先前添加的
-                .params("param2", "paramValue2")
+                .params("param2", "paramValue2", false)//传递键值对参数，格式也是http协议中的格式，最后一个isReplace为可选参数,默认为true，即代表相同key的时候，后添加的会覆盖先前添加的
+                .params("param3", "paramValue3")
                 //.params("file1", new File("filePath1"))
                 //.params("file2", new File("filePath2"))
                 .addUrlParams("key", Arrays.asList(new String[]{"key1,key2"}))
@@ -60,14 +60,14 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                 .execute(new Callback<String>() {
                     @Override
                     public void onStart(Request<String, ? extends Request> request) {
-                        Log.d(mTag, "onStart-->" + request + ", " + request.getUrl());
+                        Log.d(mTag, "11111onStart-->" + request + ", " + request.getUrl());
                     }
 
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
-                            Log.d(mTag, "onSuccess-->" + response + " ,-->" + response.code() + ", " + response.message() + "-->" + response.body());
-                            Log.d(mTag, "onSuccess-->response.getRawResponse().body()-->" + response.getRawResponse().body().string());
+                            Log.d(mTag, "11111onSuccess-->response = " + response + ", code = " + response.code() + ", message = " + response.message() + ", body = " + response.body()
+                                    + ", getRawResponse().body = " + response.getRawResponse().body().string());
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -75,32 +75,32 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
 
                     @Override
                     public void onCacheSuccess(Response<String> response) {
-                        Log.d(mTag, "onCacheSuccess-->" + response + ", " + response.message());
+                        Log.d(mTag, "11111onCacheSuccess-->" + response + ", " + response.message());
                     }
 
                     @Override
                     public void onError(Response<String> response) {
-                        Log.d(mTag, "onError-->" + response + ", " + response.message());
+                        Log.d(mTag, "11111onError-->" + response + ", " + response.message());
                     }
 
                     @Override
                     public void onFinish() {
-                        Log.d(mTag, "onFinish-->");
+                        Log.d(mTag, "11111onFinish-->");
                     }
 
                     @Override
                     public void uploadProgress(Progress progress) {
-                        Log.d(mTag, "uploadProgress-->" + progress);
+                        Log.d(mTag, "11111uploadProgress-->" + progress);
                     }
 
                     @Override
                     public void downloadProgress(Progress progress) {
-                        Log.d(mTag, "downloadProgress-->" + progress);
+                        Log.d(mTag, "11111downloadProgress-->" + progress);
                     }
 
                     @Override
                     public String convertResponse(okhttp3.Response response) throws Throwable {
-                        Log.d(mTag, "convertResponse-->" + response + "\n" + response.body().string());
+                        Log.d(mTag, "11111convertResponse-->" + response + "\n" + response.body().string());
                         return null;
                     }
                 });
@@ -116,31 +116,31 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.d(mTag, "Upload params, onSuccess-->" + response.code() + "-->"
+                        Log.d(mTag, "22222Upload params, onSuccess-->" + response.code() + "-->"
                                 + response.message() + "-->" + response.body());
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Log.d(mTag, "Upload params, onError-->" + response.code() + "-->" + response.message()
+                        Log.d(mTag, "22222Upload params, onError-->" + response.code() + "-->" + response.message()
                                 + "-->" + response.body());
                     }
                 });
     }
 
     public void onClickCallback(View view) {
-        OkGo.<String>get(URL).tag(this)
+        OkGo.<String>get(URL + "/").tag(this)//如果单纯的URL后不加“/”，请求时HTTP会重定向，自动帮在URL后帮我们加上“/”
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.d(mTag, "String, onSuccess-->" + response.code() + ", " + response.body());
+                        Log.d(mTag, "33333String, onSuccess-->" + response.code() + ", " + response.body());
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Log.d(mTag, "String, onError-->" + response.code() + ", " + response.message());
+                        Log.d(mTag, "33333String, onError-->" + response.code() + ", " + response.message());
                     }
                 });
 
@@ -149,20 +149,20 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                 .execute(new BitmapCallback() {
                     @Override
                     public void onSuccess(Response<Bitmap> response) {
-                        Log.d(mTag, "Bitmap, onSuccess-->" + response.code() + ", " + response.body());
+                        Log.d(mTag, "44444Bitmap, onSuccess-->" + response.code() + ", " + response.body());
                         ((ImageView) findViewById(R.id.image_url)).setImageBitmap(response.body());
                     }
 
                     @Override
                     public void onError(Response<Bitmap> response) {
                         super.onError(response);
-                        Log.d(mTag, "Bitmap, onError-->" + response.code() + ", " + response.body());
+                        Log.d(mTag, "44444Bitmap, onError-->" + response.code() + ", " + response.body());
                     }
 
                     @Override
                     public void onFinish() {
                         super.onFinish();
-                        Log.d(mTag, "Bitmap, onFinish-->");
+                        Log.d(mTag, "44444Bitmap, onFinish-->");
                     }
                 });
     }
@@ -174,20 +174,20 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                     @Override
                     public Bitmap convertResponse(okhttp3.Response response) throws Throwable {
                         Bitmap bitmap = super.convertResponse(response);
-                        Log.d(mTag, "post, convertResponse-->" + response.code() + ", " + response.body() + ", " + bitmap);
+                        Log.d(mTag, "55555post, convertResponse-->" + response.code() + ", " + response.body() + ", " + bitmap);
                         return bitmap;
                     }
 
                     @Override
                     public void onSuccess(Response<Bitmap> response) {
-                        Log.d(mTag, "post, onSuccess-->" + response.code() + ", " + response.body());
+                        Log.d(mTag, "55555post, onSuccess-->" + response.code() + ", " + response.body());
                         ((ImageView) findViewById(R.id.image_url)).setImageBitmap(response.body());
                     }
 
                     @Override
                     public void onError(Response<Bitmap> response) {
                         super.onError(response);
-                        Log.d(mTag, "post, onError-->" + response.code() + ", " + response.message() + ", " + response.body());
+                        Log.d(mTag, "55555post, onError-->" + response.code() + ", " + response.message() + ", " + response.body());
                     }
                 });
 
@@ -197,14 +197,14 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.d(mTag, "post params, onSuccess-->" + response.code() + "-->" + response.message()
+                        Log.d(mTag, "66666post params, onSuccess-->" + response.code() + "-->" + response.message()
                                 + "-->" + response.body());
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Log.d(mTag, "post params, onError-->" + response.code() + "-->" + response.message()
+                        Log.d(mTag, "66666post params, onError-->" + response.code() + "-->" + response.message()
                                 + "-->" + response.body());
                     }
                 });
@@ -222,24 +222,24 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                     @Override
                     public void onStart(Request<File, ? extends Request> request) {
                         super.onStart(request);
-                        Log.d(mTag, "File, onStart-->" + request.getUrl());
+                        Log.d(mTag, "77777File, onStart-->" + request.getUrl());
                     }
 
                     @Override
                     public void onSuccess(Response<File> response) {//如果不指定下载目录,默认为sdcard/download/
-                        Log.d(mTag, "File, onSuccess-->" + response.body().getName() + ", " + response.body().getAbsolutePath() + ", " + response.body().length());
+                        Log.d(mTag, "77777File, onSuccess-->" + response.body().getName() + ", " + response.body().getAbsolutePath() + ", " + response.body().length());
                     }
 
                     @Override
                     public void downloadProgress(Progress progress) {
                         super.downloadProgress(progress);
-                        Log.d(mTag, "File, downloadProgress-->" + progress.totalSize + ", " + progress.speed + ", " + progress.currentSize);
+                        Log.d(mTag, "77777File, downloadProgress-->" + progress.totalSize + ", " + progress.speed + ", " + progress.currentSize);
                     }
 
                     @Override
                     public void onError(Response<File> response) {
                         super.onError(response);
-                        Log.d(mTag, "File, onError-->" + response.code() + ", " + response.message() + ", " + response.isFromCache());
+                        Log.d(mTag, "77777File, onError-->" + response.code() + ", " + response.message() + ", " + response.isFromCache());
                     }
                 });
     }
@@ -266,14 +266,14 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.d(mTag, "Upload String, onSuccess-->" + response.code() + "-->" + response.message()
+                        Log.d(mTag, "88888Upload String, onSuccess-->" + response.code() + "-->" + response.message()
                                 + "-->" + response.body());
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Log.d(mTag, "Upload String, onError-->" + response.code() + "-->" + response.message()
+                        Log.d(mTag, "88888Upload String, onError-->" + response.code() + "-->" + response.message()
                                 + "-->" + response.body());
                     }
                 });
@@ -283,14 +283,14 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.d(mTag, "Upload params String, onSuccess-->" + response.code() + "-->" + response.message()
+                        Log.d(mTag, "99999Upload params String, onSuccess-->" + response.code() + "-->" + response.message()
                                 + "-->" + response.body());
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Log.d(mTag, "Upload params String, onError-->" + response.code() + "-->" + response.message()
+                        Log.d(mTag, "99999Upload params String, onError-->" + response.code() + "-->" + response.message()
                                 + "-->" + response.body());
                     }
                 });
@@ -306,20 +306,20 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
-                                Log.d(mTag, "Upload File, onSuccess-->" + response.code() + "-->" + response.message()
+                                Log.d(mTag, "00000Upload File, onSuccess-->" + response.code() + "-->" + response.message()
                                         + "-->" + response.body());
                             }
 
                             @Override
                             public void uploadProgress(Progress progress) {
                                 super.uploadProgress(progress);
-                                Log.d(mTag, "Upload File, uploadProgress-->" + progress.totalSize + ", " + progress.speed + ", " + progress.currentSize);
+                                Log.d(mTag, "00000Upload File, uploadProgress-->" + progress.totalSize + ", " + progress.speed + ", " + progress.currentSize);
                             }
 
                             @Override
                             public void onError(Response<String> response) {
                                 super.onError(response);
-                                Log.d(mTag, "Upload File, onError-->" + response.code() + "-->" + response.message() + "-->" + response.body());
+                                Log.d(mTag, "00000Upload File, onError-->" + response.code() + "-->" + response.message() + "-->" + response.body());
                             }
                         });
 
@@ -330,20 +330,20 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
-                                Log.d(mTag, "params File, onSuccess-->" + response.code() + "-->" + response.message()
+                                Log.d(mTag, "AAAAAparams File, onSuccess-->" + response.code() + "-->" + response.message()
                                         + "-->" + response.body());
                             }
 
                             @Override
                             public void uploadProgress(Progress progress) {
                                 super.uploadProgress(progress);
-                                Log.d(mTag, "params File, uploadProgress-->" + progress.totalSize + ", " + progress.speed + ", " + progress.currentSize);
+                                Log.d(mTag, "AAAAAparams File, uploadProgress-->" + progress.totalSize + ", " + progress.speed + ", " + progress.currentSize);
                             }
 
                             @Override
                             public void onError(Response<String> response) {
                                 super.onError(response);
-                                Log.d(mTag, "params File, onError-->" + response.code() + "-->" + response.message() + "-->" + response.body());
+                                Log.d(mTag, "AAAAAparams File, onError-->" + response.code() + "-->" + response.message() + "-->" + response.body());
                             }
                         });
             } else {
