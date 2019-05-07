@@ -34,6 +34,7 @@ import okhttp3.OkHttpClient;
  */
 public class BoutiqueApp extends Application {
 
+    public static final int NET_REQUEST_TIMEOUT = 5;
     private static AppComponent sAppComponent;
 
     @Override
@@ -79,10 +80,10 @@ public class BoutiqueApp extends Application {
         loggingInterceptor.setColorLevel(Level.INFO);
         builder.addInterceptor(loggingInterceptor);
 
-        //默认使用的超时时间就是60秒，如果想改，可以自己设置
-        builder.readTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
-        builder.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
-        builder.connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
+        //默认使用的超时时间是60（OkGo.DEFAULT_MILLISECONDS）秒，如果想改，可以自己设置
+        builder.readTimeout(NET_REQUEST_TIMEOUT, TimeUnit.SECONDS);
+        builder.writeTimeout(NET_REQUEST_TIMEOUT, TimeUnit.SECONDS);
+        builder.connectTimeout(NET_REQUEST_TIMEOUT, TimeUnit.SECONDS);
 
         //自动管理cookie（或者叫session的保持），以下几种任选一种就行
         //builder.cookieJar(new CookieJarImpl(new SPCookieStore(this)));
