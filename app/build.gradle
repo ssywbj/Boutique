@@ -33,10 +33,16 @@ android {
     packagingOptions {
         exclude 'LICENSE.txt'
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
@@ -48,6 +54,7 @@ dependencies {
     //dagger依赖
     implementation "com.google.dagger:dagger-android:$rootProject.daggerAndroidVersion"
     implementation "com.google.dagger:dagger-android-support:$rootProject.daggerAndroidSupportVersion"
+
     //if you use the support libraries
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerCompilerVersion"
 
@@ -56,29 +63,33 @@ dependencies {
         exclude group: 'com.android.support'
     }
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.arouterCompilerVersion"
-
     implementation "com.lzy.net:okgo:$rootProject.okGoVersion"
-
     if (!rootProject.ext.isModule2Independent) {
         implementation project(':module2')
     }
-
     implementation project(':boutique')
+    implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
 
-    implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'//沉浸式状态栏
+    //沉浸式状态栏
 
     //RxJava
+
     //implementation 'io.reactivex:rxjava:1.0.14'
+
     //implementation 'io.reactivex:rxandroid:1.0.1'
 
     //RxBinding: 依赖RxBinding就不需要再依赖RxJava，因为内部已经包含了
     implementation "com.jakewharton.rxbinding2:rxbinding:$rootProject.rxBindingVersion"
 
     //database
+
     /*implementation "androidx.room:room-runtime:$rootProject.roomVersion"
-    annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"*///androidx暂不了解
+        annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"*/
+
+    //androidx暂不了解
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+
     //添加测试支持，可以对数据库进行AndroidTest
     implementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
 
@@ -93,6 +104,8 @@ dependencies {
 
     //小圆点
     implementation 'q.rorbin:badgeview:1.1.3'
+
     //新功能引导蒙层
     implementation project(path: ':newbieguide')
+    implementation files('libs/Msc.jar')
 }

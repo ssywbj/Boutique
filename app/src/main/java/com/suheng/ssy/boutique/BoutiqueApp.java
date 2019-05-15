@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.iflytek.cloud.SpeechUtility;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -57,6 +58,8 @@ public class BoutiqueApp extends Application {
         ARouter.init(this);//尽可能早，推荐在Application中初始化
 
         this.initOkGo();
+
+        SpeechUtility.createUtility(this, "appid=5cd92db2");
     }
 
     public AppComponent getAppComponent() {
