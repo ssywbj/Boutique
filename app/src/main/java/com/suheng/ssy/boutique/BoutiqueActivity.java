@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.suheng.ssy.boutique.model.Constants;
 
 import ying.jie.boutique.MainActivity;
 
@@ -96,6 +97,9 @@ public class BoutiqueActivity extends BasicActivity {
                     case 13:
                         intent = new Intent(BoutiqueActivity.this, RedDotActivity.class);
                         break;
+                    case 14:
+                        ARouter.getInstance().build(Constants.ROUTER_APP_ACTIVITY_KEYBOARD);
+                        break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
                         break;
@@ -108,7 +112,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, OkGoActivity.class));
+        startActivity(new Intent(this, KeyboardActivity.class));
     }
 
 }
