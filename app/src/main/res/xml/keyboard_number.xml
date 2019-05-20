@@ -1,56 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Keyboard
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
     android:keyWidth="33.33%p"
     android:keyHeight="50dp">
 
+    <!--
+    codes:：ASCII码，若没有设置keyOutputText属性，对应的输出为primaryCode；
+    keyLabel：显示在键盘上的文案；
+    keyOutputText：按下键盘时输出的文案
+    -->
     <Row>
         <Key
             android:codes="49"
-            android:keyLabel="1"/>
+            android:keyLabel="1"
+            android:keyOutputText="1" />
         <Key
-            android:codes="50"
-            android:keyLabel="2"/>
+            android:keyLabel="2"
+            android:keyOutputText="2" />
         <Key
-            android:codes="51"
-            android:keyLabel="3"/>
+            android:keyLabel="3"
+            android:keyOutputText="3" />
     </Row>
 
     <Row>
         <Key
-            android:codes="52"
-            android:keyLabel="4"/>
+            android:keyLabel="4"
+            android:keyOutputText="4" />
         <Key
-            android:codes="53"
-            android:keyLabel="5"/>
+            android:keyLabel="5"
+            android:keyOutputText="5" />
         <Key
-            android:codes="54"
-            android:keyLabel="6"/>
+            android:keyLabel="6"
+            android:keyOutputText="6" />
     </Row>
 
     <Row>
         <Key
-            android:codes="55"
-            android:keyLabel="7"/>
+            android:keyLabel="7"
+            android:keyOutputText="7" />
         <Key
-            android:codes="56"
-            android:keyLabel="8"/>
+            android:keyLabel="8"
+            android:keyOutputText="8" />
         <Key
-            android:codes="57"
-            android:keyLabel="9"/>
+            android:keyLabel="9"
+            android:keyOutputText="9" />
     </Row>
 
     <Row>
         <Key
             android:codes="-10"
-            android:keyLabel="ABC"/>
+            android:keyLabel="ABC" />
         <Key
-            android:codes="48"
-            android:keyLabel="0"/>
-
+            android:keyLabel="0"
+            android:keyOutputText="0" />
         <Key
             android:codes="-12"
-            android:keyLabel="#+="/>
+            android:keyLabel="#+=" />
     </Row>
 
 </Keyboard>
