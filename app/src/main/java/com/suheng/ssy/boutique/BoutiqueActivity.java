@@ -98,7 +98,7 @@ public class BoutiqueActivity extends BasicActivity {
                         intent = new Intent(BoutiqueActivity.this, RedDotActivity.class);
                         break;
                     case 14:
-                        ARouter.getInstance().build(Constants.ROUTER_APP_ACTIVITY_KEYBOARD);
+                        ARouter.getInstance().build(Constants.ROUTER_APP_ACTIVITY_KEYBOARD).navigation();
                         break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
