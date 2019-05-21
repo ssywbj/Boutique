@@ -53,8 +53,9 @@
             android:keyLabel="0"
             android:keyOutputText="0" />
         <Key
-            android:codes="-12"
-            android:keyLabel="#+=" />
+            android:codes="-5"
+            android:isRepeatable="true"
+            android:keyLabel="Del" />
     </Row>
 
 </Keyboard>
