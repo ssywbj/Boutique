@@ -34,14 +34,14 @@ public abstract class BasicActivity extends AppCompatActivity {
         return mCompositeDisposable;
     }
 
-    public void showSoftKeyboard(View view) {
+    public void showSoftInput(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         if (inputMethodManager != null && view != null) {
             inputMethodManager.showSoftInput(view, 0);
         }
     }
 
-    public void hideSoftKeyboard() {
+    public void hideSoftInput() {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
             inputMethodManager.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
