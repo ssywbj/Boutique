@@ -24,11 +24,11 @@
         android:layout_marginTop="16dp"
         android:ems="10"/>
 
-    <android.inputmethodservice.KeyboardView
+    <com.suheng.ssy.boutique.view.BoutiqueKeyboard
         android:id="@+id/keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/keyboard_margin_bottom"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 </RelativeLayout>
