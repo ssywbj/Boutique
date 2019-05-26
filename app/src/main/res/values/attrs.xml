@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BoutiqueKeyboard"><!--BoutiqueKeyboard：类名-->
+        <attr name="type" format="enum">
+            <enum name="number" value="0" />
+            <enum name="identity" value="1" />
+            <enum name="alphabet" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

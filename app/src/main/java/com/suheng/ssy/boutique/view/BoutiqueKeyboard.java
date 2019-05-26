@@ -1,12 +1,17 @@
 package com.suheng.ssy.boutique.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
 import android.util.Log;
 
 import com.suheng.ssy.boutique.R;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class BoutiqueKeyboard extends KeyboardView {
     private static final String TAG = BoutiqueKeyboard.class.getSimpleName();
@@ -16,21 +21,34 @@ public class BoutiqueKeyboard extends KeyboardView {
     private Keyboard mKeyboardNumber;
     private Keyboard mKeyboardAlphabet;
     private OnKeyListener mOnKeyListener;
+    private List<Character> mKeyNumbers = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+    private int mType = 0;
 
     public BoutiqueKeyboard(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.init();
+        this.init(context, attrs, 0);
     }
 
     public BoutiqueKeyboard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.init();
+        this.init(context, attrs, defStyleAttr);
     }
 
-    private void init() {
-        mKeyboardNumber = new Keyboard(getContext(), R.xml.keyboard_number);
-        mKeyboardAlphabet = new Keyboard(getContext(), R.xml.keyboard_alphabet);
-        setKeyboard(mKeyboardNumber);
+    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.BoutiqueKeyboard, defStyleAttr, 0);
+        mType = typedArray.getInt(R.styleable.BoutiqueKeyboard_type, 0);
+        typedArray.recycle();
+
+        mKeyboardNumber = new Keyboard(context, R.xml.keyboard_number);
+        mKeyboardAlphabet = new Keyboard(context, R.xml.keyboard_alphabet);
+
+        if (mType == 0 || mType == 1) {
+            setKeyboard(mKeyboardNumber);
+            this.shuffleNumbers();
+        } else {
+            setKeyboard(mKeyboardAlphabet);
+        }
+
         setPreviewEnabled(false);//回显，默认为true
         setOnKeyboardActionListener(new KeyboardView.OnKeyboardActionListener() {
             @Override
@@ -39,7 +57,7 @@ public class BoutiqueKeyboard extends KeyboardView {
             }
 
             @Override
-            public void onRelease(int primaryCode) {//只要设置keyOutputText属性，输出primaryCode都为-1
+            public void onRelease(int primaryCode) {//只要设置了keyOutputText属性，输出primaryCode都为-1
                 Log.d(TAG, "onRelease, primaryCode = " + primaryCode);
             }
 
@@ -98,33 +116,32 @@ public class BoutiqueKeyboard extends KeyboardView {
         });
     }
 
-    /*// 0-9 数字的 Character 值
-    private final List<Character> mKeyCodes = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7',
-            '8', '9');
 
-    *//**
-     * 随机打乱数字键盘上键位的排列顺序。
-     *//*
-    public void shuffleKeyboard() {
+    private void shuffleNumbers() {//随机打乱数字键盘上键位的排列顺序
         Keyboard keyboard = getKeyboard();
-        if (keyboard != null && keyboard.getKeys() != null && keyboard.getKeys().size() > 0) {
-
-            Collections.shuffle(mKeyCodes); // 随机排序数字
-
-            // 遍历所有的按键
-            List<Keyboard.Key> keys = getKeyboard().getKeys();
-            int index = 0;
-            for (Keyboard.Key key : keys) {
-                // 如果按键是数字
-                if (key.codes[0] != ALPHABET && key.codes[0] != Keyboard.KEYCODE_DELETE) {
-                    char code = mKeyCodes.get(index++);
-                    key.codes[0] = code;
-                    key.label = Character.toString(code);
-                }
-            }
-            setKeyboard(keyboard);
+        if (keyboard == null || keyboard.getKeys() == null || keyboard.getKeys().isEmpty()) {
+            return;
         }
-    }*/
+        Collections.shuffle(mKeyNumbers); // 随机排序数字
+        int index = 0;
+        for (Keyboard.Key key : keyboard.getKeys()) {
+            if (key.codes[0] != Keyboard.KEYCODE_DELETE) {
+                if (key.codes[0] == ALPHABET) {
+                    if (mType == 1) {//身份证键盘需要把“ABC”键变成“X”
+                        key.label = Character.toString('X');
+                        key.text = key.label;
+                    }
+                    continue;
+                }
+
+                char code = mKeyNumbers.get(index++);
+                //key.codes[0] = code;//char可以自动转为int
+                key.label = Character.toString(code);
+                key.text = key.label;
+            }
+        }
+        setKeyboard(keyboard);
+    }
 
     public void setOnKeyListener(OnKeyListener onKeyListener) {
         mOnKeyListener = onKeyListener;
