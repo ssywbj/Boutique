@@ -39,13 +39,12 @@ public class BoutiqueKeyboard extends KeyboardView {
         mType = typedArray.getInt(R.styleable.BoutiqueKeyboard_type, 0);
         typedArray.recycle();
 
-        mKeyboardNumber = new Keyboard(context, R.xml.keyboard_number);
-        mKeyboardAlphabet = new Keyboard(context, R.xml.keyboard_alphabet);
-
         if (mType == 0 || mType == 1) {
+            mKeyboardNumber = new Keyboard(context, R.xml.keyboard_number);
             setKeyboard(mKeyboardNumber);
             this.shuffleNumbers();
         } else {
+            mKeyboardAlphabet = new Keyboard(context, R.xml.keyboard_alphabet);
             setKeyboard(mKeyboardAlphabet);
         }
 
@@ -65,10 +64,19 @@ public class BoutiqueKeyboard extends KeyboardView {
             public void onKey(int primaryCode, int[] keyCodes) {//只要设置keyOutputText属性，就不会执行该方法，而是执行onText方法
                 if (primaryCode == ALPHABET) {
                     Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", alphabet" + ", keyCodes.length = " + keyCodes.length);
+                    if (mKeyboardAlphabet == null) {
+                        mKeyboardAlphabet = new Keyboard(getContext(), R.xml.keyboard_alphabet);
+                    }
                     setKeyboard(mKeyboardAlphabet);
                 } else if (primaryCode == NUMBER) {
                     Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", number" + ", keyCodes.length = " + keyCodes.length);
-                    setKeyboard(mKeyboardNumber);
+                    if (mKeyboardNumber == null) {
+                        mKeyboardNumber = new Keyboard(getContext(), R.xml.keyboard_number);
+                        setKeyboard(mKeyboardNumber);
+                        shuffleNumbers();
+                    } else {
+                        setKeyboard(mKeyboardNumber);
+                    }
                 } else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
                     Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", shift" + ", keyCodes.length = " + keyCodes.length);
                     mKeyboardAlphabet.setShifted(!mKeyboardAlphabet.isShifted());
@@ -78,7 +86,7 @@ public class BoutiqueKeyboard extends KeyboardView {
                     if (mOnKeyListener != null) {
                         mOnKeyListener.onDelete();
                     }
-                } else if (primaryCode >= 97 && primaryCode <= 97 + 26) {//按下字母键
+                } else if (primaryCode >= 97 && primaryCode <= 97 + 25) {//按下字母键，ASCII码：A-65，a-97
                     Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", alphabet unit key");
                     this.onText(mKeyboardAlphabet.isShifted() ? Character.toString((char) (primaryCode - 32)) : Character.toString((char) (primaryCode)));
                 } else {
@@ -125,15 +133,15 @@ public class BoutiqueKeyboard extends KeyboardView {
         Collections.shuffle(mKeyNumbers); // 随机排序数字
         int index = 0;
         for (Keyboard.Key key : keyboard.getKeys()) {
-            if (key.codes[0] != Keyboard.KEYCODE_DELETE) {
-                if (key.codes[0] == ALPHABET) {
-                    if (mType == 1) {//身份证键盘需要把“ABC”键变成“X”
-                        key.label = Character.toString('X');
-                        key.text = key.label;
-                    }
-                    continue;
+            if (key.codes[0] == ALPHABET) {
+                if (mType == 1) {//身份证键盘需要把“ABC”键变成“X”
+                    key.label = Character.toString('X');
+                    key.text = key.label;
                 }
+                continue;
+            }
 
+            if (key.codes[0] >= 48 && key.codes[0] <= 57) {//ASCII码：0-48，
                 char code = mKeyNumbers.get(index++);
                 //key.codes[0] = code;//char可以自动转为int
                 key.label = Character.toString(code);

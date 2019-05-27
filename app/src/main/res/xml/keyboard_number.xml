@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="33.33%p"
+<Keyboard
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:keyWidth="25%p"
     android:keyHeight="50dp">
 
     <!--
@@ -12,50 +13,67 @@
         <Key
             android:codes="49"
             android:keyLabel="1"
-            android:keyOutputText="1" />
+            android:keyOutputText="1"/>
         <Key
             android:keyLabel="2"
-            android:keyOutputText="2" />
+            android:keyOutputText="2"/>
         <Key
             android:keyLabel="3"
-            android:keyOutputText="3" />
+            android:keyOutputText="3"/>
+        <Key
+            android:codes="-5"
+            android:isRepeatable="true"
+            android:keyHeight="100dp"
+            android:keyLabel="Del"/>
     </Row>
 
     <Row>
         <Key
             android:keyLabel="4"
-            android:keyOutputText="4" />
+            android:keyOutputText="4"/>
         <Key
             android:keyLabel="5"
-            android:keyOutputText="5" />
+            android:keyOutputText="5"/>
         <Key
             android:keyLabel="6"
-            android:keyOutputText="6" />
+            android:keyOutputText="6"/>
+        <Key
+            android:codes="-13"
+            android:keyHeight="0dp"
+            android:keyLabel=""/>
     </Row>
 
     <Row>
         <Key
             android:keyLabel="7"
-            android:keyOutputText="7" />
+            android:keyOutputText="7"/>
         <Key
             android:keyLabel="8"
-            android:keyOutputText="8" />
+            android:keyOutputText="8"/>
         <Key
             android:keyLabel="9"
-            android:keyOutputText="9" />
+            android:keyOutputText="9"/>
+        <Key
+            android:codes="-4"
+            android:isRepeatable="true"
+            android:keyHeight="100dp"
+            android:keyLabel="Done"/>
     </Row>
 
     <Row>
         <Key
             android:codes="-10"
-            android:keyLabel="ABC" />
+            android:keyLabel="ABC"/>
         <Key
             android:keyLabel="0"
-            android:keyOutputText="0" />
+            android:keyOutputText="0"/>
         <Key
-            android:codes="-5"
-            android:isRepeatable="true"
-            android:keyLabel="Del" />
+            android:codes="-12"
+            android:keyLabel="#+="/>
+        <Key
+            android:codes="-13"
+            android:keyHeight="0dp"
+            android:keyLabel=""/>
     </Row>
 
 </Keyboard>
