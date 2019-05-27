@@ -37,10 +37,6 @@
         <Key
             android:keyLabel="6"
             android:keyOutputText="6"/>
-        <Key
-            android:codes="-13"
-            android:keyHeight="0dp"
-            android:keyLabel=""/>
     </Row>
 
     <Row>
@@ -70,10 +66,6 @@
         <Key
             android:codes="-12"
             android:keyLabel="#+="/>
-        <Key
-            android:codes="-13"
-            android:keyHeight="0dp"
-            android:keyLabel=""/>
     </Row>
 
 </Keyboard>

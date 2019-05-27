@@ -41,8 +41,7 @@ public class BoutiqueKeyboard extends KeyboardView {
 
         if (mType == 0 || mType == 1) {
             mKeyboardNumber = new Keyboard(context, R.xml.keyboard_number);
-            setKeyboard(mKeyboardNumber);
-            this.shuffleNumbers();
+            this.shuffleNumbers(mKeyboardNumber);
         } else {
             mKeyboardAlphabet = new Keyboard(context, R.xml.keyboard_alphabet);
             setKeyboard(mKeyboardAlphabet);
@@ -72,8 +71,7 @@ public class BoutiqueKeyboard extends KeyboardView {
                     Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", number" + ", keyCodes.length = " + keyCodes.length);
                     if (mKeyboardNumber == null) {
                         mKeyboardNumber = new Keyboard(getContext(), R.xml.keyboard_number);
-                        setKeyboard(mKeyboardNumber);
-                        shuffleNumbers();
+                        shuffleNumbers(mKeyboardNumber);
                     } else {
                         setKeyboard(mKeyboardNumber);
                     }
@@ -125,12 +123,11 @@ public class BoutiqueKeyboard extends KeyboardView {
     }
 
 
-    private void shuffleNumbers() {//随机打乱数字键盘上键位的排列顺序
-        Keyboard keyboard = getKeyboard();
+    private void shuffleNumbers(Keyboard keyboard) {//随机打乱数字键盘上键位的排列顺序
         if (keyboard == null || keyboard.getKeys() == null || keyboard.getKeys().isEmpty()) {
             return;
         }
-        Collections.shuffle(mKeyNumbers); // 随机排序数字
+        Collections.shuffle(mKeyNumbers);//随机排序数字
         int index = 0;
         for (Keyboard.Key key : keyboard.getKeys()) {
             if (key.codes[0] == ALPHABET) {
@@ -141,7 +138,7 @@ public class BoutiqueKeyboard extends KeyboardView {
                 continue;
             }
 
-            if (key.codes[0] >= 48 && key.codes[0] <= 57) {//ASCII码：0-48，
+            if (key.codes[0] >= 48 && key.codes[0] <= 57) {//ASCII码：0-48
                 char code = mKeyNumbers.get(index++);
                 //key.codes[0] = code;//char可以自动转为int
                 key.label = Character.toString(code);
