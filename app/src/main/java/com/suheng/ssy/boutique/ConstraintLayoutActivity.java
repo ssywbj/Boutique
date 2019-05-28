@@ -1,5 +1,6 @@
 package com.suheng.ssy.boutique;
 
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -18,7 +19,6 @@ import javax.inject.Inject;
 
 public class ConstraintLayoutActivity extends BasicActivity implements LoginNavigator {
     private static final String TAG = ConstraintLayoutActivity.class.getSimpleName();
-    private static final int TRANSLATION_DISTANCE = 1340;
     private LoginViewModel mLoginViewModel;
 
     //A a;
@@ -71,8 +71,22 @@ public class ConstraintLayoutActivity extends BasicActivity implements LoginNavi
             mLayoutSms = mLayoutBinding.stubSms.getViewStub().inflate();
         }
 
-        ObjectAnimator.ofFloat(mLayoutPwd, View.TRANSLATION_X, 0, -TRANSLATION_DISTANCE).setDuration(400).start();//往左移，出屏幕
-        ObjectAnimator.ofFloat(mLayoutSms, View.TRANSLATION_X, TRANSLATION_DISTANCE, 0).setDuration(400).start();//往左移，进屏幕
+        int right = mLayoutPwd.getRight();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mLayoutPwd, View.TRANSLATION_X, 0, -right);//往左移，出屏幕
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(mLayoutPwd, View.ALPHA, 1, 0);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animator, animator1);
+        animatorSet.setDuration(400);
+        animatorSet.start();
+
+        //ObjectAnimator.ofFloat(mLayoutSms, View.TRANSLATION_X, right, 0).setDuration(400).start();//往左移，进屏幕
+        //ObjectAnimator.ofFloat(mLayoutSms, View.ALPHA, 0, 1).setDuration(400).start();//往左移，进屏幕
+
+        AnimatorSet animatorSet1 = new AnimatorSet();
+        animatorSet1.playTogether(ObjectAnimator.ofFloat(mLayoutSms, View.TRANSLATION_X, right, 0)
+                , ObjectAnimator.ofFloat(mLayoutSms, View.ALPHA, 0, 1));
+        animatorSet1.setDuration(400);
+        animatorSet1.start();
     }
 
     @Override
@@ -81,7 +95,18 @@ public class ConstraintLayoutActivity extends BasicActivity implements LoginNavi
             mLayoutPwd = mLayoutBinding.stubPwd.getViewStub().inflate();
         }
 
-        ObjectAnimator.ofFloat(mLayoutSms, View.TRANSLATION_X, 0, -TRANSLATION_DISTANCE).setDuration(400).start();//往左移，出屏幕
-        ObjectAnimator.ofFloat(mLayoutPwd, View.TRANSLATION_X, TRANSLATION_DISTANCE, 0).setDuration(400).start();//往左移，进屏幕
+        int right = mLayoutSms.getRight();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mLayoutSms, View.TRANSLATION_X, 0, -right);//往左移，出屏幕
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animator, ObjectAnimator.ofFloat(mLayoutSms, View.ALPHA, 1, 0));
+        animatorSet.setDuration(400);
+        animatorSet.start();
+
+        //ObjectAnimator.ofFloat(mLayoutPwd, View.TRANSLATION_X, right, 0);//往左移，进屏幕
+        AnimatorSet animatorSet1 = new AnimatorSet();
+        animatorSet1.playTogether(ObjectAnimator.ofFloat(mLayoutPwd, View.TRANSLATION_X, right, 0)
+                , ObjectAnimator.ofFloat(mLayoutPwd, View.ALPHA, 0, 1));
+        animatorSet1.setDuration(400);
+        animatorSet1.start();
     }
 }

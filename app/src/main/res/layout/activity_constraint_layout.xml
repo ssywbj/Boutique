@@ -56,28 +56,29 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/logint_btn_height"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="44dp"
             android:layout_marginEnd="24dp"
             android:enabled="@{loginViewModel.btnLoginEnabled}"
             android:onClick="@{()->loginViewModel.onClickLogin()}"
             android:text="登录"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divide_line_pwd"/>
+            app:layout_constraintTop_toBottomOf="@+id/divide_line_pwd" />
 
         <TextView
             android:id="@+id/btn_switch_login_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:layout_marginEnd="4dp"
             android:onClick="@{()->loginViewModel.onClickSwitchType()}"
             android:text="@{loginViewModel.loginBySms ? @string/login_by_pwd : @string/login_by_sms, default = 登录切换}"
             android:textColor="@color/text_switch_login_type"
             app:layout_constraintEnd_toEndOf="@+id/btn_login"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login"/>
+            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
         <ImageButton
             android:id="@+id/btn_clear_input"
@@ -98,13 +99,14 @@
             android:id="@+id/imageView"
             android:layout_width="@dimen/login_user_icon"
             android:layout_height="@dimen/login_user_icon"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="64dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_launcher_round"/>
+            app:srcCompat="@mipmap/ic_launcher_round" />
 
         <TextView
             android:id="@+id/textView5"
@@ -151,11 +153,10 @@
             android:id="@+id/frameLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="@+id/btn_clear_input"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/edit_phone">
+            app:layout_constraintTop_toBottomOf="@+id/divide_line_phone">
 
             <ViewStub
                 android:id="@+id/stub_sms"
