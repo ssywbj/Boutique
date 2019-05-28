@@ -21,11 +21,11 @@ public class LoginViewModel {
     //赋值为new ObservableField<>("")时，mPhoneNumber.get()的默认值为""；而赋值为new ObservableField<>()时，mPhoneNumber.get()默认值为null，稍有不注意引用到就会报空指针异常。
     public ObservableField<String> mPhoneNumber = new ObservableField<>("");
     public ObservableField<String> mSmsCode = new ObservableField<>("");
-    public ObservableField<String> mPwd = new ObservableField<>("");
+    private ObservableField<String> mPwd = new ObservableField<>("");
     public ObservableField<String> mObtainSmsCountdown = new ObservableField<>("");
-    public ObservableBoolean mIsBtnObtainSmsEnabled = new ObservableBoolean();
-    public ObservableBoolean mIsBtnLoginEnabled = new ObservableBoolean();
-    public ObservableBoolean mIsLoginBySms = new ObservableBoolean(true);
+    public ObservableBoolean mBtnObtainSmsEnabled = new ObservableBoolean();
+    private ObservableBoolean mBtnLoginEnabled = new ObservableBoolean();
+    private ObservableBoolean mLoginBySms = new ObservableBoolean(true);
     private CountDownTimer mCountDownTimer;
     private boolean mIsCountdownStatus;
 
@@ -34,7 +34,7 @@ public class LoginViewModel {
     }
 
     public void onClickLogin() {
-        if (mIsLoginBySms.get()) {
+        if (mLoginBySms.get()) {
             this.loginBySms();
         } else {
             this.loginByPwd();
@@ -44,7 +44,7 @@ public class LoginViewModel {
     /*在绑定表达式中会根据需要生成一个名为context的特殊变量，context的值是根据View的getContext()方法返回的Context对象，
     context变量会被具有该名称的显式变量声明所覆盖*/
     public void onClickObtainSms(final Context context) {
-        mIsBtnObtainSmsEnabled.set(false);//倒计时过程中，获取短信按钮不可用
+        mBtnObtainSmsEnabled.set(false);//倒计时过程中，获取短信按钮不可用
         mIsCountdownStatus = true;
 
         /*倒计时类CountDownTimer有误差而且随着倒计时的增加，误差有增大的迹象（具体可看打印日志），
@@ -61,7 +61,7 @@ public class LoginViewModel {
                 public void onFinish() {
                     //Log.d(TAG, "onFinish, CountDownTimer" + ", " + Thread.currentThread().getName());
                     mObtainSmsCountdown.set(context.getString(R.string.obtain_sms_retry));
-                    mIsBtnObtainSmsEnabled.set(isPhoneLegal());
+                    mBtnObtainSmsEnabled.set(isPhoneLegal());
                     mIsCountdownStatus = false;
                 }
             };
@@ -72,16 +72,25 @@ public class LoginViewModel {
     }
 
     public void onClickSwitchType() {
-        mIsLoginBySms.set(!mIsLoginBySms.get());
+        if (mLoginBySms.get()) {
+            mLoginNavigator.switchPwdLogin();
+        } else {
+            mLoginNavigator.switchSmsLogin();
+        }
+        mLoginBySms.set(!mLoginBySms.get());
     }
 
     public void onClickClearInput() {
         mPhoneNumber.set("");
     }
 
+    public void onClickEyes() {
+        mPhoneNumber.set("");
+    }
+
     public void afterTextChanged(Editable s) {
-        mIsBtnObtainSmsEnabled.set(mIsCountdownStatus ? false : this.isPhoneLegal());// 如果处于倒计时中，那么获取短信按钮肯定是处于不可用状态
-        mIsBtnLoginEnabled.set(this.isPhoneLegal() && this.isSmsCodeLegal());
+        mBtnObtainSmsEnabled.set(!mIsCountdownStatus && this.isPhoneLegal());// 如果处于倒计时中，那么获取短信按钮肯定是处于不可用状态
+        mBtnLoginEnabled.set(this.isPhoneLegal() && this.isSmsCodeLegal());
     }
 
     private boolean isPhoneLegal() {
@@ -105,4 +114,18 @@ public class LoginViewModel {
             mCountDownTimer.cancel();
         }
     }
+
+    //-----------------------------start: setter and getter-------------------------------------
+    public ObservableField<String> getPwd() {
+        return mPwd;
+    }
+
+    public ObservableBoolean getBtnLoginEnabled() {
+        return mBtnLoginEnabled;
+    }
+
+    public ObservableBoolean getLoginBySms() {
+        return mLoginBySms;
+    }
+    //-----------------------------end: setter and getter-------------------------------------
 }

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="com.suheng.ssy.boutique.model.LoginViewModel" />
+        <import type="com.suheng.ssy.boutique.model.LoginViewModel"/>
 
         <variable
             name="loginViewModel"
-            type="LoginViewModel" />
-
-        <import type="com.suheng.ssy.boutique.utils.StringUtils" />
+            type="LoginViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -33,29 +32,7 @@
             app:layout_constraintEnd_toStartOf="@+id/edit_phone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edit_phone" />
-
-        <TextView
-            android:id="@+id/text_obtain_sms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/text_obtain_sms_bg"
-            android:enabled="@{loginViewModel.mIsBtnObtainSmsEnabled}"
-            android:gravity="center"
-            android:onClick="@{()->loginViewModel.onClickObtainSms(context)}"
-            android:paddingStart="@dimen/text_obtain_sms_padding_lr"
-            android:paddingTop="@dimen/text_obtain_sms_padding_tb"
-            android:paddingEnd="@dimen/text_obtain_sms_padding_lr"
-            android:paddingBottom="@dimen/text_obtain_sms_padding_tb"
-            android:text="@{StringUtils.isEmpty(loginViewModel.mObtainSmsCountdown)?@string/obtain_sms_code:loginViewModel.mObtainSmsCountdown}"
-            android:textColor="@{loginViewModel.mIsBtnObtainSmsEnabled?@color/text_obtain_sms_enabled:@color/text_obtain_sms_disabled}"
-            android:textSize="@dimen/text_obtain_sms"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_sms_code"
-            app:layout_constraintEnd_toEndOf="@+id/btn_clear_input"
-            app:layout_constraintStart_toEndOf="@+id/edit_sms_code"
-            app:layout_constraintTop_toTopOf="@+id/edit_sms_code" />
+            app:layout_constraintTop_toTopOf="@+id/edit_phone"/>
 
         <EditText
             android:id="@+id/edit_phone"
@@ -71,21 +48,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-        <EditText
-            android:id="@+id/edit_sms_code"
-            style="@style/EditInput"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/edit_input_height"
-            android:layout_marginTop="6dp"
-            android:afterTextChanged="@{loginViewModel::afterTextChanged}"
-            android:hint="请输入验证码"
-            android:inputType="number"
-            android:text="@={loginViewModel.mSmsCode}"
-            app:layout_constraintEnd_toStartOf="@+id/text_obtain_sms"
-            app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/divide_line_phone" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5"/>
 
         <Button
             android:id="@+id/btn_login"
@@ -95,14 +58,14 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="28dp"
             android:layout_marginEnd="24dp"
-            android:enabled="@{loginViewModel.mIsBtnLoginEnabled}"
+            android:enabled="@{loginViewModel.btnLoginEnabled}"
             android:onClick="@{()->loginViewModel.onClickLogin()}"
             android:text="登录"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divide_line_pwd" />
+            app:layout_constraintTop_toBottomOf="@+id/divide_line_pwd"/>
 
         <TextView
             android:id="@+id/btn_switch_login_type"
@@ -111,10 +74,10 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:onClick="@{()->loginViewModel.onClickSwitchType()}"
-            android:text="@{loginViewModel.mIsLoginBySms?@string/login_by_pwd:@string/login_by_sms}"
+            android:text="@{loginViewModel.loginBySms ? @string/login_by_pwd : @string/login_by_sms, default = 登录切换}"
             android:textColor="@color/text_switch_login_type"
             app:layout_constraintEnd_toEndOf="@+id/btn_login"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_login"/>
 
         <ImageButton
             android:id="@+id/btn_clear_input"
@@ -129,7 +92,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toEndOf="@+id/edit_phone"
             app:layout_constraintTop_toTopOf="@+id/edit_phone"
-            app:srcCompat="@drawable/clear" />
+            app:srcCompat="@drawable/clear"/>
 
         <ImageView
             android:id="@+id/imageView"
@@ -141,7 +104,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_launcher_round" />
+            app:srcCompat="@mipmap/ic_launcher_round"/>
 
         <TextView
             android:id="@+id/textView5"
@@ -156,7 +119,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView"/>
 
         <ImageView
             android:id="@+id/divide_line_phone"
@@ -169,7 +132,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_phone"
-            app:srcCompat="@color/divide_line" />
+            app:srcCompat="@color/divide_line"/>
 
         <ImageView
             android:id="@+id/divide_line_pwd"
@@ -181,8 +144,33 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_sms_code"
-            app:srcCompat="@color/divide_line" />
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+            app:srcCompat="@color/divide_line"/>
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/btn_clear_input"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/edit_phone">
+
+            <ViewStub
+                android:id="@+id/stub_sms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout="@layout/activity_layout_stub_sms"
+                app:loginViewModel="@{loginViewModel}"/>
+
+            <ViewStub
+                android:id="@+id/stub_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout="@layout/activity_layout_stub_pwd"
+                app:loginViewModel="@{loginViewModel}"/>
+        </FrameLayout>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

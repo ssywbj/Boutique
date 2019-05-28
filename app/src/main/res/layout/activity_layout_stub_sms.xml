@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.suheng.ssy.boutique.model.LoginViewModel" />
+
+        <variable
+            name="loginViewModel"
+            type="LoginViewModel" />
+
+        <import type="com.suheng.ssy.boutique.utils.StringUtils" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_sms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ConstraintLayoutActivity">
+
+        <TextView
+            android:id="@+id/text_obtain_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/text_obtain_sms_bg"
+            android:enabled="@{loginViewModel.mBtnObtainSmsEnabled}"
+            android:gravity="center"
+            android:onClick="@{()->loginViewModel.onClickObtainSms(context)}"
+            android:paddingStart="@dimen/text_obtain_sms_padding_lr"
+            android:paddingTop="@dimen/text_obtain_sms_padding_tb"
+            android:paddingEnd="@dimen/text_obtain_sms_padding_lr"
+            android:paddingBottom="@dimen/text_obtain_sms_padding_tb"
+            android:text="@{StringUtils.isEmpty(loginViewModel.mObtainSmsCountdown) ? @string/obtain_sms_code : loginViewModel.mObtainSmsCountdown}"
+            android:textColor="@{loginViewModel.mBtnObtainSmsEnabled ? @color/text_obtain_sms_enabled :@color/text_obtain_sms_disabled}"
+            android:textSize="@dimen/text_obtain_sms"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_sms_code"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_sms_code"/>
+
+        <EditText
+            android:id="@+id/edit_sms_code"
+            style="@style/EditInput"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edit_input_height"
+            android:afterTextChanged="@{loginViewModel::afterTextChanged}"
+            android:hint="请输入验证码"
+            android:inputType="number"
+            android:paddingEnd="8dp"
+            android:text="@={loginViewModel.mSmsCode}"
+            app:layout_constraintEnd_toStartOf="@+id/text_obtain_sms"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

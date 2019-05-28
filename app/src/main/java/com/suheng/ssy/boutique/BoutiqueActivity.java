@@ -112,7 +112,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, KeyboardActivity.class));
+        startActivity(new Intent(this, ConstraintLayoutActivity.class));
     }
 
 }

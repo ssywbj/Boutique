@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.suheng.ssy.boutique.model.LoginViewModel" />
+
+        <variable
+            name="loginViewModel"
+            type="LoginViewModel" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ConstraintLayoutActivity">
+
+        <EditText
+            android:id="@+id/edit_sms_code"
+            style="@style/EditInput"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edit_input_height"
+            android:afterTextChanged="@{loginViewModel::afterTextChanged}"
+            android:hint="8-16位数字+字母密码"
+            android:inputType="textPassword"
+            android:paddingEnd="8dp"
+            android:text="@={loginViewModel.mSmsCode}"
+            app:layout_constraintEnd_toStartOf="@+id/btn_eyes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/btn_eyes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:onClick="@{()->loginViewModel.onClickEyes()}"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_sms_code"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_sms_code"
+            app:srcCompat="@drawable/clear"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
