@@ -15,8 +15,9 @@ import com.suheng.ssy.boutique.R;
 public class LoginViewModel {
 
     public static final String TAG = LoginViewModel.class.getSimpleName();
-    public static final int EDIT_PHONE_MAX_LENGTH = 11;
-    public static final int EDIT_SMS_CODE_MAX_LENGTH = 6;
+    public static final int PHONE_MAX_LENGTH = 11;
+    public static final int SMS_CODE_MAX_LENGTH = 6;
+    public static final int PWD_MAX_LENGTH = 16;
     private LoginNavigator mLoginNavigator;
     //赋值为new ObservableField<>("")时，mPhoneNumber.get()的默认值为""；而赋值为new ObservableField<>()时，mPhoneNumber.get()默认值为null，稍有不注意引用到就会报空指针异常。
     public ObservableField<String> mPhoneNumber = new ObservableField<>("");
@@ -25,7 +26,7 @@ public class LoginViewModel {
     public ObservableField<String> mObtainSmsCountdown = new ObservableField<>("");
     public ObservableBoolean mBtnObtainSmsEnabled = new ObservableBoolean();
     private ObservableBoolean mBtnLoginEnabled = new ObservableBoolean();
-    private ObservableBoolean mLoginBySms = new ObservableBoolean(true);
+    private ObservableBoolean mLoginBySms = new ObservableBoolean(false);
     private CountDownTimer mCountDownTimer;
     private boolean mIsCountdownStatus;
 
@@ -77,7 +78,6 @@ public class LoginViewModel {
         } else {
             mLoginNavigator.switchSmsLogin();
         }
-        mLoginBySms.set(!mLoginBySms.get());
     }
 
     public void onClickClearInput() {
@@ -85,20 +85,49 @@ public class LoginViewModel {
     }
 
     public void onClickEyes() {
-        mPhoneNumber.set("");
+        mPwd.set("");
     }
 
     public void afterTextChanged(Editable s) {
         mBtnObtainSmsEnabled.set(!mIsCountdownStatus && this.isPhoneLegal());// 如果处于倒计时中，那么获取短信按钮肯定是处于不可用状态
-        mBtnLoginEnabled.set(this.isPhoneLegal() && this.isSmsCodeLegal());
+        this.setLoginBtnEnabled();
+    }
+
+    public void afterSmsOrPwdTextChanged(Editable s) {
+        this.setLoginBtnEnabled();
+    }
+
+    private void setLoginBtnEnabled() {
+        if (this.isPhoneLegal()) {
+            if (mLoginBySms.get()) {
+                if (this.isSmsCodeLegal()) {
+                    mBtnLoginEnabled.set(true);
+                } else {
+                    mBtnLoginEnabled.set(false);
+                }
+            } else {
+                if (this.isPwdLegal()) {
+                    mBtnLoginEnabled.set(true);
+                } else {
+                    mBtnLoginEnabled.set(false);
+                }
+            }
+        } else {
+            mBtnLoginEnabled.set(false);
+        }
     }
 
     private boolean isPhoneLegal() {
-        return mPhoneNumber.get().matches("^[1][3456789]\\d{" + (EDIT_PHONE_MAX_LENGTH - 2) + "}$");
+        return mPhoneNumber.get().matches("^[1][3-9]\\d{" + (PHONE_MAX_LENGTH - 2) + "}$");
     }
 
     private boolean isSmsCodeLegal() {
-        return mSmsCode.get().matches("^\\d{" + (EDIT_SMS_CODE_MAX_LENGTH) + "}$");
+        return mSmsCode.get().matches("^\\d{" + (SMS_CODE_MAX_LENGTH) + "}$");
+    }
+
+    private boolean isPwdLegal() {
+        int length = mPwd.get().length();
+        return length >= 8 && length <= PWD_MAX_LENGTH;
     }
 
     private void loginBySms() {
@@ -122,6 +151,10 @@ public class LoginViewModel {
 
     public ObservableBoolean getBtnLoginEnabled() {
         return mBtnLoginEnabled;
+    }
+
+    public void setLoginBySms(boolean loginBySms) {
+        mLoginBySms.set(loginBySms);
     }
 
     public ObservableBoolean getLoginBySms() {

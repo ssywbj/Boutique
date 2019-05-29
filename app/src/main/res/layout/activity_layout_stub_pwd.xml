@@ -6,11 +6,11 @@
 
     <data>
 
-        <import type="com.suheng.ssy.boutique.model.LoginViewModel" />
+        <import type="com.suheng.ssy.boutique.model.LoginViewModel"/>
 
         <variable
             name="loginViewModel"
-            type="LoginViewModel" />
+            type="LoginViewModel"/>
 
     </data>
 
@@ -21,15 +21,15 @@
         tools:context=".ConstraintLayoutActivity">
 
         <EditText
-            android:id="@+id/edit_sms_code"
+            android:id="@+id/edit_pwd"
             style="@style/EditInput"
             android:layout_width="0dp"
             android:layout_height="@dimen/edit_input_height"
-            android:afterTextChanged="@{loginViewModel::afterTextChanged}"
+            android:afterTextChanged="@{loginViewModel::afterSmsOrPwdTextChanged}"
             android:hint="8-16位数字+字母密码"
             android:inputType="textPassword"
             android:paddingEnd="8dp"
-            android:text="@={loginViewModel.mSmsCode}"
+            android:text="@={loginViewModel.pwd}"
             app:layout_constraintEnd_toStartOf="@+id/btn_eyes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -40,9 +40,9 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:onClick="@{()->loginViewModel.onClickEyes()}"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_sms_code"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_pwd"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edit_sms_code"
+            app:layout_constraintTop_toTopOf="@+id/edit_pwd"
             app:srcCompat="@drawable/clear"/>
 
     </android.support.constraint.ConstraintLayout>

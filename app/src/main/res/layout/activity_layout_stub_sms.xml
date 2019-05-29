@@ -37,16 +37,16 @@
             android:text="@{StringUtils.isEmpty(loginViewModel.mObtainSmsCountdown) ? @string/obtain_sms_code : loginViewModel.mObtainSmsCountdown}"
             android:textColor="@{loginViewModel.mBtnObtainSmsEnabled ? @color/text_obtain_sms_enabled :@color/text_obtain_sms_disabled}"
             android:textSize="@dimen/text_obtain_sms"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_sms_code"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_sms"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edit_sms_code"/>
+            app:layout_constraintTop_toTopOf="@+id/edit_sms"/>
 
         <EditText
-            android:id="@+id/edit_sms_code"
+            android:id="@+id/edit_sms"
             style="@style/EditInput"
             android:layout_width="0dp"
             android:layout_height="@dimen/edit_input_height"
-            android:afterTextChanged="@{loginViewModel::afterTextChanged}"
+            android:afterTextChanged="@{loginViewModel::afterSmsOrPwdTextChanged}"
             android:hint="请输入验证码"
             android:inputType="number"
             android:paddingEnd="8dp"
