@@ -17,11 +17,14 @@ public class BoutiqueKeyboard extends KeyboardView {
     private static final String TAG = BoutiqueKeyboard.class.getSimpleName();
     private static final int ALPHABET = -10;//字母表
     private static final int NUMBER = -11;//数字键
-    //private static final int PUNCTUATIONS = -12;//标点符号集
+    private static final int PUNCTUATIONS = -12;//标点符号
     private Keyboard mKeyboardNumber;
     private Keyboard mKeyboardAlphabet;
+    private Keyboard mKeyboardPunctuation;
     private OnKeyListener mOnKeyListener;
     private List<Character> mKeyNumbers = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+    private List<Character> mKeyAlphabet = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'
+            , 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
     private int mType = 0;
 
     public BoutiqueKeyboard(Context context, AttributeSet attrs) {
@@ -39,12 +42,16 @@ public class BoutiqueKeyboard extends KeyboardView {
         mType = typedArray.getInt(R.styleable.BoutiqueKeyboard_type, 0);
         typedArray.recycle();
 
-        if (mType == 0 || mType == 1) {
-            mKeyboardNumber = new Keyboard(context, R.xml.keyboard_number);
-            this.shuffleNumbers(mKeyboardNumber);
-        } else {
+        if (mType == 2) {
             mKeyboardAlphabet = new Keyboard(context, R.xml.keyboard_alphabet);
             setKeyboard(mKeyboardAlphabet);
+            //this.shuffleAlphabet(mKeyboardAlphabet);
+        } else if (mType == 3) {
+            mKeyboardPunctuation = new Keyboard(context, R.xml.keyboard_punctuation);
+            setKeyboard(mKeyboardPunctuation);
+        } else {
+            mKeyboardNumber = new Keyboard(context, R.xml.keyboard_number);
+            this.shuffleNumber(mKeyboardNumber);
         }
 
         setPreviewEnabled(false);//回显，默认为true
@@ -65,26 +72,39 @@ public class BoutiqueKeyboard extends KeyboardView {
                     Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", alphabet" + ", keyCodes.length = " + keyCodes.length);
                     if (mKeyboardAlphabet == null) {
                         mKeyboardAlphabet = new Keyboard(getContext(), R.xml.keyboard_alphabet);
+                        //shuffleAlphabet(mKeyboardAlphabet);
+                    } else {
+                        setKeyboard(mKeyboardAlphabet);
                     }
-                    setKeyboard(mKeyboardAlphabet);
                 } else if (primaryCode == NUMBER) {
                     Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", number" + ", keyCodes.length = " + keyCodes.length);
                     if (mKeyboardNumber == null) {
                         mKeyboardNumber = new Keyboard(getContext(), R.xml.keyboard_number);
-                        shuffleNumbers(mKeyboardNumber);
+                        shuffleNumber(mKeyboardNumber);
                     } else {
                         setKeyboard(mKeyboardNumber);
                     }
+                } else if (primaryCode == PUNCTUATIONS) {
+                    Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", number" + ", keyCodes.length = " + keyCodes.length);
+                    if (mKeyboardPunctuation == null) {
+                        mKeyboardPunctuation = new Keyboard(getContext(), R.xml.keyboard_punctuation);
+                    }
+                    setKeyboard(mKeyboardPunctuation);
                 } else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
                     Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", shift" + ", keyCodes.length = " + keyCodes.length);
                     mKeyboardAlphabet.setShifted(!mKeyboardAlphabet.isShifted());
                     invalidateAllKeys();
+                } else if (primaryCode == Keyboard.KEYCODE_DONE) {
+                    Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", delete" + ", keyCodes.length = " + keyCodes.length);
+                    if (mOnKeyListener != null) {
+                        mOnKeyListener.onDone();
+                    }
                 } else if (primaryCode == Keyboard.KEYCODE_DELETE) {
                     Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", delete" + ", keyCodes.length = " + keyCodes.length);
                     if (mOnKeyListener != null) {
                         mOnKeyListener.onDelete();
                     }
-                } else if (primaryCode >= 97 && primaryCode <= 97 + 25) {//按下字母键，ASCII码：A-65，a-97
+                } else if (primaryCode >= 97 && primaryCode <= 97 + 25) {//按下字母键，ASCII码：A-65,Z-90;a-97,z-122
                     Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", alphabet unit key");
                     this.onText(mKeyboardAlphabet.isShifted() ? Character.toString((char) (primaryCode - 32)) : Character.toString((char) (primaryCode)));
                 } else {
@@ -123,7 +143,7 @@ public class BoutiqueKeyboard extends KeyboardView {
     }
 
 
-    private void shuffleNumbers(Keyboard keyboard) {//随机打乱数字键盘上键位的排列顺序
+    private void shuffleNumber(Keyboard keyboard) {//随机打乱数字键盘上数字的排列顺序
         if (keyboard == null || keyboard.getKeys() == null || keyboard.getKeys().isEmpty()) {
             return;
         }
@@ -148,6 +168,22 @@ public class BoutiqueKeyboard extends KeyboardView {
         setKeyboard(keyboard);
     }
 
+    private void shuffleAlphabet(Keyboard keyboard) {//随机打乱字母键盘上字母的排列顺序
+        if (keyboard == null || keyboard.getKeys() == null || keyboard.getKeys().isEmpty()) {
+            return;
+        }
+        Collections.shuffle(mKeyAlphabet);//随机排序数字
+        int index = 0;
+        for (Keyboard.Key key : keyboard.getKeys()) {
+            if (key.codes[0] >= 97 && key.codes[0] <= 122) {//ASCII码：a-97,z-122
+                char code = mKeyAlphabet.get(index++);
+                key.label = Character.toString(code);
+                key.text = key.label;
+            }
+        }
+        setKeyboard(keyboard);
+    }
+
     public void setOnKeyListener(OnKeyListener onKeyListener) {
         mOnKeyListener = onKeyListener;
     }
@@ -156,5 +192,7 @@ public class BoutiqueKeyboard extends KeyboardView {
         void onText(CharSequence text);
 
         void onDelete();
+
+        void onDone();
     }
 }

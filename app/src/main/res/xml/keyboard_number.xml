@@ -24,7 +24,7 @@
             android:codes="-5"
             android:isRepeatable="true"
             android:keyHeight="100dp"
-            android:keyLabel="Del"/>
+            android:keyLabel="Delete"/>
     </Row>
 
     <Row>
@@ -51,7 +51,6 @@
             android:keyOutputText="9"/>
         <Key
             android:codes="-4"
-            android:isRepeatable="true"
             android:keyHeight="100dp"
             android:keyLabel="Done"/>
     </Row>

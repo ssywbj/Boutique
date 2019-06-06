@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -38,6 +39,11 @@ public class KeyboardActivity extends BasicActivity {
                 if (selectionStart > 0) {
                     editNumber.getText().delete(selectionStart - 1, selectionStart);
                 }
+            }
+
+            @Override
+            public void onDone() {
+                Log.i("WBJ", "on key done");
             }
         });
 

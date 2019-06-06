@@ -32,5 +32,5 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/keyboard_margin_bottom"
         android:visibility="gone"
-        app:type="number" />
+        app:type="alphabet" />
 </RelativeLayout>
