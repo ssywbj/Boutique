@@ -1,5 +1,5 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--点击状态-->
+    <!--按下状态-->
     <item android:state_pressed="true">
         <shape>
             <corners android:radius="@dimen/corner_radius"/>
@@ -13,7 +13,7 @@
             <solid android:color="@color/login_btn_enabled"/>
         </shape>
     </item>
-    <!--不可用状态-->
+    <!--默认状态-->
     <item>
         <shape>
             <corners android:radius="@dimen/corner_radius"/>

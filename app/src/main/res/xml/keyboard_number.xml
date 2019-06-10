@@ -2,7 +2,9 @@
 <Keyboard
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:keyWidth="25%p"
-    android:keyHeight="50dp">
+    android:horizontalGap="2dp"
+    android:keyHeight="42dp"
+    android:verticalGap="2dp">
 
     <!--
     codes:：ASCII码，若没有设置keyOutputText属性，对应的输出为primaryCode；

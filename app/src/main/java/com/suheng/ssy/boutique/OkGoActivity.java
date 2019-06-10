@@ -34,8 +34,8 @@ import okhttp3.HttpUrl;
 public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
 
     //public static final String URL = "http://gank.io/api/data/福利/50/1";
-    //private static final String URL = "http://192.168.120.169:8080/TestJSP";
-    private static final String URL = "http://192.168.1.111:8080/TestJSP";
+    private static final String URL = "http://192.168.120.169:8080/TestJSP";
+    //private static final String URL = "http://192.168.1.111:8080/TestJSP";
     private static final String SERVER_ADDRESS = URL + "/ServletDemo";
     private static final String PICTURE_ADDRESS = URL + "/pictures";
     private static final String VIDEO_ADDRESS = URL + "/Videos";
@@ -388,7 +388,7 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
     }
 
     private void uploadFile() {
-        OkGo.<String>post(SERVER_ADDRESS).tag(this)
+        /*OkGo.<String>post(SERVER_ADDRESS).tag(this)
                 .upString("---upload params中的参数设置是无效的---")//使用该方法时，params中的参数设置是无效的，所有参数均需要通过需要上传的文本中指定
                 .params("username", "Wbj")
                 .params("password", "123456")
@@ -422,7 +422,7 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                         Log.d(mTag, "99999Upload params String, onError-->" + response.code() + "-->" + response.message()
                                 + "-->" + response.body());
                     }
-                });
+                });*/
 
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             final File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
@@ -452,7 +452,7 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                             }
                         });
 
-                OkGo.<String>post(SERVER_ADDRESS).tag(this)
+                /*OkGo.<String>post(SERVER_ADDRESS).tag(this)
                         .params("username", "Wbj")
                         .params("password", "123456")
                         .params("file", file)
@@ -474,7 +474,7 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                                 super.onError(response);
                                 Log.d(mTag, "AAAAAparams File, onError-->" + response.code() + "-->" + response.message() + "-->" + response.body());
                             }
-                        });
+                        });*/
             } else {
                 Log.d(mTag, "需要上传的文件不存在");
             }
