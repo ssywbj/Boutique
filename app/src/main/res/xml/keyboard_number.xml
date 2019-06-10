@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="25%p"
-    android:horizontalGap="2dp"
-    android:keyHeight="42dp"
-    android:verticalGap="2dp">
+    android:keyWidth="22.5%p"
+    android:horizontalGap="2%p"
+    android:keyHeight="43dp"
+    android:verticalGap="6dp">
 
     <!--
     codes:：ASCII码，若没有设置keyOutputText属性，对应的输出为primaryCode；
     keyLabel：显示在键盘上的文案；
     keyOutputText：按下键盘时输出的文案
     -->
+
+    <!--类似与内边距属性-->
+    <Row android:keyHeight="0%p"/>
+
     <Row>
         <Key
+            android:keyEdgeFlags="left"
             android:codes="49"
             android:keyLabel="1"
             android:keyOutputText="1"/>
@@ -25,8 +30,17 @@
         <Key
             android:codes="-5"
             android:isRepeatable="true"
-            android:keyHeight="100dp"
-            android:keyLabel="Delete"/>
+            android:keyHeight="92dp"
+            android:keyLabel="删除"/>
+        <!--43*2+6=92-->
+
+        <!--类似与内边距属性-->
+        <Key
+            android:keyEdgeFlags="right"
+            android:codes="-9999"
+            android:keyWidth="0%p"/>
+        <!--21.25*4+5*3=100-->
+        <!--22.5*4+5*2=100-->
     </Row>
 
     <Row>
@@ -53,8 +67,8 @@
             android:keyOutputText="9"/>
         <Key
             android:codes="-4"
-            android:keyHeight="100dp"
-            android:keyLabel="Done"/>
+            android:keyHeight="92dp"
+            android:keyLabel="确定"/>
     </Row>
 
     <Row>
@@ -69,4 +83,6 @@
             android:keyLabel="#+="/>
     </Row>
 
+    <!--下边的内边距-->
+    <Row android:keyHeight="0%p" />
 </Keyboard>

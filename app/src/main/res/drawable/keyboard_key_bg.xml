@@ -2,14 +2,14 @@
     <!--按下状态-->
     <item android:state_pressed="true">
         <shape>
-            <corners android:radius="4dp"/>
+            <corners android:radius="@dimen/keyboard_key_radius"/>
             <solid android:color="#DDDDDD"/>
         </shape>
     </item>
     <!--默认状态-->
     <item>
         <shape>
-            <corners android:radius="4dp"/>
+            <corners android:radius="@dimen/keyboard_key_radius"/>
             <solid android:color="@color/white"/>
         </shape>
     </item>

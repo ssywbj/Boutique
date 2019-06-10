@@ -12,6 +12,8 @@
     <dimen name="text_switch_login_type">@dimen/text_obtain_sms</dimen>
     <dimen name="text_obtain_sms_padding_lr">8dp</dimen>
     <dimen name="text_obtain_sms_padding_tb">4dp</dimen>
-    <dimen name="logint_btn_height">48dp</dimen>
     <dimen name="keyboard_margin_bottom">-198dp</dimen>
+    <dimen name="keyboard_key_height">42dp</dimen>
+    <dimen name="keyboard_key_gap">2dp</dimen>
+    <dimen name="keyboard_key_radius">4dp</dimen>
 </resources>

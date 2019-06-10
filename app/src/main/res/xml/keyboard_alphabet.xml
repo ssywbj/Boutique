@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:horizontalGap="2dp"
-    android:keyWidth="10%p"
-    android:keyHeight="42dp"
-    android:verticalGap="2dp">
+    android:horizontalGap="0.9%p"
+    android:keyWidth="9.01%p"
+    android:keyHeight="@dimen/keyboard_key_height"
+    android:verticalGap="6dp">
 
-    <Row android:rowEdgeFlags="top">
+    <!--类似与内边距属性-->
+    <Row
+        android:keyHeight="0%p"
+        android:rowEdgeFlags="top"/>
+
+    <Row>
         <Key
             android:keyEdgeFlags="left"
             android:keyLabel="q"/>
@@ -18,9 +23,13 @@
         <Key android:keyLabel="u"/>
         <Key android:keyLabel="i"/>
         <Key android:keyLabel="o"/>
+        <Key android:keyLabel="p"/>
+        <!--类似与内边距属性-->
         <Key
             android:keyEdgeFlags="right"
-            android:keyLabel="p"/>
+            android:codes="-9999"
+            android:keyWidth="0%p"/>
+        <!--10*9.01+11*0.9=90.1+9.9=100-->
     </Row>
 
     <Row>
@@ -62,6 +71,11 @@
             android:keyWidth="15%p"
             android:keyEdgeFlags="right"
             android:keyLabel="delete"/>
+        <!--类似与内边距属性-->
+        <Key
+            android:keyEdgeFlags="right"
+            android:codes="-9999"
+            android:keyWidth="0%p"/>
     </Row>
 
     <Row android:rowEdgeFlags="bottom">
@@ -88,6 +102,15 @@
             android:keyWidth="15%p"
             android:keyEdgeFlags="right"
             android:keyLabel="Done"/>
+        <!--类似与内边距属性-->
+        <Key
+            android:keyEdgeFlags="right"
+            android:codes="-9999"
+            android:keyWidth="0%p"/>
     </Row>
 
+    <!--类似与内边距属性-->
+    <Row
+        android:keyHeight="0%p"
+        android:rowEdgeFlags="bottom"/>
 </Keyboard>
