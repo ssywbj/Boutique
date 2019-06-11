@@ -3,8 +3,12 @@ package com.suheng.ssy.boutique.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -20,6 +24,7 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
     private static final int ALPHABET = -10;//字母表
     private static final int NUMBER = -11;//数字键
     private static final int PUNCTUATIONS = -12;//标点符号
+    private static final int SPACE_KEY = -13;//空格键
     private Keyboard mKeyboardNumber;
     private Keyboard mKeyboardAlphabet;
     private Keyboard mKeyboardPunctuation;
@@ -29,6 +34,7 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
             , 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
     private int mType = 0;
     private boolean mIsShuffle;
+    private Paint mTextPaint;
 
     public BoutiqueKeyboard(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -56,6 +62,8 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
 
         setPreviewEnabled(false);//回显，默认为true
         setOnKeyboardActionListener(this);
+
+        this.initPaint();
     }
 
     private void initNumberKeyboard() {
@@ -122,10 +130,48 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
         setKeyboard(keyboard);
     }
 
+    private void initPaint() {
+        mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
+        mTextPaint.setTextSize(62);
+        mTextPaint.setColor(Color.WHITE);
+    }
+
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         List<Keyboard.Key> keys = getKeyboard().getKeys();
+        for (Keyboard.Key key : keys) {
+            if (key.codes[0] == Keyboard.KEYCODE_DONE || key.codes[0] == ALPHABET
+                    || key.codes[0] == PUNCTUATIONS || key.codes[0] == NUMBER
+                    || key.codes[0] == Keyboard.KEYCODE_SHIFT || key.codes[0] == SPACE_KEY) {
+                Drawable drawable;
+                if (key.codes[0] == Keyboard.KEYCODE_DONE) {
+                    drawable = ContextCompat.getDrawable(getContext(), R.drawable.keyboard_key_done_bg);
+                } else if (key.codes[0] == SPACE_KEY) {
+                    drawable = ContextCompat.getDrawable(getContext(), R.drawable.keyboard_key_space_bg);
+                } else {
+                    drawable = ContextCompat.getDrawable(getContext(), R.drawable.keyboard_key_switch_bg);
+                }
+                if (drawable != null) {
+                    drawable.setState(key.getCurrentDrawableState());
+                    drawable.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+                    drawable.draw(canvas);
+                }
+                if (key.label != null) {
+                    if (key.codes[0] == SPACE_KEY) {
+                        mTextPaint.setColor(Color.BLACK);
+                    } else {
+                        mTextPaint.setColor(Color.WHITE);
+                    }
+
+                    Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
+                    float y = key.y + 1.0f * key.height / 2 + (fontMetrics.bottom
+                            - fontMetrics.top) / 2 - fontMetrics.bottom;
+                    canvas.drawText(key.label.toString(), key.x + (1.0f * key.width / 2), y, mTextPaint);
+                }
+            }
+        }
     }
 
     @Override

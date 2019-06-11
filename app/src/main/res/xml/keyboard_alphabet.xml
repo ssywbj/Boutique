@@ -4,7 +4,7 @@
     android:horizontalGap="0.9%p"
     android:keyWidth="9.01%p"
     android:keyHeight="@dimen/keyboard_key_height"
-    android:verticalGap="6dp">
+    android:verticalGap="@dimen/keyboard_key_gap">
 
     <!--类似与内边距属性-->
     <Row
@@ -24,19 +24,26 @@
         <Key android:keyLabel="i"/>
         <Key android:keyLabel="o"/>
         <Key android:keyLabel="p"/>
-        <!--类似与内边距属性-->
+        <!--100-10*(9.01+0.9)=100-99.1=0.9，给最右边的key剩下右边距也刚好是0.9%p-->
+
+        <!--该宽度为零的键只用于占位且不会在键盘上出现，作用类似于内边距属性。因为horizontalGap影响
+        只是Key的左边距，当给‘p’键留下0.9的右边距时它并不会填充屏幕而是留白，所以需要一个在最右边的
+        占位键，它的左边距就是我们在根元素设定的horizontalGap值，这样就能填充屏幕的整个宽度了-->
         <Key
-            android:keyEdgeFlags="right"
-            android:codes="-9999"
-            android:keyWidth="0%p"/>
-        <!--10*9.01+11*0.9=90.1+9.9=100-->
+            android:codes="-1001"
+            android:keyWidth="0%p"
+            android:keyEdgeFlags="right"/>
+        <!--10*(9.01+0.9)+1(0+0.9)=100，刚好填充整个屏幕而且只要有一行填充整个屏幕，
+        其余的行数也会自动填充屏幕，它们的占位键也可以省略不写了-->
     </Row>
 
     <Row>
+        <!--horizontalGap如果在Key元素中出现会，那么会覆盖根元素的horizontalGap值，但影响是只是这个元素-->
         <Key
-            android:horizontalGap="5%p"
+            android:horizontalGap="5.855%p"
             android:keyEdgeFlags="left"
             android:keyLabel="a"/>
+        <!--(100-9.01-8(9.01+0.9))/2=5.855-->
         <Key android:keyLabel="s"/>
         <Key android:keyLabel="d"/>
         <Key android:keyLabel="f"/>
@@ -47,16 +54,27 @@
         <Key
             android:keyEdgeFlags="right"
             android:keyLabel="l"/>
+        <!--(100-5.855-9.01-8(9.01+0.9))=5.855，给最右边的key剩下的右边距也刚好是5.855%p-->
+
+        <!--该占位键可省略不写
+        <Key
+            android:codes="-1001"
+            android:horizontalGap="5.855%p"
+            android:keyWidth="0%p"
+            android:keyEdgeFlags="right"/>-->
     </Row>
 
     <Row>
+        <!--覆盖根元素的keyWidth值，同理覆盖horizontalGap-->
         <Key
             android:codes="-1"
             android:isModifier="true"
             android:isSticky="true"
-            android:keyWidth="15%p"
+            android:keyWidth="13.965%p"
             android:keyEdgeFlags="left"
-            android:keyLabel="shift"/>
+            android:keyLabel="Shift"/>
+        <!--(100-7(9.01+0.9)-3*0.9)/2=13.965或9.01+5.855-0.9=13.965，其中3等于‘Shift’键的一个左边
+        距加上‘删除’键的一个左边距和一个右边距-->
         <Key android:keyLabel="z"/>
         <Key android:keyLabel="x"/>
         <Key android:keyLabel="c"/>
@@ -68,45 +86,49 @@
             android:codes="-5"
             android:isModifier="true"
             android:isRepeatable="true"
-            android:keyWidth="15%p"
+            android:keyWidth="13.965%p"
             android:keyEdgeFlags="right"
-            android:keyLabel="delete"/>
-        <!--类似与内边距属性-->
+            android:keyIcon="@drawable/keyboard_key_delete"/>
+        <!--100-7(9.01+0.9)-2*(13.965+0.9)=0.9，给‘删除’键剩下的右边距也刚好是0.9%p-->
+
+        <!--该占位键可省略不写
         <Key
-            android:keyEdgeFlags="right"
-            android:codes="-9999"
-            android:keyWidth="0%p"/>
+            android:codes="-1001"
+            android:keyWidth="0%p"
+            android:keyEdgeFlags="right"/>-->
     </Row>
 
     <Row android:rowEdgeFlags="bottom">
         <Key
             android:codes="-11"
-            android:keyWidth="15%p"
+            android:keyWidth="13.965%p"
             android:keyEdgeFlags="left"
             android:keyLabel="123"/>
         <Key
-            android:keyWidth="15%p"
+            android:keyWidth="13.965%p"
             android:keyLabel=".com"
             android:keyOutputText=".com"/>
         <Key
             android:codes="-13"
-            android:keyWidth="40%p"
+            android:keyWidth="38.74%p"
             android:keyLabel="@string/app_name"/>
-
+        <!--100-4(13.965+0.9)-2*0.9=0.9，其中2等于空格键的一个左边距加上‘确定’键的一个右边距-->
         <Key
             android:codes="-12"
-            android:keyWidth="15%p"
+            android:keyWidth="13.965%p"
             android:keyLabel="#+="/>
         <Key
             android:codes="-4"
-            android:keyWidth="15%p"
+            android:keyWidth="13.965%p"
             android:keyEdgeFlags="right"
-            android:keyLabel="Done"/>
-        <!--类似与内边距属性-->
+            android:keyLabel="@string/keyboard_key_done"/>
+        <!--100-4(13.965+0.9)-(38.74+0.9)=0.9，给‘确定’键剩下的右边距也刚好是0.9%p-->
+
+        <!--该占位键可省略不写
         <Key
-            android:keyEdgeFlags="right"
-            android:codes="-9999"
-            android:keyWidth="0%p"/>
+            android:codes="-1001"
+            android:keyWidth="0%p"
+            android:keyEdgeFlags="right"/>-->
     </Row>
 
     <!--类似与内边距属性-->

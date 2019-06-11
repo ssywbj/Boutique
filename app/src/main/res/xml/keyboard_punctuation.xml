@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:horizontalGap="@dimen/keyboard_key_gap"
-    android:keyWidth="10%p"
+    android:horizontalGap="0.9%p"
+    android:keyWidth="9.01%p"
     android:keyHeight="@dimen/keyboard_key_height"
     android:verticalGap="@dimen/keyboard_key_gap">
 
-    <Row android:rowEdgeFlags="top">
+    <Row
+        android:keyHeight="0%p"
+        android:rowEdgeFlags="top"/>
+
+    <Row>
         <Key
             android:keyEdgeFlags="left"
             android:keyLabel="+"
@@ -36,9 +40,13 @@
             android:keyLabel=";"
             android:keyOutputText=";"/>
         <Key
-            android:keyEdgeFlags="right"
             android:keyLabel=","
             android:keyOutputText=","/>
+
+        <Key
+            android:codes="-9999"
+            android:keyWidth="0%p"
+            android:keyEdgeFlags="right"/>
     </Row>
 
     <Row>
@@ -79,7 +87,7 @@
     <Row>
         <Key
             android:codes="-10"
-            android:keyWidth="15%p"
+            android:keyWidth="13.965%p"
             android:keyEdgeFlags="left"
             android:keyLabel="ABC"/>
         <Key
@@ -107,15 +115,15 @@
             android:codes="-5"
             android:isModifier="true"
             android:isRepeatable="true"
-            android:keyWidth="15%p"
+            android:keyWidth="13.965%p"
             android:keyEdgeFlags="right"
-            android:keyLabel="delete"/>
+            android:keyIcon="@drawable/keyboard_key_delete"/>
     </Row>
 
-    <Row android:rowEdgeFlags="bottom">
+    <Row>
         <Key
             android:codes="-11"
-            android:keyWidth="15%p"
+            android:keyWidth="13.965%p"
             android:keyEdgeFlags="left"
             android:keyLabel="123"/>
         <Key
@@ -141,9 +149,12 @@
             android:keyOutputText="¥"/>
         <Key
             android:codes="-4"
-            android:keyWidth="15%p"
+            android:keyWidth="13.965%p"
             android:keyEdgeFlags="right"
-            android:keyLabel="Done"/>
+            android:keyLabel="@string/keyboard_key_done"/>
     </Row>
 
+    <Row
+        android:keyHeight="0%p"
+        android:rowEdgeFlags="bottom"/>
 </Keyboard>

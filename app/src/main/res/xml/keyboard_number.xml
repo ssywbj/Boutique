@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="22.5%p"
     android:horizontalGap="2%p"
-    android:keyHeight="43dp"
+    android:keyWidth="22.5%p"
+    android:keyHeight="@dimen/keyboard_number_height"
     android:verticalGap="6dp">
 
     <!--
     codes:：ASCII码，若没有设置keyOutputText属性，对应的输出为primaryCode；
-    keyLabel：显示在键盘上的文案；
-    keyOutputText：按下键盘时输出的文案
+    keyLabel：显示在键盘上的文案；keyOutputText：按下键盘时输出的文案；
+    horizontalGap：Key水平间隙，影响的是Key的左边距；
+    verticalGap：Key垂直间隙，影响的是Key的上边距；
     -->
 
-    <!--类似与内边距属性-->
-    <Row android:keyHeight="0%p"/>
+    <Row
+        android:keyHeight="0%p"
+        android:rowEdgeFlags="top"/>
 
     <Row>
         <Key
-            android:keyEdgeFlags="left"
             android:codes="49"
+            android:keyEdgeFlags="left"
             android:keyLabel="1"
             android:keyOutputText="1"/>
         <Key
@@ -30,21 +32,20 @@
         <Key
             android:codes="-5"
             android:isRepeatable="true"
-            android:keyHeight="92dp"
-            android:keyLabel="删除"/>
-        <!--43*2+6=92-->
+            android:keyHeight="@dimen/keyboard_number_action_height"
+            android:keyIcon="@drawable/keyboard_key_delete_tmp"/>
+        <!--42*2+6=90-->
 
-        <!--类似与内边距属性-->
         <Key
-            android:keyEdgeFlags="right"
-            android:codes="-9999"
-            android:keyWidth="0%p"/>
-        <!--21.25*4+5*3=100-->
-        <!--22.5*4+5*2=100-->
+            android:codes="-1001"
+            android:keyWidth="0%p"
+            android:keyEdgeFlags="right"/>
+        <!--4(22.5+2)+1(0+2)=100-->
     </Row>
 
     <Row>
         <Key
+            android:keyEdgeFlags="left"
             android:keyLabel="4"
             android:keyOutputText="4"/>
         <Key
@@ -53,10 +54,20 @@
         <Key
             android:keyLabel="6"
             android:keyOutputText="6"/>
+
+        <!--该宽度和高度均为零的键只用于占位且不会在键盘上出现，作用类似于内边距属性。因为horizontalGap影响
+        只是Key的左边距，当给‘p’键留下0.9的右边距时它并不会填充屏幕而是留白，所以需要一个在最右边的
+        占位键，它的左边距就是我们在根元素设定的horizontalGap值，这样就能填充屏幕的整个宽度了-->
+        <Key
+            android:codes="-1000"
+            android:keyWidth="0%p"
+            android:keyHeight="0%p"
+            android:keyEdgeFlags="right"/>
     </Row>
 
     <Row>
         <Key
+            android:keyEdgeFlags="left"
             android:keyLabel="7"
             android:keyOutputText="7"/>
         <Key
@@ -67,13 +78,15 @@
             android:keyOutputText="9"/>
         <Key
             android:codes="-4"
-            android:keyHeight="92dp"
-            android:keyLabel="确定"/>
+            android:keyHeight="@dimen/keyboard_number_action_height"
+            android:keyEdgeFlags="right"
+            android:keyLabel="@string/keyboard_key_done"/>
     </Row>
 
     <Row>
         <Key
             android:codes="-10"
+            android:keyEdgeFlags="left"
             android:keyLabel="ABC"/>
         <Key
             android:keyLabel="0"
@@ -81,8 +94,14 @@
         <Key
             android:codes="-12"
             android:keyLabel="#+="/>
+        <Key
+            android:codes="-1000"
+            android:keyWidth="0%p"
+            android:keyHeight="0%p"
+            android:keyEdgeFlags="right"/>
     </Row>
 
-    <!--下边的内边距-->
-    <Row android:keyHeight="0%p" />
+    <Row
+        android:keyHeight="0%p"
+        android:rowEdgeFlags="bottom"/>
 </Keyboard>

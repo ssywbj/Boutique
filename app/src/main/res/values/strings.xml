@@ -19,4 +19,5 @@
     <string name="obtain_sms_code">获取验证码</string>
     <string name="obtain_sms_countdown">%ds后重新获取</string>
     <string name="obtain_sms_retry">重新获取</string>
+    <string name="keyboard_key_done">确定</string>
 </resources>

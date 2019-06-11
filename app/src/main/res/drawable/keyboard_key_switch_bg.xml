@@ -3,14 +3,14 @@
     <item android:state_pressed="true">
         <shape>
             <corners android:radius="@dimen/keyboard_key_radius"/>
-            <solid android:color="@color/divide_line"/>
+            <solid android:color="#9BA6B1"/>
         </shape>
     </item>
     <!--默认状态-->
     <item>
         <shape>
             <corners android:radius="@dimen/keyboard_key_radius"/>
-            <solid android:color="@color/white"/>
+            <solid android:color="#94A0AB"/>
         </shape>
     </item>
 </selector>
