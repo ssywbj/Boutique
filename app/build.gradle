@@ -108,4 +108,5 @@ dependencies {
     //新功能引导蒙层
     implementation project(path: ':newbieguide')
     implementation files('libs/Msc.jar')
+    implementation project(path: ':keyboard')
 }

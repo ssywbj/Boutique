@@ -8,5 +8,7 @@
             <enum name="punctuation" value="3"/>
         </attr>
         <attr name="shuffle" format="boolean"/>
+        <attr name="spaceKeyText" format="string"/>
+        <attr name="deleteDrawable" format="reference"/>
     </declare-styleable>
 </resources>

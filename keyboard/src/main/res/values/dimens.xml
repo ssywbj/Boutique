@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="keyboard_key_height">40dp</dimen>
+    <dimen name="keyboard_key_gap">4dp</dimen>
+    <dimen name="keyboard_key_radius">4dp</dimen>
+    <dimen name="keyboard_number_height">42dp</dimen>
+    <dimen name="keyboard_number_key_gap">6dp</dimen>
+    <!--keyboard_number_action_height = keyboard_number_height * 2 + keyboard_number_key_gap-->
+    <dimen name="keyboard_number_action_height">90dp</dimen>
+</resources>

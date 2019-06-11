@@ -13,11 +13,4 @@
     <dimen name="text_obtain_sms_padding_lr">8dp</dimen>
     <dimen name="text_obtain_sms_padding_tb">4dp</dimen>
     <dimen name="keyboard_margin_bottom">-198dp</dimen>
-    <dimen name="keyboard_key_height">40dp</dimen>
-    <dimen name="keyboard_key_gap">4dp</dimen>
-    <dimen name="keyboard_key_radius">4dp</dimen>
-    <dimen name="keyboard_number_height">42dp</dimen>
-    <dimen name="keyboard_number_key_gap">6dp</dimen>
-    <!--keyboard_number_action_height = keyboard_number_height * 2 + keyboard_number_key_gap-->
-    <dimen name="keyboard_number_action_height">90dp</dimen>
 </resources>

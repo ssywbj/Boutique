@@ -1,4 +1,4 @@
-package com.suheng.ssy.boutique.view;
+package com.suheng.keyboard;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,10 +9,10 @@ import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-
-import com.suheng.ssy.boutique.R;
+import android.util.TypedValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,8 +32,11 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
     private List<Character> mKeyNumbers = new ArrayList<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
     private List<Character> mKeyAlphabet = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'
             , 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+
     private int mType = 0;
     private boolean mIsShuffle;
+    private String mSpaceKeyText;
+
     private Paint mTextPaint;
 
     public BoutiqueKeyboard(Context context, AttributeSet attrs) {
@@ -50,6 +53,7 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.BoutiqueKeyboard, defStyleAttr, 0);
         mType = typedArray.getInt(R.styleable.BoutiqueKeyboard_type, 0);
         mIsShuffle = typedArray.getBoolean(R.styleable.BoutiqueKeyboard_shuffle, false);
+        mSpaceKeyText = typedArray.getString(R.styleable.BoutiqueKeyboard_spaceKeyText);
         typedArray.recycle();
 
         if (mType == 2) {
@@ -133,7 +137,8 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
     private void initPaint() {
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
-        mTextPaint.setTextSize(62);
+        mTextPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17
+                , getResources().getDisplayMetrics()));//17sp
         mTextPaint.setColor(Color.WHITE);
     }
 
@@ -158,13 +163,16 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
                     drawable.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
                     drawable.draw(canvas);
                 }
-                if (key.label != null) {
-                    if (key.codes[0] == SPACE_KEY) {
-                        mTextPaint.setColor(Color.BLACK);
-                    } else {
-                        mTextPaint.setColor(Color.WHITE);
-                    }
 
+                if (key.codes[0] == SPACE_KEY) {
+                    if (!TextUtils.isEmpty(mSpaceKeyText)) {
+                        key.label = mSpaceKeyText;
+                        mTextPaint.setColor(Color.BLACK);
+                    }
+                } else {
+                    mTextPaint.setColor(Color.WHITE);
+                }
+                if (key.label != null) {
                     Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
                     float y = key.y + 1.0f * key.height / 2 + (fontMetrics.bottom
                             - fontMetrics.top) / 2 - fontMetrics.bottom;

@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.suheng.keyboard.BoutiqueKeyboard;
 import com.suheng.ssy.boutique.model.Constants;
-import com.suheng.ssy.boutique.view.BoutiqueKeyboard;
 
 @Route(path = Constants.ROUTER_APP_ACTIVITY_KEYBOARD)//路径至少需要有两级，第一级是Group名称
 public class KeyboardActivity extends BasicActivity {
