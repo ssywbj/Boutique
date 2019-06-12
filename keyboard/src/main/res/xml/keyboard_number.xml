@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:horizontalGap="2%p"
     android:keyWidth="22.5%p"
-    android:keyHeight="@dimen/keyboard_number_height"
+    android:keyHeight="@dimen/keyboard_key_height"
     android:verticalGap="6dp">
 
     <!--
@@ -31,9 +31,9 @@
             android:keyOutputText="3"/>
         <Key
             android:codes="-5"
+            android:isModifier="true"
             android:isRepeatable="true"
-            android:keyHeight="@dimen/keyboard_number_action_height"
-            android:keyIcon="@drawable/keyboard_key_delete_tmp"/>
+            android:keyHeight="@dimen/keyboard_number_action_height"/>
         <!--42*2+6=90-->
 
         <Key

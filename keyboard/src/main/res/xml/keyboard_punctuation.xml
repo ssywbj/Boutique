@@ -116,8 +116,7 @@
             android:isModifier="true"
             android:isRepeatable="true"
             android:keyWidth="13.965%p"
-            android:keyEdgeFlags="right"
-            android:keyIcon="@drawable/keyboard_key_delete"/>
+            android:keyEdgeFlags="right"/>
     </Row>
 
     <Row>

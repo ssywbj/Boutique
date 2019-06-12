@@ -1,6 +1,6 @@
 ext {//若引用该变量，需要在同级目录下build.gradle的文件添加配置：apply from: "config.gradle"
     //Sdk and Tools
-    minSdkVersion = 23 //minSdkVersion设置为21或更高，能让InstantRun获得更佳的性能
+    minSdkVersion = 21 //minSdkVersion设置为21或更高，能让InstantRun获得更佳的性能
     targetSdkVersion = 28
     compileSdkVersion = 28
 

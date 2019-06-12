@@ -37,7 +37,6 @@
         android:shadowRadius="0"
         android:visibility="gone"
         app:shuffle="true"
-        app:type="alphabet"
         app:spaceKeyText="@string/app_name"
-        app:deleteDrawable="@drawable/clear"/>
+        app:type="number"/>
 </RelativeLayout>

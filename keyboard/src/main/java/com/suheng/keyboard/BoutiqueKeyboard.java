@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +26,9 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
     private static final int NUMBER = -11;//数字键
     private static final int PUNCTUATIONS = -12;//标点符号
     private static final int SPACE_KEY = -13;//空格键
+    private static final int SHIFT_KEY = Keyboard.KEYCODE_SHIFT;//shift键
+    private static final int DELETE_KEY = Keyboard.KEYCODE_DELETE;//delete键
+    private static final int DONE_KEY = Keyboard.KEYCODE_DONE;//确认键
     private Keyboard mKeyboardNumber;
     private Keyboard mKeyboardAlphabet;
     private Keyboard mKeyboardPunctuation;
@@ -36,6 +40,7 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
     private int mType = 0;
     private boolean mIsShuffle;
     private String mSpaceKeyText;
+    private Drawable mDeleteDrawable;
 
     private Paint mTextPaint;
 
@@ -54,6 +59,8 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
         mType = typedArray.getInt(R.styleable.BoutiqueKeyboard_type, 0);
         mIsShuffle = typedArray.getBoolean(R.styleable.BoutiqueKeyboard_shuffle, false);
         mSpaceKeyText = typedArray.getString(R.styleable.BoutiqueKeyboard_spaceKeyText);
+        mSpaceKeyText = typedArray.getString(R.styleable.BoutiqueKeyboard_spaceKeyText);
+        mDeleteDrawable = typedArray.getDrawable(R.styleable.BoutiqueKeyboard_deleteDrawable);
         typedArray.recycle();
 
         if (mType == 2) {
@@ -68,6 +75,14 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
         setOnKeyboardActionListener(this);
 
         this.initPaint();
+    }
+
+    private void initPaint() {
+        mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
+        mTextPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 15
+                , getResources().getDisplayMetrics()));//15sp
+        mTextPaint.setColor(Color.WHITE);
     }
 
     private void initNumberKeyboard() {
@@ -100,10 +115,16 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
         Collections.shuffle(mKeyNumbers);//随机排序数字
         int index = 0;
         for (Keyboard.Key key : keyboard.getKeys()) {
-            if (key.codes[0] == ALPHABET) {
-                if (mType == 1) {//身份证键盘需要把“ABC”键变成“X”
-                    key.label = Character.toString('X');
-                    key.text = key.label;
+            if (key.codes[0] == ALPHABET || key.codes[0] == PUNCTUATIONS) {
+                if (mType == 1) { //身份证键盘
+                    if (key.codes[0] == ALPHABET) {
+                        key.label = Character.toString('X'); //把“ABC”键变成“X”
+                        key.text = key.label;
+                    } else { //把“#+=”键隐藏
+                        key.label = "";
+                        key.width = 0;
+                        key.height = 0;
+                    }
                 }
                 continue;
             }
@@ -134,24 +155,16 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
         setKeyboard(keyboard);
     }
 
-    private void initPaint() {
-        mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mTextPaint.setTextAlign(Paint.Align.CENTER);
-        mTextPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17
-                , getResources().getDisplayMetrics()));//17sp
-        mTextPaint.setColor(Color.WHITE);
-    }
-
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         List<Keyboard.Key> keys = getKeyboard().getKeys();
         for (Keyboard.Key key : keys) {
-            if (key.codes[0] == Keyboard.KEYCODE_DONE || key.codes[0] == ALPHABET
-                    || key.codes[0] == PUNCTUATIONS || key.codes[0] == NUMBER
-                    || key.codes[0] == Keyboard.KEYCODE_SHIFT || key.codes[0] == SPACE_KEY) {
-                Drawable drawable;
-                if (key.codes[0] == Keyboard.KEYCODE_DONE) {
+            if (key.codes[0] == DONE_KEY || key.codes[0] == ALPHABET || key.codes[0] == PUNCTUATIONS
+                    || key.codes[0] == NUMBER || key.codes[0] == SHIFT_KEY || key.codes[0] == SPACE_KEY) {
+
+                Drawable drawable;//单独设置某些按键的背景
+                if (key.codes[0] == DONE_KEY) {
                     drawable = ContextCompat.getDrawable(getContext(), R.drawable.keyboard_key_done_bg);
                 } else if (key.codes[0] == SPACE_KEY) {
                     drawable = ContextCompat.getDrawable(getContext(), R.drawable.keyboard_key_space_bg);
@@ -171,6 +184,9 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
                     }
                 } else {
                     mTextPaint.setColor(Color.WHITE);
+                    if (key.codes[0] == SHIFT_KEY) {
+                        key.label = (mKeyboardAlphabet.isShifted() ? "Shift" : "shift");
+                    }
                 }
                 if (key.label != null) {
                     Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
@@ -179,7 +195,46 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
                     canvas.drawText(key.label.toString(), key.x + (1.0f * key.width / 2), y, mTextPaint);
                 }
             }
+
+            if (key.codes[0] == DELETE_KEY) {
+                this.drawDeleteKey(key, canvas);
+            }
         }
+    }
+
+    /**
+     * 绘制删除键图标
+     */
+    private void drawDeleteKey(Keyboard.Key key, Canvas canvas) {
+        if (mDeleteDrawable == null) {
+            //设置默认的删除键图标
+            mDeleteDrawable = ContextCompat.getDrawable(getContext(), R.drawable.keyboard_key_delete);
+        }
+        if (mDeleteDrawable == null) {
+            return;
+        }
+
+        //计算图标绘制的坐标
+        int intrinsicWidth = mDeleteDrawable.getIntrinsicWidth();
+        int intrinsicHeight = mDeleteDrawable.getIntrinsicHeight();
+        int drawWidth = intrinsicWidth;
+        int drawHeight = intrinsicHeight;
+        //限制图标的大小，防止图标超出按键
+        if (drawWidth > key.width) {
+            drawWidth = key.width;
+            drawHeight = drawWidth * intrinsicHeight / intrinsicWidth;
+        }
+        if (drawHeight > key.height) {
+            drawHeight = key.height;
+            drawWidth = drawHeight * intrinsicWidth / intrinsicHeight;
+        }
+
+        //获取图标绘制的坐标
+        int left = key.x + (key.width - drawWidth) / 2;
+        int top = key.y + (key.height - drawHeight) / 2;
+
+        mDeleteDrawable.setBounds(left, top, left + drawWidth, top + drawHeight);
+        mDeleteDrawable.draw(canvas);
     }
 
     @Override
@@ -223,16 +278,16 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
             } else {
                 setKeyboard(mKeyboardPunctuation);
             }
-        } else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
+        } else if (primaryCode == SHIFT_KEY) {
             Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", shift" + ", keyCodes.length = " + keyCodes.length);
             mKeyboardAlphabet.setShifted(!mKeyboardAlphabet.isShifted());
             invalidateAllKeys();
-        } else if (primaryCode == Keyboard.KEYCODE_DONE) {
+        } else if (primaryCode == DONE_KEY) {
             Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", delete" + ", keyCodes.length = " + keyCodes.length);
             if (mOnKeyListener != null) {
                 mOnKeyListener.onDone();
             }
-        } else if (primaryCode == Keyboard.KEYCODE_DELETE) {
+        } else if (primaryCode == DELETE_KEY) {
             Log.d(TAG, "onKey, primaryCode = " + primaryCode + ", delete" + ", keyCodes.length = " + keyCodes.length);
             if (mOnKeyListener != null) {
                 mOnKeyListener.onDelete();
@@ -271,6 +326,15 @@ public class BoutiqueKeyboard extends KeyboardView implements KeyboardView.OnKey
     @Override
     public void swipeUp() {
         Log.d(TAG, "swipeUp");
+    }
+
+    /**
+     * 获取焦点后只显示光标不弹出软键盘：https://blog.csdn.net/android_zyf/article/details/80526249
+     */
+    public void setShowSoftInputOnFocus(EditText editText) {
+        if (editText != null) {
+            editText.setShowSoftInputOnFocus(false);
+        }
     }
 
     public void setOnKeyListener(OnKeyListener onKeyListener) {

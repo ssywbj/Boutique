@@ -47,8 +47,7 @@ public class KeyboardActivity extends BasicActivity {
             }
         });
 
-        //获取焦点后只显示光标不弹出软键盘：https://blog.csdn.net/android_zyf/article/details/80526249
-        editNumber.setShowSoftInputOnFocus(false);
+        mBoutiqueKeyboard.setShowSoftInputOnFocus(editNumber);
         editNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
