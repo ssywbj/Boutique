@@ -2,6 +2,10 @@ package com.suheng.upload;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +17,6 @@ import android.widget.ProgressBar;
 
 public class UploadView extends FrameLayout {
     private static final String TAG = UploadView.class.getSimpleName();
-    public static final int UPDATE_ANIM_DURATION = 100;
     private static final int MAX_PROGRESS = 100;
     private ProgressBar mProgressBar;
     private ImageView mImageView;
@@ -82,13 +85,34 @@ public class UploadView extends FrameLayout {
 
     private void smoothUpdateProgress(int progress) {//平滑更新进度条(比起更新时一跳一跳的效果好很多)
         ObjectAnimator animation = ObjectAnimator.ofInt(mProgressBar, "progress", progress);
-        animation.setDuration(UPDATE_ANIM_DURATION);
+        animation.setDuration(300);
         animation.setInterpolator(new LinearInterpolator());
         animation.start();
     }
 
-    public ImageView getImageView() {
-        return mImageView;
+    public void setPicture(Drawable drawable) {
+        if (drawable != null) {
+            mImageView.setImageDrawable(drawable);
+        }
     }
 
+    public void setPicture(int resId) {
+        mImageView.setImageResource(resId);
+    }
+
+    public void setPicture(Bitmap bitmap) {
+        if (bitmap != null) {
+            mImageView.setImageBitmap(bitmap);
+        }
+    }
+
+    /**
+     * @param path 手机图片的完整路径。注：需要打开存储权限，否则获取到的Bitmap对象为空
+     */
+    public void setPicture(String path) {
+        if (TextUtils.isEmpty(path)) {
+            return;
+        }
+        this.setPicture(BitmapFactory.decodeFile(path));
+    }
 }

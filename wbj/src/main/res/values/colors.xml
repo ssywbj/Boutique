@@ -16,6 +16,4 @@
     <color name="completely_transparent">#00000000</color>
     <color name="view_divide_line">#CCCCCC</color>
     <color name="red">#FF0000</color>
-
-    <color name="vertical_progress_bar_bg">#55000000</color>
 </resources>

@@ -1,7 +1,7 @@
 <resources>
     <array name="main_item_list">
         <item>WebView</item>
-        <item>UploadView</item>
+        <item>ProgressView</item>
         <item>图片浏览器</item>
         <item>对话框优先级管理器</item>
         <item>数字动态改变效果</item>

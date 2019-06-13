@@ -13,4 +13,6 @@
     <dimen name="text_obtain_sms_padding_lr">8dp</dimen>
     <dimen name="text_obtain_sms_padding_tb">4dp</dimen>
     <dimen name="keyboard_margin_bottom">-198dp</dimen>
+
+    <dimen name="vertical_progress_bar_radius">6dp</dimen>
 </resources>

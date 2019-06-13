@@ -100,6 +100,9 @@ public class BoutiqueActivity extends BasicActivity {
                     case 14:
                         ARouter.getInstance().build(Constants.ROUTER_APP_ACTIVITY_KEYBOARD).navigation();
                         break;
+                    case 15:
+                        intent = new Intent(BoutiqueActivity.this, UploadViewActivity.class);
+                        break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
                         break;
@@ -112,7 +115,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, KeyboardActivity.class));
+        startActivity(new Intent(this, UploadViewActivity.class));
     }
 
 }

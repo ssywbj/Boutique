@@ -48,6 +48,7 @@
         <activity android:name=".RoomActivity" />
         <activity android:name=".PermissionApplyActivity" />
         <activity android:name=".KeyboardActivity" />
+        <activity android:name=".UploadViewActivity" />
     </application>
 
 </manifest>

@@ -12,4 +12,6 @@
     <color name="text_obtain_sms_enabled">@color/login_btn_enabled</color>
     <color name="text_obtain_sms_disabled">#999999</color>
     <color name="transparent">#00000000</color>
+
+    <color name="vertical_progress_bar_bg">#55000000</color>
 </resources>

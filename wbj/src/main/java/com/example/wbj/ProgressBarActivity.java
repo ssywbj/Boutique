@@ -5,22 +5,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.wbj.view.CommonDialog;
 import com.wbj.view.SmoothProgressBar;
-import com.suheng.upload.UploadView;
 
 import java.lang.ref.WeakReference;
 
 public class ProgressBarActivity extends AppCompatActivity {
     public static final String TAG = ProgressBarActivity.class.getSimpleName();
-    private static final int TIME_UPDATE_PROGRESS = UploadView.UPDATE_ANIM_DURATION;
-    private static final int MSG_UPDATE_PROGRESS = 1;
+    private static final int TIME_UPDATE_PROGRESS = 100;
     private static final int MSG_UPDATE_PROGRESS_ENDS = 2;
-    private UploadView mUploadView;
+    private static final int MAX_PROGRESS = 100;
+    private Button mBthEnds;
+    private ProgressBar mProgressBarEnds, mProgressBar1;
+    private Drawable mDrawableEndsNormal, mDrawableEndsNote;
+    private int mCurrentProgress;
+    private int mTakeTime = TIME_UPDATE_PROGRESS;
     private WeakHandler mHandler = new WeakHandler(this);
 
     @Override
@@ -28,9 +32,7 @@ public class ProgressBarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.progress_bar_aty);
 
-        mUploadView = findViewById(R.id.upload_view);
-
-        mBthEnds =  findViewById(R.id.btn_ends);
+        mBthEnds = findViewById(R.id.btn_ends);
         mProgressBarEnds = (SmoothProgressBar) findViewById(R.id.pb_both_ends);
         mProgressBarEnds.setMax(MAX_PROGRESS);
         mProgressBarEnds.setProgress(MAX_PROGRESS);
@@ -42,7 +44,7 @@ public class ProgressBarActivity extends AppCompatActivity {
         mDrawableEndsNormal = getResources().getDrawable(R.drawable.ends_progress_normal);
         mProgressBarEnds.setProgressDrawable(mDrawableEndsNormal);
 
-        /*CommonDialog commonDialog = new CommonDialog(this, "标题", "内容内容内容内容", "取消", "确认");
+        CommonDialog commonDialog = new CommonDialog(this, "标题", "内容内容内容内容", "取消", "确认");
         commonDialog.setOnClickDialog(new CommonDialog.OnClickDialog() {
             @Override
             public void clickLeftBtn() {
@@ -54,51 +56,8 @@ public class ProgressBarActivity extends AppCompatActivity {
                 finish();
             }
         });
-        commonDialog.show();*/
+        commonDialog.show();
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mHandler.hasMessages(MSG_UPDATE_PROGRESS)) {
-            mHandler.removeMessages(MSG_UPDATE_PROGRESS);
-        }
-        if (mHandler.hasMessages(MSG_UPDATE_PROGRESS_ENDS)) {
-            mHandler.removeMessages(MSG_UPDATE_PROGRESS_ENDS);
-        }
-    }
-
-    private void updateProgress(double percent) {
-        if (percent >= 1.0) {
-            percent = 1.0;
-            mHandler.removeMessages(MSG_UPDATE_PROGRESS);
-        } else {
-            Message msg = new Message();
-            msg.what = MSG_UPDATE_PROGRESS;
-            msg.obj = (percent + 0.17);
-            mHandler.sendMessageDelayed(msg, TIME_UPDATE_PROGRESS);
-        }
-
-        Log.d(TAG, "percent-->" + percent);
-        mUploadView.updateProgress(percent);
-    }
-
-    public void upload(View view) {
-        mUploadView.resetProgress();
-
-        mHandler.removeMessages(MSG_UPDATE_PROGRESS);
-        Message msg = new Message();
-        msg.what = MSG_UPDATE_PROGRESS;
-        msg.obj = 0.11;
-        mHandler.sendMessageDelayed(msg, TIME_UPDATE_PROGRESS);
-    }
-
-    private static final int MAX_PROGRESS = 100;
-    private Button mBthEnds;
-    private ProgressBar mProgressBarEnds, mProgressBar1;
-    private Drawable mDrawableEndsNormal, mDrawableEndsNote;
-    private int mCurrentProgress;
-    private int mTakeTime = TIME_UPDATE_PROGRESS;
 
     public void reduceBothEnds(View view) {
         mTakeTime = TIME_UPDATE_PROGRESS;
@@ -150,9 +109,6 @@ public class ProgressBarActivity extends AppCompatActivity {
             }
 
             switch (msg.what) {
-                case MSG_UPDATE_PROGRESS:
-                    instance.updateProgress((Double) msg.obj);
-                    break;
                 case MSG_UPDATE_PROGRESS_ENDS:
                     instance.updateProgressEnds();
                     break;
@@ -162,4 +118,11 @@ public class ProgressBarActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHandler.hasMessages(MSG_UPDATE_PROGRESS_ENDS)) {
+            mHandler.removeMessages(MSG_UPDATE_PROGRESS_ENDS);
+        }
+    }
 }
