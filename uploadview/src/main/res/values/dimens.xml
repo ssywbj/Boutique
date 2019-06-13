@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="vertical_progress_bar_radius">10dp</dimen>
+</resources>

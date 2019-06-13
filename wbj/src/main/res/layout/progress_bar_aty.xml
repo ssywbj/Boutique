@@ -23,7 +23,7 @@
         android:layout_marginBottom="10dp"
         android:progressDrawable="@drawable/progress_red"/>
 
-    <com.wbj.view.UploadView
+    <com.suheng.upload.UploadView
         android:id="@+id/upload_view"
         android:layout_width="86dp"
         android:layout_height="110dp"

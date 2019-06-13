@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.wbj.view.SmoothProgressBar;
-import com.wbj.view.UploadView;
+import com.suheng.upload.UploadView;
 
 import java.lang.ref.WeakReference;
 

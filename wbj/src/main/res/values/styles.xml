@@ -14,10 +14,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="VerticalProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/vertical_progress_bar</item>
-    </style>
-
     <!--windowIsFloating为true，可以有让Dialog自带背景、布局自动居中、自带填充效果等功能-->
     <style name="BasicDialog">
         <item name="android:windowFrame">@null</item>
