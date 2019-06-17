@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.suheng.ssy.boutique.model.Constants;
+import com.suheng.ssy.boutique.oom.MemoryLeakageActivity;
 
 import ying.jie.boutique.MainActivity;
 
@@ -103,6 +104,9 @@ public class BoutiqueActivity extends BasicActivity {
                     case 15:
                         intent = new Intent(BoutiqueActivity.this, UploadViewActivity.class);
                         break;
+                    case 16:
+                        intent = new Intent(BoutiqueActivity.this, MemoryLeakageActivity.class);
+                        break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
                         break;
@@ -115,7 +119,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, UploadViewActivity.class));
+        startActivity(new Intent(this, MemoryLeakageActivity.class));
     }
 
 }
