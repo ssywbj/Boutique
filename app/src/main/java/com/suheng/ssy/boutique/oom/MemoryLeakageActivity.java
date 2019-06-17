@@ -199,7 +199,6 @@ public class MemoryLeakageActivity extends BasicActivity {
         对象（比如注册机制）。即使Android程序已经结束了，但是别的应用程序仍然还有对Android程序的某个对象的引用，
         泄漏的内存依然不能被垃圾回收。
         解决方案：
-
         1.使用ApplicationContext代替ActivityContext;
         2.在Activity执行onDestory时，调用反注册;
         */

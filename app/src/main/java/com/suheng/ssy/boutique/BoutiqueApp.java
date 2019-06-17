@@ -15,6 +15,7 @@ import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpParams;
+import com.squareup.leakcanary.LeakCanary;
 import com.suheng.ssy.boutique.dagger.AppComponent;
 import com.suheng.ssy.boutique.dagger.AppModule;
 import com.suheng.ssy.boutique.dagger.DaggerAppComponent;
@@ -41,12 +42,12 @@ public class BoutiqueApp extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        MultiDex.install(this);
         sAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();//强调：AppComponent只能初始化一次
 
         //if (isDebug()) {
@@ -59,6 +60,7 @@ public class BoutiqueApp extends Application {
         this.initOkGo();
 
         SpeechUtility.createUtility(this, "appid=5cd92db2");
+        LeakCanary.install(this);
     }
 
     public AppComponent getAppComponent() {
