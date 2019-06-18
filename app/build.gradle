@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('D:\\Utils\\suheng.jks')
+            storePassword 'Weisuheng1871_'
+            keyAlias = 'boutique'
+            keyPassword 'Ssywbj1239.'
+        }
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.suheng.ssy.boutique"
@@ -19,6 +27,10 @@ android {
         multiDexEnabled true
     }
     buildTypes {
+        debug {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

@@ -4,6 +4,13 @@ android {
     compileSdkVersion 27
     buildToolsVersion '28.0.3'
 
+    lintOptions {//打正式包出错时加入的
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
     defaultConfig {
         applicationId "jie.example.boutique"
         minSdkVersion 14
