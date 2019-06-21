@@ -27,4 +27,6 @@
     <dimen name="title_bar_text">16sp</dimen>
     <dimen name="checkbox_size">19dp</dimen>
     <dimen name="scroll_view_title_height">50dp</dimen>
+
+    <dimen name="vertical_progress_bar_radius">6dp</dimen>
 </resources>

@@ -25,6 +25,7 @@ android {
         }
 
         multiDexEnabled true
+        signingConfig signingConfigs.release
     }
     buildTypes {
         debug {
@@ -124,9 +125,10 @@ dependencies {
     implementation files('libs/Msc.jar')
 
     implementation project(path: ':keyboard')
-    implementation project(path: ':uploadview')
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3' // or 1.4-beta1
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3' // or 1.4-beta1
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3' // or 1.4-beta1
+
+    implementation 'com.github.ssywbj:uploadview:v1.0'
 }
