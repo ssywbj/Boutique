@@ -107,6 +107,9 @@ public class BoutiqueActivity extends BasicActivity {
                     case 16:
                         intent = new Intent(BoutiqueActivity.this, MemoryLeakageActivity.class);
                         break;
+                    case 17:
+                        intent = new Intent(BoutiqueActivity.this, PickPictureActivity.class);
+                        break;
                     default:
                         intent = new Intent(BoutiqueActivity.this, RegexActivity.class);
                         break;
@@ -119,7 +122,7 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, MemoryLeakageActivity.class));
+        startActivity(new Intent(this, PickPictureActivity.class));
     }
 
 }

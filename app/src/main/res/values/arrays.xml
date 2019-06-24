@@ -17,5 +17,6 @@
         <item>自定义键盘</item>
         <item>UploadView</item>
         <item>MemoryLeakage</item>
+        <item>调起系统相机和图库</item>
     </array>
 </resources>

@@ -50,6 +50,7 @@
         <activity android:name=".KeyboardActivity" />
         <activity android:name=".UploadViewActivity" />
         <activity android:name=".oom.MemoryLeakageActivity" />
+        <activity android:name=".PickPictureActivity" />
     </application>
 
 </manifest>
