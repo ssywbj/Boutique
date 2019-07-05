@@ -57,7 +57,7 @@ public class BankVoiceActivity extends BasicActivity {
         if (i == R.id.text_play) {
             String speak;
             try {
-                speak = VoiceToText.voiceToText(mEditNumber.getText().toString());
+                speak = VoiceToText.styleCNRead(mEditNumber.getText().toString());
             } catch (Exception e) {
                 LogUtil.e(mLogTag, e.toString());
                 speak = mEditNumber.getText().toString();
