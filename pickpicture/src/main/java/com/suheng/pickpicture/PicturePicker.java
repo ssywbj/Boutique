@@ -20,10 +20,10 @@ public class PicturePicker extends Activity {
     private static final int REQUEST_CODE_TAKE_PHOTO = 0x11;
     private static final int REQUEST_CODE_PICK_PICTURE = 0x12;
     private static final String DATA_KEY_OPEN_TYPE = "data_key_open_type";
-    private static final String DATA_KEY_COMPRESS_SIZE = "data_key_compress_size";
+    private static final String DATA_KEY_MAX_FILE_SIZE = "data_key_max_file_size";
     private static PickerListener sPickerListener;
     private String mPhotoPath;
-    private long mCompressSize;
+    private long mMaxFileSize;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class PicturePicker extends Activity {
             } else {
                 this.openAlbum();
             }
-            mCompressSize = intent.getLongExtra(DATA_KEY_OPEN_TYPE, 0);
+            mMaxFileSize = intent.getLongExtra(DATA_KEY_MAX_FILE_SIZE, 0);
         } catch (Exception e) {
             Log.e(TAG, "open picture picker exception: " + e.toString());
             finish();
@@ -43,10 +43,10 @@ public class PicturePicker extends Activity {
     }
 
     private static void openPicker(Activity activity, PickerListener pickerListener
-            , int openType, int compressSize) {
+            , int openType, long compressSize) {
         Intent intent = new Intent(activity, PicturePicker.class);
         intent.putExtra(DATA_KEY_OPEN_TYPE, openType);
-        intent.putExtra(DATA_KEY_COMPRESS_SIZE, compressSize);
+        intent.putExtra(DATA_KEY_MAX_FILE_SIZE, compressSize);
         activity.startActivity(intent);
 
         sPickerListener = pickerListener;
@@ -135,8 +135,7 @@ public class PicturePicker extends Activity {
                         this.updateSystemAlbum(mPhotoPath);
                     }
 
-                    if (mCompressSize > 0) {
-
+                    if (mMaxFileSize > 0) {
                     } else {
                         if (sPickerListener != null) {
                             sPickerListener.obtainPicture(mPhotoPath);
