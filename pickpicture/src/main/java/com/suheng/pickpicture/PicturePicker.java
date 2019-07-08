@@ -72,7 +72,7 @@ public class PicturePicker extends Activity {
             mMaxFileSize = intent.getLongExtra(DATA_KEY_MAX_FILE_SIZE, 0);
 
             mMaxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024 / 1024);
-            Log.d(TAG, "max memory: " + mMaxMemory);
+            Log.d(TAG, "max memory: " + mMaxMemory + "M");
         } catch (Exception e) {
             Log.e(TAG, "open picture picker exception: " + e.toString());
             finish();
@@ -187,6 +187,8 @@ public class PicturePicker extends Activity {
             default:
                 break;
         }
+
+        finish();
     }
 
     private File compressFile(final File destFile, File originFile) {
@@ -217,7 +219,7 @@ public class PicturePicker extends Activity {
                     Bitmap.Config preferredConfig = options.inPreferredConfig;
                     int needMemory = imageWidth * imageHeight * 4 / 1024 / 1024;
                     Log.d(TAG, "imageWidth = " + imageWidth + ", imageHeight = " + imageHeight + ", imageType = "
-                            + imageType + ", preferredConfig = " + preferredConfig + ", need memory = " + needMemory);
+                            + imageType + ", preferredConfig = " + preferredConfig + ", need memory = " + needMemory + "M");
                     if (needMemory >= mMaxMemory) {
                         options.inSampleSize = (int) (1.0 * needMemory / mMaxMemory + 1);
                         Log.d(TAG, "picture prepare handle before put it in memory, inSampleSize = " + options.inSampleSize);
@@ -240,8 +242,6 @@ public class PicturePicker extends Activity {
         if (sPickerListener != null) {
             sPickerListener.obtainPicture(photoPath);
         }
-
-        finish();
     }
 
     /**
@@ -267,11 +267,7 @@ public class PicturePicker extends Activity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "picture picker destroy");
+    public static void releaseSource() {
         sPickerListener = null;
-        this.recycleBitmap();
     }
 }

@@ -42,4 +42,9 @@ public class PickPictureActivity extends BasicActivity {
         }, 1024 * 1024);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PicturePicker.releaseSource();
+    }
 }
