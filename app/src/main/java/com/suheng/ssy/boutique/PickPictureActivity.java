@@ -29,7 +29,7 @@ public class PickPictureActivity extends BasicActivity {
                 Log.d(TAG, "album picture: " + path);
                 mViewAlbum.setImageBitmap(BitmapFactory.decodeFile(path));
             }
-        }, 1024 * 1024);
+        }, 50 * 1024 * 1024);
     }
 
     public void openCamera(View view) {

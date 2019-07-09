@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
@@ -154,27 +155,31 @@ public class PicturePicker extends Activity {
                         this.updateSystemAlbum(mPhotoPath);
                     }
 
-                    if (mMaxFileSize > 0) {
+                    new PictureCompressor().compressByQuality(mPhotoPath);
+                    new PictureCompressor().compressByDimen(mPhotoPath);
+
+                    if (mMaxFileSize > 0) {//如果传进来的最大文件体积大于0，那么需要压缩后返回压缩后的路径，否则返回原始路径
                         final File file = new File(mPhotoPath);
-                        if (mMaxFileSize >= file.length()) {
-                            Log.d(TAG, "don't need complete: mMaxFileSize = " + mMaxFileSize + ", file.length = " + file.length());
-                            this.notifyListener(mPhotoPath);
-                        } else {
-                            mCompressTime = System.currentTimeMillis();
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        String tmpPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-                                                + File.separator + "rTmp" + System.currentTimeMillis() + ".jpg";
-                                        File tmpFile = new File(tmpPath);
-                                        copyFile(file, tmpFile);
-                                        compressFile(tmpFile, tmpFile);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+                        if (mMaxFileSize >= file.length()) {//如果传进来的最大文件大小大于文件大小，那么不需要压缩后再返回
+                            if (mMaxFileSize >= mMaxMemory) {//但如果传进来的最大文件体积大于可分配的内存，那么还是需要压缩后再返回，以免报OOM异常
+                                Log.d(TAG, "max file size bigger than file length and max memory");
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            File compress = compress(file);
+                                            compressFile(compress, compress);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
                                     }
-                                }
-                            }).start();
+                                }).start();
+                            } else {
+                                Log.d(TAG, "don't need complete: mMaxFileSize = " + mMaxFileSize + ", file.length = " + file.length());
+                                this.notifyListener(mPhotoPath);
+                            }
+                        } else {
+                            this.compressFile(file);
                         }
                     } else {
                         this.notifyListener(mPhotoPath);
@@ -191,13 +196,31 @@ public class PicturePicker extends Activity {
         finish();
     }
 
+    private void compressFile(final File file) {
+        mCompressTime = System.currentTimeMillis();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String tmpPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+                            + File.separator + "Tmp" + System.currentTimeMillis() + ".jpg";
+                    File tmpFile = new File(tmpPath);
+                    copyFile(file, tmpFile);
+                    compressFile(tmpFile, tmpFile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     private File compressFile(final File destFile, File originFile) {
         try {
             if (destFile.length() <= mMaxFileSize) {
                 mCompressTime = (System.currentTimeMillis() - mCompressTime);
                 Log.d(TAG, "compress complete, take time: " + (1.0 * mCompressTime / 1000) + "s");
                 this.recycleBitmap();
-                originFile.delete();
+                //originFile.delete();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -206,29 +229,7 @@ public class PicturePicker extends Activity {
                 });
                 return destFile;
             } else {
-                String newPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-                        + File.separator + "rCompress" + System.currentTimeMillis() + ".jpg";
-                File newFile = new File(newPath);
-                if (mBitmap == null) {
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inJustDecodeBounds = true;
-                    BitmapFactory.decodeFile(originFile.getAbsolutePath(), options);
-                    int imageWidth = options.outWidth;
-                    int imageHeight = options.outHeight;
-                    String imageType = options.outMimeType;
-                    Bitmap.Config preferredConfig = options.inPreferredConfig;
-                    int needMemory = imageWidth * imageHeight * 4 / 1024 / 1024;
-                    Log.d(TAG, "imageWidth = " + imageWidth + ", imageHeight = " + imageHeight + ", imageType = "
-                            + imageType + ", preferredConfig = " + preferredConfig + ", need memory = " + needMemory + "M");
-                    if (needMemory >= mMaxMemory) {
-                        options.inSampleSize = (int) (1.0 * needMemory / mMaxMemory + 1);
-                        Log.d(TAG, "picture prepare handle before put it in memory, inSampleSize = " + options.inSampleSize);
-                    }
-                    options.inMutable = true;
-                    options.inJustDecodeBounds = false;
-                    mBitmap = BitmapFactory.decodeFile(originFile.getAbsolutePath(), options);
-                }
-                mBitmap.compress(Bitmap.CompressFormat.JPEG, 30, new FileOutputStream(newFile));
+                File newFile = compress(originFile);
                 return compressFile(newFile, originFile);
             }
         } catch (Exception e) {
@@ -236,6 +237,35 @@ public class PicturePicker extends Activity {
             this.recycleBitmap();
             return null;
         }
+    }
+
+    @NonNull
+    private File compress(File originFile) throws Exception {
+        if (mBitmap == null) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(originFile.getAbsolutePath(), options);
+            int imageWidth = options.outWidth;
+            int imageHeight = options.outHeight;
+            String imageType = options.outMimeType;
+            Bitmap.Config preferredConfig = options.inPreferredConfig;
+            int needMemory = imageWidth * imageHeight * 4 / 1024 / 1024;
+            Log.d(TAG, "imageWidth = " + imageWidth + ", imageHeight = " + imageHeight + ", imageType = "
+                    + imageType + ", preferredConfig = " + preferredConfig + ", need memory = " + needMemory + "M");
+            if (needMemory >= mMaxMemory) {
+                options.inSampleSize = (int) (1.0 * needMemory / mMaxMemory + 1);//按尺寸压缩到原来的inSampleSize分之一
+                Log.d(TAG, "picture prepare handle before put it in memory, inSampleSize = " + options.inSampleSize);
+            }
+            options.inMutable = true;
+            options.inJustDecodeBounds = false;
+            mBitmap = BitmapFactory.decodeFile(originFile.getAbsolutePath(), options);
+        }
+
+        String newPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+                + File.separator + "Compress" + System.currentTimeMillis() + ".jpg";
+        File newFile = new File(newPath);
+        mBitmap.compress(Bitmap.CompressFormat.JPEG, 30, new FileOutputStream(newFile));//按质量压缩到原来的30%
+        return newFile;
     }
 
     private void notifyListener(String photoPath) {
