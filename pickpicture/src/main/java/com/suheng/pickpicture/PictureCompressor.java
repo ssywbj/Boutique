@@ -20,7 +20,7 @@ public class PictureCompressor implements Runnable {
     private int mMaxMemory;
     private long mMaxFileSize;
     private String mPicturePath;
-    private WeakHandler mHandler = new WeakHandler(this);
+    //private WeakHandler mHandler = new WeakHandler(this);
     private int mCompressType = COMPRESS_BY_QUALITY;
 
     /**
@@ -63,6 +63,7 @@ public class PictureCompressor implements Runnable {
         String newPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
                 + File.separator + "Dimen" + System.currentTimeMillis() + ".jpg";
         File newFile = new File(newPath);
+        newFile.createNewFile();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(newFile));
     }
 
@@ -83,7 +84,7 @@ public class PictureCompressor implements Runnable {
         }
     }
 
-    private static class WeakHandler extends Handler {
+    /*private static class WeakHandler extends Handler {
         private WeakReference<PictureCompressor> mWeakReference;
 
         private WeakHandler(PictureCompressor instance) {
@@ -98,6 +99,6 @@ public class PictureCompressor implements Runnable {
                 return;
             }
         }
-    }
+    }*/
 
 }
