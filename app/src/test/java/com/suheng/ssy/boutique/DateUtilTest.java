@@ -23,71 +23,61 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(Parameterized.class)
 public class DateUtilTest {
 
-    private String time = "2017-10-15 16:00:02";
-    private long timeStamp = 1508054402000L;
-    private Date mDate;
+    private String mTimePlain;
+    private long mTimeStamp = 1508054402000L;
 
-    public DateUtilTest(String time) {
-        this.time = time;
+    @Parameterized.Parameters
+    public static Collection primeNumbers() {
+        return Arrays.asList("2017-10-15", "2017-10-15 10:12", "2017-10-15 10:72", "2017-10-15 10:52:34");
+    }
+
+    public DateUtilTest(String timePlain) {
+        this.mTimePlain = timePlain;
     }
 
     @Before
-    public void init() throws Exception {
+    public void init() {
         System.out.println("测试开始！");
-        mDate = new Date();
-        mDate.setTime(timeStamp);
+        Date date = new Date();
+        date.setTime(mTimeStamp);
     }
 
     @After
-    public void destroy() throws Exception {
+    public void destroy() {
         System.out.println("测试结束！");
     }
 
     @Test
-    public void testDateToStamp() throws Exception {
-        //System.out.println(DateUtil.stampToDate(timeStamp));
-        //assertEquals("dfafa", DateUtil.stampToDate(timeStamp));
-        assertEquals("2017-10-15 16:00:02", DateUtil.stampToDate(timeStamp));
+    public void testDateToStamp() {
+        //System.out.println(DateUtil.stampToDate(mTimeStamp));
+        //assertEquals("dfafa", DateUtil.stampToDate(mTimeStamp));
+        assertEquals("2017-10-15 16:00:02", DateUtil.stampToDate(mTimeStamp));
     }
 
     @Test
-    public void testDateToStamp2() throws Exception {
-        assertNotEquals("dfafa", DateUtil.stampToDate(timeStamp));
+    public void testDateToStamp2() {
+        assertNotEquals("dfafa", DateUtil.stampToDate(mTimeStamp));
     }
 
     @Test
     public void dateToStamp() throws Exception {
-        //assertEquals(1670793, DateUtil.dateToStamp(time));
-        assertEquals(1508035954000L, DateUtil.dateToStamp(time));
+        //assertEquals(1670793, DateUtil.dateToStamp(mTimePlain));
+        assertEquals(1508035954000L, DateUtil.dateToStamp(mTimePlain));
     }
 
     @Test(expected = ParseException.class)
     public void dateToStamp2() throws Exception {
-        //assertEquals(1670793, DateUtil.dateToStamp(time));
+        //assertEquals(1670793, DateUtil.dateToStamp(mTimePlain));
         assertEquals(1508054402000L, DateUtil.dateToStamp("2017-10-15"));
     }
 
     @Test(timeout = 100)//性能测试，如果方法耗时超过100毫秒->失败
-    public void testTimeout() throws Exception {
+    public void testTimeout() {
         try {
-            Thread.sleep(99);
+            Thread.sleep(990);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void testTimeout2() throws Exception {
-        try {
-            Thread.sleep(99);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Parameterized.Parameters
-    public static Collection primeNumbers() {
-        return Arrays.asList(new String[]{"2017-10-15", "2017-10-15 10:12"
-                , "2017-10-15 10:72", "2017-10-15 10:52:34"});
     }
 
 }

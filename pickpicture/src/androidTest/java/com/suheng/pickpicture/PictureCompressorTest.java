@@ -34,7 +34,6 @@ public class PictureCompressorTest {
     public void testCompressByQuality() {
         String photoPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
                 + File.separator + "hand_front_face.jpg";
-        Log.d(TAG, "file length = " + new File(photoPath).length());
         //Looper.prepare();
         Object lock = new Object();
         new PictureCompressor().compressByQuality(photoPath);
