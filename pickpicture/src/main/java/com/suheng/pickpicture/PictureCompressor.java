@@ -3,13 +3,10 @@ package com.suheng.pickpicture;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.lang.ref.WeakReference;
 
 public class PictureCompressor implements Runnable {
     private static final String TAG = PictureCompressor.class.getSimpleName();
@@ -63,7 +60,6 @@ public class PictureCompressor implements Runnable {
         String newPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
                 + File.separator + "Dimen" + System.currentTimeMillis() + ".jpg";
         File newFile = new File(newPath);
-        newFile.createNewFile();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(newFile));
     }
 

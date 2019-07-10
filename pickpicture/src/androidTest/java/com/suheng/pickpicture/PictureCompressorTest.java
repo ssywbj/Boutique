@@ -27,13 +27,25 @@ public class PictureCompressorTest {
         Log.d(TAG, "picture compressor test end");
     }
 
+    /**
+     * 怎样测试异步代码：https://www.jianshu.com/p/8c9348ff4c15
+     */
     @Test
     public void testCompressByQuality() {
         String photoPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
                 + File.separator + "hand_front_face.jpg";
         Log.d(TAG, "file length = " + new File(photoPath).length());
         //Looper.prepare();
-        mPictureCompressor.compressByQuality(photoPath);
+        Object lock = new Object();
+        new PictureCompressor().compressByQuality(photoPath);
+        new PictureCompressor().compressByDimen(photoPath);
+        try {
+            synchronized (lock) {
+                lock.wait();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //Looper.loop();
     }
 }
