@@ -155,11 +155,21 @@ public class PicturePicker extends Activity {
                         this.updateSystemAlbum(mPhotoPath);
                     }
 
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                new PictureCompressor().compressByQuality(mPhotoPath);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
                     /*new PictureCompressor().compressByQuality(mPhotoPath);
-                    new PictureCompressor().compressByDimen(mPhotoPath);*/
+                    new PictureCompressor().compressByDimen(mPhotoPath);
                     PictureCompressor pictureCompressor = new PictureCompressor();
                     pictureCompressor.compressByQuality(mPhotoPath);
-                    pictureCompressor.compressByDimen(mPhotoPath);
+                    pictureCompressor.compressByDimen(mPhotoPath);*/
 
                     if (mMaxFileSize > 0) {//如果传进来的最大文件体积大于0，那么需要压缩后返回压缩后的路径，否则返回原始路径
                         final File file = new File(mPhotoPath);
