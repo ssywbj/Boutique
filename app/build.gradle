@@ -132,6 +132,6 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3' // or 1.4-beta1
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3' // or 1.4-beta1
 
-    implementation 'com.github.ssywbj:uploadview:v1.0'
+    implementation 'com.github.ssywbj:smooth-upload-view:v1.0'
     implementation project(path: ':pickpicture')
 }
