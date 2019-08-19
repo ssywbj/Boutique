@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file('D:\\Utils\\suheng.jks')
+            /*storeFile file('D:\\Utils\\suheng.jks')
             storePassword 'Weisuheng1871_'
             keyAlias = 'boutique'
-            keyPassword 'Ssywbj1239.'
+            keyPassword 'Ssywbj1239.'*/
         }
     }
     compileSdkVersion rootProject.ext.compileSdkVersion
