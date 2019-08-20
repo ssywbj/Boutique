@@ -1,11 +1,9 @@
 package com.suheng.ssy.boutique;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.util.LruCache;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,11 +14,6 @@ import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.suheng.ssy.boutique.model.Constants;
 import com.suheng.ssy.boutique.oom.MemoryLeakageActivity;
-
-import java.lang.ref.SoftReference;
-import java.net.HttpURLConnection;
-import java.net.URLConnection;
-import java.util.Map;
 
 import ying.jie.boutique.MainActivity;
 
@@ -131,35 +124,4 @@ public class BoutiqueActivity extends BasicActivity {
 
         startActivity(new Intent(this, PickPictureActivity.class));
     }
-
-    private static class ImageCache extends LruCache<String, Bitmap> {
-        private Map<String, SoftReference<Bitmap>> mCacheMap;
-
-
-        public ImageCache(Map<String, SoftReference<Bitmap>> cacheMap) {
-            super((int) (Runtime.getRuntime().maxMemory() / 8));
-            mCacheMap = cacheMap;
-        }
-
-        @Override
-        protected int sizeOf(String key, Bitmap value) {
-            return value.getRowBytes() * value.getHeight();
-        }
-
-        @Override
-        protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
-            if (oldValue != null) {
-                SoftReference<Bitmap> softReference = new SoftReference<>(oldValue);
-                mCacheMap.put(key, softReference);
-            }
-        }
-
-        public Map<String, SoftReference<Bitmap>> getCacheMap() {
-            return mCacheMap;
-        }
-
-    }
-
-    HttpURLConnection mHttpURLConnection;
-    URLConnection mURLConnection;
 }
