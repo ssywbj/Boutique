@@ -62,7 +62,7 @@ public class SyncList {
                 System.out.println(Thread.currentThread().getName() + ", " + download);
             }
         } else {
-            System.out.println("----------- list is empty ------------");
+            System.out.println(Thread.currentThread().getName() + ", ------- list is empty --------");
         }
     }
 
@@ -78,6 +78,47 @@ public class SyncList {
     }
 
     public static void main(String[] args) {
+        final SyncList syncList = new SyncList();
+
+        Thread updateThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (syncList) {
+                    syncList.update(new Download(1, 11111));
+                    syncList.update(new Download(2, 22222));
+                    syncList.printList();
+                }
+                /*List<Download> downloads = new ArrayList<>();
+                for (int uid = 0; uid < 20; uid++) {
+                    downloads.add(new Download(uid, 1000 + uid));
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                syncList.update(downloads);*/
+            }
+        }, "update thread");
+
+        Thread deleteThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (syncList) {
+                    syncList.delete(1);
+                    List<Long> uids = new ArrayList<>();
+                    for (long uid = 0; uid < 5; uid++) {
+                        uids.add(uid);
+                    }
+                    syncList.delete(uids);
+
+                    syncList.printList();
+                }
+            }
+        }, "delete thread");
+
+        updateThread.start();
+        deleteThread.start();
     }
 
 }

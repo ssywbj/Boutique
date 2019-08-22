@@ -4,11 +4,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.example.wbj.info.ImageInfo;
+import com.example.wbj.utils.DateUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class QueryTask extends AsyncTask<Integer, Void, List<ImageInfo>> {
@@ -58,10 +61,10 @@ public class QueryTask extends AsyncTask<Integer, Void, List<ImageInfo>> {
                     long dateModified = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_MODIFIED)) * 1000;//*1000:秒转化为毫秒
                     int orientation = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.ORIENTATION));
                     ImageInfo imageInfo = new ImageInfo(imagePath, dirName, width, height, size, dateModified, orientation);
-                    /*Log.d(TAG, "queryPictures: " + imageInfo + "\n" + DateUtil.parseYearMonthDay(dateModified) + ", " + new Date().getTime()
+                    Log.d(TAG, "queryPictures: " + imageInfo + "\n" + DateUtil.parseYearMonthDay(dateModified) + ", " + new Date().getTime()
                             + "--" + DateUtils.formatDateTime(mContext, dateModified, DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY)
                             + "--" + DateUtils.formatDateTime(mContext, dateModified, DateUtils.FORMAT_SHOW_YEAR)
-                            + "--" + DateUtils.formatDateTime(mContext, dateModified, DateUtils.FORMAT_SHOW_DATE));*/
+                            + "--" + DateUtils.formatDateTime(mContext, dateModified, DateUtils.FORMAT_SHOW_DATE));
                     imageInfoList.add(imageInfo);
                 } while (cursor.moveToNext());
             }

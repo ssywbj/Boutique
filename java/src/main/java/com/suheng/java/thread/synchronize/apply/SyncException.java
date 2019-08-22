@@ -48,11 +48,11 @@ public class SyncException {
             public void run() {
                 for (Integer integer : mIntegers) {
                     System.out.println("thread foreach, integer = " + integer);
-                    try {
+                    /*try {
                         Thread.sleep(300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                    }
+                    }*/
                 }
             }
         });
@@ -127,8 +127,8 @@ public class SyncException {
 
     public static void main(String[] args) {
         SyncException syncException = new SyncException();
-        //syncException.threadUnsafe();
-        syncException.threadSafe();
+        syncException.threadUnsafe();
+        //syncException.threadSafe();
     }
 
 }

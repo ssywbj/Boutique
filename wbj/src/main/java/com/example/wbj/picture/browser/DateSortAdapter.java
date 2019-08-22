@@ -77,7 +77,7 @@ public class DateSortAdapter extends PictureAdapter<ImageInfo> {
 
         public ContentHolder(View view) {
             super(view);
-            ivShowImage = (ImageView) view.findViewById(R.id.image_item);
+            ivShowImage = view.findViewById(R.id.image_item);
             if (mActivity != null) {
                 ViewGroup.LayoutParams layoutParams = ivShowImage.getLayoutParams();
                 layoutParams.width = mActivity.mItemWidth;
@@ -85,7 +85,7 @@ public class DateSortAdapter extends PictureAdapter<ImageInfo> {
                 ivShowImage.setLayoutParams(layoutParams);
             }
 
-            cBox = (CheckBox) view.findViewById(R.id.cb_select);
+            cBox =  view.findViewById(R.id.cb_select);
         }
     }
 
@@ -94,7 +94,7 @@ public class DateSortAdapter extends PictureAdapter<ImageInfo> {
 
         public FooterHolder(View view) {
             super(view);
-            tvShowNumber = (TextView) view.findViewById(R.id.tv_show_number);
+            tvShowNumber =  view.findViewById(R.id.tv_show_number);
         }
     }
 
@@ -103,7 +103,7 @@ public class DateSortAdapter extends PictureAdapter<ImageInfo> {
 
         public TitleHolder(View view) {
             super(view);
-            tvTitle = (TextView) view.findViewById(R.id.tv_title);
+            tvTitle =  view.findViewById(R.id.tv_title);
         }
     }
 }

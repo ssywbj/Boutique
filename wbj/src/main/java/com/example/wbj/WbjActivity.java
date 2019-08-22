@@ -14,28 +14,30 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.wbj.picture.browser.ImageBrowserActivity;
+import com.wbj.view.DragListActivity;
+
 public class WbjActivity extends AppCompatActivity {
     private static final String TAG = WbjActivity.class.getSimpleName();
     private ListView mListView;
-    private SparseArray<String> sAtyArray = new SparseArray<>();
+    private SparseArray<Class> sAtyArray = new SparseArray<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_aty);
 
-        sAtyArray.put(0, "com.example.wbj.WebViewActivity");
-        sAtyArray.put(1, "com.example.wbj.ProgressBarActivity");
-        sAtyArray.put(2, "com.example.wbj.picture.browser.ImageBrowserActivity");
-        sAtyArray.put(3, "com.example.wbj.DialogPriorityActivity");
-        sAtyArray.put(4, "com.example.wbj.NumberDynamicActivity");
-        sAtyArray.put(5, "com.example.wbj.RecyclerViewActivity");
-        sAtyArray.put(6, "com.example.wbj.SettingSetActivity");
-        sAtyArray.put(7, "com.example.wbj.ClipActivity");
-        sAtyArray.put(8, "com.wbj.view.DragListActivity");
-        sAtyArray.put(9, "com.example.wbj.MVPLoginActivity");
-        //sAtyArray.put(9, "com.example.wbj.MVCLoginActivity");
-        sAtyArray.put(10, "com.example.wbj.TitleScrollViewActivity");
+        sAtyArray.put(0, WebViewActivity.class);
+        sAtyArray.put(1, ProgressBarActivity.class);
+        sAtyArray.put(2, ImageBrowserActivity.class);
+        sAtyArray.put(3, DialogPriorityActivity.class);
+        sAtyArray.put(4, NumberDynamicActivity.class);
+        sAtyArray.put(5, RecyclerViewActivity.class);
+        sAtyArray.put(6, SettingSetActivity.class);
+        sAtyArray.put(7, ClipActivity.class);
+        sAtyArray.put(8, DragListActivity.class);
+        sAtyArray.put(9, MVPLoginActivity.class);
+        sAtyArray.put(10, TitleScrollViewActivity.class);
 
         FrameLayout rootLayout = findViewById(android.R.id.content);
         Log.i(TAG, "rootLayout: " + rootLayout);
@@ -68,7 +70,7 @@ public class WbjActivity extends AppCompatActivity {
             }
         });
 
-        openActivity(10);
+        openActivity(2);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pst, long id) {
@@ -116,7 +118,7 @@ public class WbjActivity extends AppCompatActivity {
 
     private void openActivity(final int position) {
         try {
-            Intent intent = new Intent(this, Class.forName(sAtyArray.get(position)));
+            Intent intent = new Intent(this, sAtyArray.get(position));
             this.startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();

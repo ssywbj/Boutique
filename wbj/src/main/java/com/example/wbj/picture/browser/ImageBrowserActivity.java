@@ -54,7 +54,7 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
     }
 
     private void initTitleBar() {
-        mTitleBar = (TitleBar) findViewById(R.id.title_bar);
+        mTitleBar = findViewById(R.id.title_bar);
         mTitleBar.setLRRightBtn(R.drawable.icon_sort_btn);
         mTitleBar.setLRMiddleBtn(R.drawable.icon_edit_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,13 +78,10 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
     }
 
     private void initRecyclerView() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.main_picture_rv);
+        mRecyclerView = findViewById(R.id.main_picture_rv);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, NUM_COLUMNS, GridLayoutManager.VERTICAL, false));
-        //mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-        //mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));//这里用线性宫格显示 类似于瀑布流
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
         mRecyclerView.addItemDecoration(new DividerDecoration(this, true));//设置Item分隔线
-        //mPictureAdapter = new NormalAdapter(this, mDataList);
         mPictureAdapter = new DateSortAdapter(this, mDataList);
         mPictureAdapter.setHasStableIds(true);//解决adapter闪烁问题
         mRecyclerView.setAdapter(mPictureAdapter);
@@ -145,8 +142,8 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
                 if (mIsEditMode) {
                     if (imageInfo.getItemType() == PictureAdapter.VIEW_TYPE_CONTENT) {
                         setSelectedItem(position);
-                    } else {
-
+                    } else if (imageInfo.getItemType() == PictureAdapter.VIEW_TYPE_TITLE) {
+                        ToastUtil.shortShow("date: " + imageInfo.getTitle());
                     }
                 } else {
                     if (imageInfo.getItemType() == PictureAdapter.VIEW_TYPE_CONTENT) {
@@ -222,11 +219,9 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
         mPictureAdapter.notifyDataSetChanged();
     }
 
-    private ImageInfo mBatchLastItem;
-
     @Override
     public void onPostExecute(List<ImageInfo> imageInfoList) {
-        if ((imageInfoList == null || imageInfoList.size() <= 0) && mDataList.size() <= 0) {
+        if ((imageInfoList == null || imageInfoList.size() <= 0)) {
             mGridEmptyView.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
             return;
@@ -243,36 +238,24 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
 
         final int contentLength = imageInfoList.size();
         if (contentLength > 0) {
-            ImageInfo imageSource, imageCompare;
-            int nextIndex;
-            for (int index = 0; index < contentLength; index++) {
-                imageSource = imageInfoList.get(index);
-                imageSource.setDate(DateUtils.formatDateTime(this, imageSource.getDateModified(), DateUtils.FORMAT_SHOW_YEAR));
-                imageSource.setItemType(PictureAdapter.VIEW_TYPE_CONTENT);
-                if (index == 0) {
-                    if (mBatchLastItem == null) {
-                        mDataList.add(new ImageInfo(imageSource.getDate(), PictureAdapter.VIEW_TYPE_TITLE));
-                        mDataList.add(imageSource);
-                    } else {//如果上一批的最后一个数据不为空，那么先和它比较是否是同一天
-                        this.addInList(mBatchLastItem, imageSource);
-                    }
-                }
-
-                Log.d(TAG, "index: " + index);
-                nextIndex = index + 1;//和本批数据有下一项数据比较是否是同一天
-                if (nextIndex < contentLength) {
-                    imageCompare = imageInfoList.get(nextIndex);//取出下一项的值
-                    imageCompare.setDate(DateUtils.formatDateTime(this, imageCompare.getDateModified(), DateUtils.FORMAT_SHOW_YEAR));
-                    imageCompare.setItemType(PictureAdapter.VIEW_TYPE_CONTENT);
-                    this.addInList(imageSource, imageCompare);
-
-                    if (nextIndex == (contentLength - 1)) {//保存批量数据中最后一项的值，用于与下一个批量数据的第一项比较
-                        mBatchLastItem = imageCompare;
-                    }
+            /*
+             * 算法：在for循环中，如果Item集合为空，那么先额外加入日期Title项再加入第一条数据项；往后的数据项与
+             * 前一项比较，如果是同一日期则直接加在集合后面，如果是不同日期则先额外加入日期Title项再加入数据项。
+             */
+            for (ImageInfo currentImage : imageInfoList) {
+                currentImage.setDate(DateUtils.formatDateTime(this, currentImage.getDateModified(), DateUtils.FORMAT_SHOW_YEAR));
+                final int size = mDataList.size();
+                if (size > 0) {
+                    addInList(mDataList.get(size - 1), currentImage);//mDataList.get(size - 1)：取出前一项数据
+                } else {
+                    mDataList.add(new ImageInfo(currentImage.getDate(), PictureAdapter.VIEW_TYPE_TITLE));//先额外加入日期Title项
+                    mDataList.add(currentImage);//再加入第一条数据项
                 }
             }
 
             this.updateContentLength(contentLength);
+        } else {
+            Log.d(TAG, "没有数据了");
         }
 
         mPictureAdapter.notifyDataSetChanged();
