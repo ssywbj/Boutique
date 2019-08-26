@@ -23,7 +23,9 @@ import com.wbj.view.TitleBar;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ImageBrowserActivity extends BasicActivity implements QueryTask.TaskResultListener {
     private static final String TAG = ImageBrowserActivity.class.getSimpleName();
@@ -38,6 +40,7 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
     private PictureAdapter mPictureAdapter;
     private boolean mHasLoadCompleted;
     protected boolean mIsEditMode;
+    private Map<String, List<ImageInfo>> mMapDateImage = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,9 +144,12 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
                 ImageInfo imageInfo = (ImageInfo) mPictureAdapter.getItem(position);
                 if (mIsEditMode) {
                     if (imageInfo.getItemType() == PictureAdapter.VIEW_TYPE_CONTENT) {
-                        setSelectedItem(position);
+                        setSelectedItem(imageInfo);
                     } else if (imageInfo.getItemType() == PictureAdapter.VIEW_TYPE_TITLE) {
-                        ToastUtil.shortShow("date: " + imageInfo.getTitle());
+                        final String infoTitle = imageInfo.getTitle();
+                        if (mMapDateImage.containsKey(infoTitle)) {
+                            setSelectedTitle(imageInfo);
+                        }
                     }
                 } else {
                     if (imageInfo.getItemType() == PictureAdapter.VIEW_TYPE_CONTENT) {
@@ -178,30 +184,91 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
             mTitleBar.setSelectedCount(mSelectedList.size(), ImageInfo.getImageInfo().getContentLength());
             mPictureAdapter.notifyDataSetChanged();
         } else {
-            this.setSelectedItem(pst);
+            this.setSelectedItem(mDataList.get(pst));
         }
     }
 
     private void exitEditMode() {
+        for (ImageInfo imageInfo : mSelectedList) {
+            if (imageInfo.getItemType() == PictureAdapter.VIEW_TYPE_CONTENT) {
+                Log.d(TAG, "selected item: " + imageInfo);
+            }
+        }
         mIsEditMode = false;
         mSelectedList.clear();
         mTitleBar.exitEditMode();
         mPictureAdapter.notifyDataSetChanged();
     }
 
-    private void setSelectedItem(int pst) {
-        if (pst < 0 || pst >= mDataList.size() || mDataList.get(pst).getItemType() != PictureAdapter.VIEW_TYPE_CONTENT) {
+    private void setSelectedItem(ImageInfo imageInfo) {
+        if (imageInfo.getItemType() == PictureAdapter.VIEW_TYPE_FOOTER) {
             return;
         }
 
-        ImageInfo imageInfo = mDataList.get(pst);
         if (mSelectedList.contains(imageInfo)) {
             mSelectedList.remove(imageInfo);
         } else {
             mSelectedList.add(imageInfo);
         }
 
-        mTitleBar.setSelectedCount(mSelectedList.size(), ImageInfo.getImageInfo().getContentLength());
+        int dateSelectedCount = 0;
+        for (ImageInfo info : mSelectedList) {
+            if (imageInfo.getDate().equals(info.getDate())) {
+                ++dateSelectedCount;
+            }
+        }
+        ImageInfo imageTitle = imageInfo.getImageTitle();
+        if (mMapDateImage.containsKey(imageTitle.getTitle())) {
+            if (mMapDateImage.get(imageTitle.getTitle()).size() == dateSelectedCount) {
+                mSelectedList.add(imageTitle);
+            } else {
+                mSelectedList.remove(imageTitle);
+            }
+        }
+
+
+        int selectedCount = 0;
+        for (ImageInfo info : mSelectedList) {
+            if (info.getItemType() == PictureAdapter.VIEW_TYPE_CONTENT) {
+                selectedCount++;
+            }
+
+        }
+        mTitleBar.setSelectedCount(selectedCount, ImageInfo.getImageInfo().getContentLength());
+
+        mPictureAdapter.notifyDataSetChanged();
+    }
+
+    private void setSelectedTitle(ImageInfo imageInfo) {
+        if (imageInfo.getItemType() == PictureAdapter.VIEW_TYPE_FOOTER) {
+            return;
+        }
+
+        List<ImageInfo> imageInfos = mMapDateImage.get(imageInfo.getTitle());
+        if (mSelectedList.contains(imageInfo)) {
+            mSelectedList.remove(imageInfo);
+
+            for (ImageInfo image : imageInfos) {
+                mSelectedList.remove(image);
+            }
+        } else {
+            mSelectedList.add(imageInfo);
+
+            for (ImageInfo image : imageInfos) {
+                if (!mSelectedList.contains(image)) {
+                    mSelectedList.add(image);
+                }
+            }
+        }
+
+        int selectedCount = 0;
+        for (ImageInfo info : mSelectedList) {
+            if (info.getItemType() == PictureAdapter.VIEW_TYPE_CONTENT) {
+                selectedCount++;
+            }
+
+        }
+        mTitleBar.setSelectedCount(selectedCount, ImageInfo.getImageInfo().getContentLength());
 
         mPictureAdapter.notifyDataSetChanged();
     }
@@ -210,13 +277,14 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
         mSelectedList.clear();
         if (isSelectedAll) {
             for (ImageInfo imageInfo : mDataList) {
-                if (imageInfo.getItemType() == PictureAdapter.VIEW_TYPE_CONTENT) {
-                    mSelectedList.add(imageInfo);
+                if (imageInfo.getItemType() == PictureAdapter.VIEW_TYPE_TITLE) {
+                    setSelectedTitle(imageInfo);
                 }
             }
+        } else {
+            mTitleBar.setSelectedCount(0, ImageInfo.getImageInfo().getContentLength());
+            mPictureAdapter.notifyDataSetChanged();
         }
-        mTitleBar.setSelectedCount(mSelectedList.size(), ImageInfo.getImageInfo().getContentLength());
-        mPictureAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -238,18 +306,35 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
 
         final int contentLength = imageInfoList.size();
         if (contentLength > 0) {
+            boolean isNotSameDay;
+            List<ImageInfo> dateImages = null;
+            ImageInfo imageTitle = null;
             /*
-             * 算法：在for循环中，如果Item集合为空，那么先额外加入日期Title项再加入第一条数据项；往后的数据项与
-             * 前一项比较，如果是同一日期则直接加在集合后面，如果是不同日期则先额外加入日期Title项再加入数据项。
+             * 算法：在for循环中，如果Item集合为空，那么先加入日期Title项再加入第一条数据项；往后的数据项与
+             * 前一项比较，如果是同一日期则直接加在集合后面，如果是不同日期则先加入日期Title项再加入数据项。
              */
             for (ImageInfo currentImage : imageInfoList) {
                 currentImage.setDate(DateUtils.formatDateTime(this, currentImage.getDateModified(), DateUtils.FORMAT_SHOW_YEAR));
-                final int size = mDataList.size();
-                if (size > 0) {
-                    addInList(mDataList.get(size - 1), currentImage);//mDataList.get(size - 1)：取出前一项数据
+                if (mDataList.size() > 0) {
+                    isNotSameDay = !DateUtil.isSameDay(mDataList.get(mDataList.size() - 1).getDateModified()
+                            , currentImage.getDateModified());//mDataList.get(size - 1)：取出前一项数据
                 } else {
-                    mDataList.add(new ImageInfo(currentImage.getDate(), PictureAdapter.VIEW_TYPE_TITLE));//先额外加入日期Title项
-                    mDataList.add(currentImage);//再加入第一条数据项
+                    isNotSameDay = true;
+                }
+                if (isNotSameDay) {//如果不是同一天
+                    imageTitle = new ImageInfo(currentImage.getDate(), PictureAdapter.VIEW_TYPE_TITLE);
+                    mDataList.add(imageTitle);//先加入日期Title项
+
+                    dateImages = new ArrayList<>();
+                    mMapDateImage.put(currentImage.getDate(), dateImages);
+                }
+                if (imageTitle != null) {
+                    currentImage.setImageTitle(imageTitle);
+                }
+                mDataList.add(currentImage);//再加入数据项
+
+                if (dateImages != null) {
+                    dateImages.add(currentImage);
                 }
             }
 
@@ -302,6 +387,7 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
     protected void onDestroy() {
         mDataList.clear();
         mSelectedList.clear();
+        mMapDateImage.clear();
         ImageInfo.getImageInfo().setItemFooter(null);
         ImageInfo.getImageInfo().setContentLength(0);
         super.onDestroy();

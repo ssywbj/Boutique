@@ -274,7 +274,8 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                 });
 
         //http://ww1.sinaimg.cn/large/0065oQSqly1fs02a9b0nvj30sg10vk4z.jpg
-        OkGo.<Bitmap>get(PICTURE_ADDRESS + "/0065oQSqly1fymj13tnjmj30r60zf79k.jpg").tag(this)
+        //OkGo.<Bitmap>get(PICTURE_ADDRESS + "/0065oQSqly1fymj13tnjmj30r60zf79k.jpg").tag(this)
+        OkGo.<Bitmap>get("http://ww1.sinaimg.cn/large/0065oQSqly1fs02a9b0nvj30sg10vk4z.jpg").tag(this)
                 .execute(new BitmapCallback() {
                     @Override
                     public void onSuccess(Response<Bitmap> response) {
@@ -297,7 +298,8 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
     }
 
     public void onClickPost(View view) {
-        OkGo.<Bitmap>post(PICTURE_ADDRESS + "/0065oQSqgy1ft4kqrmb9bj30sg10fdzq.jpg").tag(this)
+        //OkGo.<Bitmap>post(PICTURE_ADDRESS + "/0065oQSqgy1ft4kqrmb9bj30sg10fdzq.jpg").tag(this)
+        OkGo.<Bitmap>post("http://ww1.sinaimg.cn/large/0065oQSqly1g2pquqlp0nj30n00yiq8u.jpg").tag(this)
                 .execute(new BitmapCallback() {
 
                     @Override

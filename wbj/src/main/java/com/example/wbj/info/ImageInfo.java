@@ -17,6 +17,7 @@ public class ImageInfo extends BasicBean {
     private int width;
     private int height;
     private long size;
+    private ImageInfo mImageTitle;
 
     public ImageInfo getItemFooter() {
         return itemFooter;
@@ -124,4 +125,11 @@ public class ImageInfo extends BasicBean {
         return size;
     }
 
+    public ImageInfo getImageTitle() {
+        return mImageTitle;
+    }
+
+    public void setImageTitle(ImageInfo imageTitle) {
+        mImageTitle = imageTitle;
+    }
 }

@@ -67,7 +67,20 @@ public class DateSortAdapter extends PictureAdapter<ImageInfo> {
             ((FooterHolder) viewHolder).tvShowNumber.setText(mActivity.getString(R.string.picture_bottom_number, data.getContentLength()));
             viewHolder.itemView.setOnClickListener(null);
         } else if ((viewHolder instanceof TitleHolder)) {
-            ((TitleHolder) viewHolder).tvTitle.setText(data.getTitle());
+            final TitleHolder titleHolder = (TitleHolder) viewHolder;
+            titleHolder.tvTitle.setText(data.getTitle());
+            if (mActivity.mIsEditMode) {
+                titleHolder.checkBox.setVisibility(View.VISIBLE);
+                titleHolder.checkBox.setChecked(mActivity.mSelectedList.contains(data));
+                titleHolder.checkBox.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        titleHolder.itemView.performClick();
+                    }
+                });
+            } else {
+                titleHolder.checkBox.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -75,7 +88,7 @@ public class DateSortAdapter extends PictureAdapter<ImageInfo> {
         ImageView ivShowImage;
         CheckBox cBox;
 
-        public ContentHolder(View view) {
+        ContentHolder(View view) {
             super(view);
             ivShowImage = view.findViewById(R.id.image_item);
             if (mActivity != null) {
@@ -85,25 +98,27 @@ public class DateSortAdapter extends PictureAdapter<ImageInfo> {
                 ivShowImage.setLayoutParams(layoutParams);
             }
 
-            cBox =  view.findViewById(R.id.cb_select);
+            cBox = view.findViewById(R.id.cb_select);
         }
     }
 
     class FooterHolder extends RecyclerView.ViewHolder {
         TextView tvShowNumber;
 
-        public FooterHolder(View view) {
+         FooterHolder(View view) {
             super(view);
-            tvShowNumber =  view.findViewById(R.id.tv_show_number);
+            tvShowNumber = view.findViewById(R.id.tv_show_number);
         }
     }
 
     class TitleHolder extends RecyclerView.ViewHolder {
         TextView tvTitle;
+        CheckBox checkBox;
 
-        public TitleHolder(View view) {
+         TitleHolder(View view) {
             super(view);
-            tvTitle =  view.findViewById(R.id.tv_title);
+            tvTitle = view.findViewById(R.id.tv_title);
+            checkBox = view.findViewById(R.id.checkbox);
         }
     }
 }

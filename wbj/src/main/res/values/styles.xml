@@ -59,7 +59,6 @@
     <style name="CheckBoxStyle">
         <item name="android:layout_width">@dimen/checkbox_size</item>
         <item name="android:layout_height">@dimen/checkbox_size</item>
-        <item name="android:layout_margin">5dp</item>
         <item name="android:focusable">false</item>
         <item name="android:button">@drawable/checkbox_selector</item>
         <item name="android:background">@null</item>
