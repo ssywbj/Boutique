@@ -34,8 +34,8 @@ import okhttp3.HttpUrl;
 public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
 
     //public static final String URL = "http://gank.io/api/data/福利/50/1";
-    private static final String URL = "http://192.168.120.169:8080/TestJSP";
-    //private static final String URL = "http://192.168.1.111:8080/TestJSP";
+    //private static final String URL = "http://192.168.120.169:8080/TestJSP";
+    private static final String URL = "http://192.168.1.111:8080/TestJSP";
     private static final String SERVER_ADDRESS = URL + "/ServletDemo";
     private static final String PICTURE_ADDRESS = URL + "/pictures";
     private static final String VIDEO_ADDRESS = URL + "/Videos";
@@ -274,8 +274,8 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
                 });
 
         //http://ww1.sinaimg.cn/large/0065oQSqly1fs02a9b0nvj30sg10vk4z.jpg
-        //OkGo.<Bitmap>get(PICTURE_ADDRESS + "/0065oQSqly1fymj13tnjmj30r60zf79k.jpg").tag(this)
-        OkGo.<Bitmap>get("http://ww1.sinaimg.cn/large/0065oQSqly1fs02a9b0nvj30sg10vk4z.jpg").tag(this)
+        OkGo.<Bitmap>get(PICTURE_ADDRESS + "/0065oQSqly1fymj13tnjmj30r60zf79k.jpg").tag(this)
+        //OkGo.<Bitmap>get("http://ww1.sinaimg.cn/large/0065oQSqly1fs02a9b0nvj30sg10vk4z.jpg").tag(this)
                 .execute(new BitmapCallback() {
                     @Override
                     public void onSuccess(Response<Bitmap> response) {
@@ -298,8 +298,8 @@ public class OkGoActivity extends PermissionApplyActivity/*BasicActivity*/ {
     }
 
     public void onClickPost(View view) {
-        //OkGo.<Bitmap>post(PICTURE_ADDRESS + "/0065oQSqgy1ft4kqrmb9bj30sg10fdzq.jpg").tag(this)
-        OkGo.<Bitmap>post("http://ww1.sinaimg.cn/large/0065oQSqly1g2pquqlp0nj30n00yiq8u.jpg").tag(this)
+        OkGo.<Bitmap>post(PICTURE_ADDRESS + "/0065oQSqgy1ft4kqrmb9bj30sg10fdzq.jpg").tag(this)
+        //OkGo.<Bitmap>post("http://ww1.sinaimg.cn/large/0065oQSqly1g2pquqlp0nj30n00yiq8u.jpg").tag(this)
                 .execute(new BitmapCallback() {
 
                     @Override

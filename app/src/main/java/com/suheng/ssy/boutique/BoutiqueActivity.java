@@ -20,26 +20,7 @@ import ying.jie.boutique.MainActivity;
 
 public class BoutiqueActivity extends BasicActivity {
 
-    private static SparseArray<Class> sMapAty = new SparseArray<>();
-
-    static {
-        sMapAty.put(0, RegexActivity.class);
-        sMapAty.put(1, LaunchStandardActivity.class);
-        sMapAty.put(2, ConstraintLayoutActivity.class);
-        sMapAty.put(3, DataBindingActivity.class);
-        sMapAty.put(4, DaggerActivity.class);
-        sMapAty.put(5, FragmentRecyclerActivity.class);
-        sMapAty.put(7, UnitTestActivity.class);
-        sMapAty.put(8, OkGoActivity.class);
-        sMapAty.put(9, MainActivity.class);
-        sMapAty.put(10, RxJava2Activity.class);
-        sMapAty.put(11, RoomActivity.class);
-        sMapAty.put(12, PermissionApplyActivity.class);
-        sMapAty.put(13, RedDotActivity.class);
-        sMapAty.put(15, UploadViewActivity.class);
-        sMapAty.put(16, MemoryLeakageActivity.class);
-        sMapAty.put(17, PickPictureActivity.class);
-    }
+    private SparseArray<Class> mMapAty = new SparseArray<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +37,24 @@ public class BoutiqueActivity extends BasicActivity {
 
         setContentView(listView);
 
-        startActivity(new Intent(this, PickPictureActivity.class));
+        mMapAty.put(0, RegexActivity.class);
+        mMapAty.put(1, LaunchStandardActivity.class);
+        mMapAty.put(2, ConstraintLayoutActivity.class);
+        mMapAty.put(3, DataBindingActivity.class);
+        mMapAty.put(4, DaggerActivity.class);
+        mMapAty.put(5, FragmentRecyclerActivity.class);
+        mMapAty.put(7, UnitTestActivity.class);
+        mMapAty.put(8, OkGoActivity.class);
+        mMapAty.put(9, MainActivity.class);
+        mMapAty.put(10, RxJava2Activity.class);
+        mMapAty.put(11, RoomActivity.class);
+        mMapAty.put(12, PermissionApplyActivity.class);
+        mMapAty.put(13, RedDotActivity.class);
+        mMapAty.put(15, UploadViewActivity.class);
+        mMapAty.put(16, MemoryLeakageActivity.class);
+        mMapAty.put(17, PickPictureActivity.class);
+
+        openActivity(16);
     }
 
     private void openActivity(int pst) {
@@ -91,7 +89,7 @@ public class BoutiqueActivity extends BasicActivity {
                             }
                         });
             } else {
-                Intent intent = new Intent(this, sMapAty.get(pst));
+                Intent intent = new Intent(this, mMapAty.get(pst));
                 startActivity(intent);
             }
         } catch (Exception e) {
@@ -102,6 +100,6 @@ public class BoutiqueActivity extends BasicActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sMapAty.clear();
+        mMapAty.clear();
     }
 }

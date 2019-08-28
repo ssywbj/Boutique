@@ -346,17 +346,6 @@ public class ImageBrowserActivity extends BasicActivity implements QueryTask.Tas
         mPictureAdapter.notifyDataSetChanged();
     }
 
-    private void addInList(ImageInfo imageSource, ImageInfo imageCompare) {
-        boolean isSameDay = DateUtil.isSameDay(imageSource.getDateModified(), imageCompare.getDateModified());
-        Log.d(TAG, "is same day: " + isSameDay
-                + ", " + imageSource.getDate() + "--" + imageCompare.getDate() +
-                ", " + imageSource.getDateModified() + "--" + imageCompare.getDateModified());
-        if (!isSameDay) {
-            mDataList.add(new ImageInfo(imageCompare.getDate(), PictureAdapter.VIEW_TYPE_TITLE));
-        }
-        mDataList.add(imageCompare);
-    }
-
     private void updateContentLength(int contentLength) {
         ImageInfo itemFooter = ImageInfo.getImageInfo().getItemFooter();
         if (itemFooter == null) {

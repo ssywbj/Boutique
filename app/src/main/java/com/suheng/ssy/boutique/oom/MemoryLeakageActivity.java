@@ -2,13 +2,21 @@ package com.suheng.ssy.boutique.oom;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 
 import com.suheng.ssy.boutique.BasicActivity;
 import com.suheng.ssy.boutique.R;
 
 import java.lang.ref.WeakReference;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class MemoryLeakageActivity extends BasicActivity {
     private int mMemoryRemain = 1024;
@@ -24,8 +32,48 @@ public class MemoryLeakageActivity extends BasicActivity {
         testStatic();
         this.testStaticRunnable();*/
 
-        mHandler.sendEmptyMessage(-2);
-        mHandlerStatic.sendEmptyMessage(-1);
+        //mHandler.sendEmptyMessage(-2);
+        //mHandlerStatic.sendEmptyMessage(-1);
+
+        //this.communicationBetweenThreads();
+        this.createThreadPool();
+    }
+
+    private void createThreadPool() {
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(3, 5, 1, TimeUnit.SECONDS
+                , new LinkedBlockingDeque<Runnable>(100));
+
+        for (int i = 0; i < 7; i++) {
+            final int index = i;
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    SystemClock.sleep(2000);
+                    Log.w(mTag, Thread.currentThread().getName() + ", thread pool: index = " + index);
+                }
+            };
+
+            threadPoolExecutor.execute(runnable);
+        }
+
+        threadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 5; i++) {
+                    Log.w(mTag, Thread.currentThread().getName() + ", i = " + i);
+                    SystemClock.sleep(500);
+                }
+            }
+        });
+
+        //FixedThreadPool: 可重用固定线程数，只有核心线程，无非核心线程，并且阻塞队列无界
+        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(4);//4：核心线程数
+        //CachedThreadPool：按需创建，没有核心线程，只有非核心线程，并且每个非核心线程空闲等待的时间为60s，采用SynchronousQueue队列
+        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+        //SingleThreadPool：单个核线的fixed，
+        ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+        //ScheduledThreadPool：定时延时执行
+        ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(5);
     }
 
     /*
@@ -235,4 +283,61 @@ public class MemoryLeakageActivity extends BasicActivity {
         */
     }
 
+    private Handler mHandlerThreadA;
+    private Handler mHandlerThreadB;
+
+    //android子线程与主线程通信主要有四种方式：Handler、View.post(Runnable)、runOnUiThread(Runnable)、AsyncTask
+    //android子线程与子线程通信方式：把looper绑定到子线程中并且创建一个handler
+    private void communicationBetweenThreads() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                /*for (int i = 0; i < 10; i++) {
+                    SystemClock.sleep(1000);
+                    if (i == 5 || i == 8) {
+                        if (mHandlerThreadB != null) {
+                            mHandlerThreadB.sendEmptyMessage(-125);
+                        }
+                    }
+                }*/
+
+                Looper.prepare();
+                mHandlerThreadA = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        Log.d(mTag, Thread.currentThread().getName() + ", receive msg = " + msg);
+                    }
+                };
+                Looper.loop();
+            }
+        }, "Thread-A").start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                /*Looper.prepare();
+                mHandlerThreadB = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        Log.d(mTag, Thread.currentThread().getName() + ", receive msg = " + msg);
+                    }
+                };
+                Looper.loop();*/
+
+                for (int i = 0; i < 13; i++) {
+                    SystemClock.sleep(500);
+                    Log.d(mTag, Thread.currentThread().getName() + " run, i = " + i);
+                    if (i == 5 || i == 9) {
+                        if (mHandlerThreadA != null) {
+                            Message msg = mHandlerThreadA.obtainMessage();
+                            msg.what = i * 10;
+                            mHandlerThreadA.sendMessage(msg);
+                        }
+                    }
+                }
+            }
+        }, "Thread-B").start();
+    }
+
+    //android进程间通信：1.Bundle；2.ContentProvider;3.文件；4.AIDL;5.Socket
 }
