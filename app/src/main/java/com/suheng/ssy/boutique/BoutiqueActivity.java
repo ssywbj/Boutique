@@ -52,7 +52,7 @@ public class BoutiqueActivity extends BasicActivity {
         mMapAty.put(13, RedDotActivity.class);
         mMapAty.put(15, UploadViewActivity.class);
         mMapAty.put(16, MemoryLeakageActivity.class);
-        mMapAty.put(17, PickPictureActivity.class);
+        mMapAty.put(17, SocketActivity.class);
 
         openActivity(16);
     }

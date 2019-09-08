@@ -15,7 +15,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.wbj.picture.browser.ImageBrowserActivity;
+import com.example.wbj.service.EchoService;
+import com.example.wbj.service.SocketServer;
 import com.wbj.view.DragListActivity;
+
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class WbjActivity extends AppCompatActivity {
     private static final String TAG = WbjActivity.class.getSimpleName();
@@ -114,6 +121,27 @@ public class WbjActivity extends AppCompatActivity {
             }
         });
         //mListView.setSelection(12);//设置屏幕里第一个显示的Item，默认为0
+
+        //this.start();//为什么如果不通过服务启动ServerSocket，客户端连接上服务端后会报错？
+        startService(new Intent(this, EchoService.class));
+    }
+
+    public void start() {
+        try {
+            ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+            ServerSocket serverSocket = new ServerSocket(8093);
+            while (true) {
+                Log.d(TAG, "服务器正在运行，等待客户端连接......");
+                Socket socket = serverSocket.accept();
+                /*
+                 多线程处理机制：每一个客户端连接之后都启动一个线程，以保证服务器可以同时与多个客户端通信。如果是单线程
+                 处理机制，那么服务器每次只能与一个客户端连接，其他客户端无法同时连接服务器，要等待服务器出现空闲才可以连接。
+                 */
+                cachedThreadPool.execute(new SocketServer(socket));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void openActivity(final int position) {

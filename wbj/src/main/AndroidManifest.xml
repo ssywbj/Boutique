@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.wbj">
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    package="com.example.wbj">
 
     <application
         android:name=".WbjApp"
@@ -16,30 +11,46 @@
         android:theme="@style/AppTheme">
         <activity android:name=".WbjActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DialogPriorityActivity"/>
-        <activity android:name=".ProgressBarActivity"/>
-        <activity android:name=".WebViewActivity"/>
+        <activity android:name=".DialogPriorityActivity" />
+        <activity android:name=".ProgressBarActivity" />
+        <activity android:name=".WebViewActivity" />
         <activity
             android:name=".picture.browser.ImageBrowserActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/FullScreen"/>
-        <activity android:name=".RecyclerViewActivity"/>
-        <activity android:name=".NumberDynamicActivity"/>
-        <activity android:name=".SettingSetActivity"/>
-        <activity android:name=".MVCLoginActivity"/>
-        <activity android:name=".MVPLoginActivity"/>
-        <activity android:name="com.wbj.view.DragListActivity"/>
+            android:theme="@style/FullScreen" />
+        <activity android:name=".RecyclerViewActivity" />
+        <activity android:name=".NumberDynamicActivity" />
+        <activity android:name=".SettingSetActivity" />
+        <activity android:name=".MVCLoginActivity" />
+        <activity android:name=".MVPLoginActivity" />
+        <activity android:name="com.wbj.view.DragListActivity" />
         <activity
             android:name=".ClipActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".TitleScrollViewActivity"/>
+            android:launchMode="singleTop" />
+        <activity android:name=".TitleScrollViewActivity" />
 
-        <service android:name=".service.ClipService"/>
+        <service android:name=".service.ClipService" />
+        <service
+            android:name=".TCPServerService"
+            android:exported="true"
+            android:process=":socket" />
+
+        <service
+            android:name=".service.EchoService"
+            android:exported="true"
+            android:process=":socket" />
     </application>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

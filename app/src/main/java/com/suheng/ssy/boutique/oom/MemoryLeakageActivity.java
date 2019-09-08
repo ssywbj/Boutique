@@ -6,11 +6,18 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.View;
 
 import com.suheng.ssy.boutique.BasicActivity;
 import com.suheng.ssy.boutique.R;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
+import java.net.Socket;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -20,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MemoryLeakageActivity extends BasicActivity {
     private int mMemoryRemain = 1024;
+    private static final String CHARSET_NAME = "UTF-8";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +44,74 @@ public class MemoryLeakageActivity extends BasicActivity {
         //mHandlerStatic.sendEmptyMessage(-1);
 
         //this.communicationBetweenThreads();
-        this.createThreadPool();
+        //this.createThreadPool();
+    }
+
+    public void onClickConnectOne(View view) {
+        SocketManager.getSocketManager().connect("localhost", 8093);
+    }
+
+    public void onClickSendOne(View view) {
+        String info = (new Random().nextInt(7) + "");
+        SocketManager.getSocketManager().sendRequest(info);
+    }
+
+    PrintWriter output2;
+    BufferedReader input2;
+
+    public void onClickConnectTwo(View view) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //Socket socket = new Socket("192.168.1.108", 8093);
+                    Socket socket = new Socket("localhost", 8093);
+                    Log.i(mTag, "client connect success: connected: " + socket.isConnected() + ", remote socket address: "
+                            + socket.getRemoteSocketAddress() + "\nlocal socket address: " + socket.getLocalSocketAddress());
+                    input2 = new BufferedReader(new InputStreamReader(socket.getInputStream(), CHARSET_NAME));
+                    output2 = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), CHARSET_NAME), true);
+
+                    while (true) {
+                        String readLine = input2.readLine();
+                        if (readLine == null) {
+                            break;
+                        } else {
+                            Log.d(mTag, "server return info: " + readLine);
+                        }
+                    }
+
+                    input2.close();
+                    output2.close();
+                    socket.close();
+                    Log.d(mTag, "客户端关闭连接, ip: " + socket.getInetAddress() + ", port: " + socket.getPort()
+                            + ", local ip: " + socket.getLocalAddress() + ", local port: " + socket.getLocalPort());
+                } catch (Exception e) {
+                    Log.e(mTag, "client connect fail: " + e.toString());
+                }
+            }
+        }).start();
+    }
+
+    private int count2 = 0;
+
+    public void onClickSendTwo(View view) {
+        if (output2 == null) {
+            return;
+        }
+
+        count2++;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String info = (count2 + ", another socket");
+                if (count2 == 3) {
+                    info = "bye";
+                    count2 = 0;
+                }
+
+                output2.println(info);
+            }
+        }).start();
     }
 
     private void createThreadPool() {
@@ -281,6 +356,8 @@ public class MemoryLeakageActivity extends BasicActivity {
         7.WebView内存泄露（影响较大）
         用新的进程调起含有WebView的Activity,并且在该Activity的onDestroy()最后加上System.exit(0);杀死当前进程。
         */
+
+        SocketManager.getSocketManager().disconnect();
     }
 
     private Handler mHandlerThreadA;
