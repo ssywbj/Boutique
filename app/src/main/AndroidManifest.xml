@@ -45,6 +45,8 @@
         <activity android:name=".oom.MemoryLeakageActivity" />
         <activity android:name=".PickPictureActivity" />
         <activity android:name=".SocketActivity" />
+        <activity android:name=".PaintDemoActivity" />
+        <activity android:name=".HexagonProgressActivity" />
     </application>
 
     <uses-permission android:name="android.permission.CALL_PHONE" />

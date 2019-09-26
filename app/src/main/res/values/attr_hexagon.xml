@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SixProgressBar">
+
+        <!--六边形圆角半径-->
+        <attr name="radius" format="dimension" />
+        <!--六边形进度颜色-->
+        <attr name="sexangleColor" format="color" />
+        <!--六边形颜色-->
+        <attr name="sexangleSecondColor" format="color" />
+        <!--六边形线条宽度-->
+        <attr name="sexangleWidth" format="dimension" />
+        <!--进度-->
+        <attr name="progress" format="float" />
+        <!--总进度-->
+        <attr name="max" format="float" />
+        <!--进度条是否是圆角-->
+        <attr name="isRound" format="boolean" />
+
+        <!--是否设置动画-->
+        <attr name="useAnimation" format="boolean" />
+        <!--动画执行时间-->
+        <attr name="duration" format="integer" />
+    </declare-styleable>
+</resources>

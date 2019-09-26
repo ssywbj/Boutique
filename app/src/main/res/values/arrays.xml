@@ -18,5 +18,7 @@
         <item>UploadView</item>
         <item>MemoryLeakage</item>
         <item>调起系统相机和图库</item>
+        <item>PaintDemo</item>
+        <item>六边形进度条</item>
     </array>
 </resources>

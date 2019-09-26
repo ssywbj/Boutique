@@ -53,8 +53,10 @@ public class BoutiqueActivity extends BasicActivity {
         mMapAty.put(15, UploadViewActivity.class);
         mMapAty.put(16, MemoryLeakageActivity.class);
         mMapAty.put(17, SocketActivity.class);
+        mMapAty.put(18, PaintDemoActivity.class);
+        mMapAty.put(19, HexagonProgressActivity.class);
 
-        openActivity(16);
+        openActivity(18);
     }
 
     private void openActivity(int pst) {
