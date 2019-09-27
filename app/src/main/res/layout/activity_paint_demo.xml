@@ -4,7 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.suheng.ssy.boutique.view.PaintDemoView
+    <!--<com.suheng.ssy.boutique.view.PaintDemoView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />-->
+    <!--<com.suheng.ssy.boutique.view.PathDemoView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />-->
+    <com.suheng.ssy.boutique.view.HexagonProgressBar
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

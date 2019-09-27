@@ -202,6 +202,8 @@ public class SixProgressBar extends View {
 
         RectF rectF = new RectF();
 
+        //https://www.cnblogs.com/mmy0925/archive/2013/01/22/2871009.html
+        //https://blog.csdn.net/coderinchina/article/details/53665632
         Matrix matrix = new Matrix();
         matrix.postTranslate(translateX, translateY);
         matrix.mapRect(rectF, firstRect);

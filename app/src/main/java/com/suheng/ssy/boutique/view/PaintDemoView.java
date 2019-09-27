@@ -125,26 +125,28 @@ public class PaintDemoView extends View {
         float point1X = 20;
         float point1Y = Y_BASIC_COORDINATE * 1.0f * 11 + 20;
         mPath.moveTo(point1X, point1Y);//操作的起点位置
-        float point2X = point1X + 79;
-        float point2Y = point1Y + 20;
-        mPath.lineTo(point2X, point2Y);//第二点的坐标
-        float point3X = point1X + 30;
-        float point3Y = point2Y + 80;
+        float point2X = point1X + 70;
+        mPath.lineTo(point2X, point1Y);//第二点的坐标
+        float point3X = point2X;
+        float point3Y = point1Y + 80;
         mPath.lineTo(point3X, point3Y);//第三点的坐标
         canvas.drawPath(mPath, mPaint);
         //画任意多边形：图形封闭
         point1X = point2X + 20;
         mPath.moveTo(point1X, point1Y);//操作的起点位置
         point2X = point1X + 79;
-        mPath.lineTo(point2X, point2Y);//第二点的坐标
+        mPath.lineTo(point2X, point1Y);//第二点的坐标
         point3X = point1X + 30;
         mPath.lineTo(point3X, point3Y);//第三点的坐标
-        mPath.close();//设置图形封闭
+        mPath.close();//设置图形封闭：当绘制的路径大于等于3时，会前后连接成一个图形
         canvas.drawPath(mPath, mPaint);
         /* 画任意多边形：等边三角形
          * Math.toRadians(60)：角度换算成弧度；
          * Math.sin(Math.toRadians(60));//60度角的正弦值
-         * 正弦：角的对边除以斜边；余弦：角的邻边除以斜边
+         * Math.cos(Math.toRadians(60));//60度角的余弦值
+         * Math.tan(Math.toRadians(60));//60度角的正切值
+         *
+         * 直角三角函数中，正弦：角的对边除以斜边；余弦：角的邻边除以斜边；正切：角的对直角边除以邻直角边。
          */
         float sin60 = (float) Math.sin(Math.toRadians(60));
         point1X = point2X + 20;
@@ -185,13 +187,6 @@ public class PaintDemoView extends View {
         ovalTrue.set(260, 550, 410, 700);
         canvas.drawOval(ovalTrue, mPaint);
 
-        // 等边三角形
-        path = new Path();
-        path.moveTo(500, 710);
-        path.lineTo(600, 536.8f);
-        path.lineTo(700, 710);
-        // 未设置封闭//path.close();
-        canvas.drawPath(path, mPaint);
         // 折线图
         float[] y = {660, 730, 680, 550, 660};
         path = new Path();
@@ -256,9 +251,9 @@ public class PaintDemoView extends View {
     /**
      * 获取特定颜色的画笔
      */
-    private Paint getPaint(int colorRes) {
+    private Paint getPaint(int color) {
         Paint paint = getPaint();
-        paint.setColor(colorRes);// 设置画笔的颜色
+        paint.setColor(color);// 设置画笔的颜色
         return paint;
     }
 
