@@ -2,8 +2,8 @@
 <resources>
     <declare-styleable name="SixProgressBar">
 
-        <!--六边形圆角半径-->
-        <attr name="radius" format="dimension" />
+        <!--六边形圆角半径
+        <attr name="radius" format="dimension" />-->
         <!--六边形进度颜色-->
         <attr name="sexangleColor" format="color" />
         <!--六边形颜色-->

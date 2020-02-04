@@ -1,13 +1,14 @@
 package com.suheng.ssy.boutique;
 
-import android.graphics.Color;
-import android.graphics.SweepGradient;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
-import android.widget.SeekBar;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
-import com.suheng.ssy.boutique.view.SixProgressBar;
+import com.suheng.ssy.boutique.view.HexagonView;
 
 public class HexagonProgressActivity extends LaunchTypeActivity {
 
@@ -19,41 +20,121 @@ public class HexagonProgressActivity extends LaunchTypeActivity {
     }
 
     private void initView() {
-        SeekBar seekBar = findViewById(R.id.seek_bar_anim);
-        final TextView textView = findViewById(R.id.text_anim_describe);
-        final SixProgressBar sixProgressBar = findViewById(R.id.hexagon_progress_bar);
-
-        //sixProgressBar.setShader(null);
-        SweepGradient shader = new SweepGradient(0, 0, new int[]{Color.parseColor("#7D5BCD")
-        , Color.parseColor("#61C0EE"), Color.parseColor("#7D5BCD")}, null);
-        sixProgressBar.setShader(shader);
-        sixProgressBar.setMax(seekBar.getMax());
-        //seekBar.setProgress((int) sixProgressBar.getProgress());
-
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        final HexagonView outHexagon = findViewById(R.id.outer_hexagon_view);
+        final HexagonView stopHexagon = findViewById(R.id.stop_hexagon);
+        final HexagonView hexagonView = findViewById(R.id.hexagon_view);
+        mOuterAnimator = ValueAnimator.ofFloat(0, 1);
+        mOuterAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                sixProgressBar.setProgress(progress);
+            public void onAnimationUpdate(ValueAnimator animation) {
+                if (animation.getAnimatedValue() instanceof Float) {
+                    float animatedValue = (Float) animation.getAnimatedValue();
+                    outHexagon.setAlpha(0.3f * (1 - animatedValue));
+                    outHexagon.setScaleX(1.0f + 0.5f * animatedValue);
+                    outHexagon.setScaleY(1.0f + 0.5f * animatedValue);
+                }
             }
-
+        });
+        mOuterAnimator.setDuration(1200);
+        mOuterAnimator.setInterpolator(new LinearInterpolator());
+        mOuterAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mOuterAnimator.start();
+        hexagonView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
+            public void onClick(View v) {
+                if (stopHexagon.getVisibility() != View.VISIBLE) {
+                    outHexagon.setVisibility(View.GONE);
+                    stopHexagon.setVisibility(View.VISIBLE);
+                    mOuterAnimator.cancel();
+                } else {
+                    outHexagon.setVisibility(View.VISIBLE);
+                    stopHexagon.setVisibility(View.GONE);
+                    mOuterAnimator.start();
+                }
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
+                for (int i = 0; i < 6; i++) {
+                    final Message msg = new Message();
+                    msg.what = 11;
+                    msg.arg1 = (99 - i);
+                    //mWeakHandler.sendMessageDelayed(msg, 300 * i);
+                    mTextScore.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mTextScore.setText(String.valueOf(msg.arg1));
+                        }
+                    }, 300 * i);
+                }
             }
         });
 
-        sixProgressBar.setOnProgressChangeInter(new SixProgressBar.OnProgressChangeInter() {
+        final HexagonView middleHexagon = findViewById(R.id.middle_hexagon_view);
+        mMiddleAnimator = ValueAnimator.ofFloat(0, 1);
+        mMiddleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void progress(float scaleProgress, float progress, float max) {
-                textView.setText("总进度：" + max + ",当前进度" + progress + "动画进度：" + scaleProgress);
+            public void onAnimationUpdate(ValueAnimator animation) {
+                if (animation.getAnimatedValue() instanceof Float) {
+                    float animatedValue = (Float) animation.getAnimatedValue();
+                    middleHexagon.setAlpha(0.2f * (1 - animatedValue));
+                    middleHexagon.setScaleX(animatedValue);
+                    middleHexagon.setScaleY(animatedValue);
+                }
             }
         });
+        mMiddleAnimator.setDuration(2500);
+        mMiddleAnimator.setInterpolator(new LinearInterpolator());
+        mMiddleAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mMiddleAnimator.start();
 
-        textView.setText("总进度：" + sixProgressBar.getMax() + ",当前进度" + sixProgressBar.getProgress() + "动画进度：" + sixProgressBar.getProgress());
+        final HexagonView middleTurnHexagon = findViewById(R.id.middle_turn_hexagon);
+        middleHexagon.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mMiddleTurnAnimator = ValueAnimator.ofFloat(0, 1);
+                mMiddleTurnAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        if (animation.getAnimatedValue() instanceof Float) {
+                            float animatedValue = (Float) animation.getAnimatedValue();
+                            middleTurnHexagon.setAlpha(0.2f * (1 - animatedValue));
+                            middleTurnHexagon.setScaleX(animatedValue);
+                            middleTurnHexagon.setScaleY(animatedValue);
+                        }
+                    }
+                });
+                mMiddleTurnAnimator.setDuration(2500);
+                mMiddleTurnAnimator.setInterpolator(new LinearInterpolator());
+                mMiddleTurnAnimator.setRepeatCount(ValueAnimator.INFINITE);
+                mMiddleTurnAnimator.start();
+
+                middleTurnHexagon.setVisibility(View.VISIBLE);
+            }
+        }, 1000);
+
+        mTextScore = findViewById(R.id.text_score);
     }
 
+    private ValueAnimator mOuterAnimator;
+    private ValueAnimator mMiddleAnimator;
+    private ValueAnimator mMiddleTurnAnimator;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mOuterAnimator != null) {
+            mOuterAnimator.cancel();
+            mOuterAnimator = null;
+        }
+
+        if (mMiddleAnimator != null) {
+            mMiddleAnimator.cancel();
+            mMiddleAnimator = null;
+        }
+
+        if (mMiddleTurnAnimator != null) {
+            mMiddleTurnAnimator.cancel();
+            mMiddleTurnAnimator = null;
+        }
+    }
+
+    private TextView mTextScore;
 }

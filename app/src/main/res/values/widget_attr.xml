@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ScoreChangeView">
+        <attr name="number_scroll_speed" format="integer" />
+        <attr name="number_size" format="dimension" />
+        <attr name="number_color" format="color" />
+        <attr name="size" format="dimension"/>
+    </declare-styleable>
+</resources>

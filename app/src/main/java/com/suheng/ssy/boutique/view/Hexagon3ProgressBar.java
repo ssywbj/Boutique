@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-public class HexagonProgressBar extends View {
+public class Hexagon3ProgressBar extends View {
     public static final String TAG = "WBJ";
     private Paint mPaint;
     private PathMeasure mPathMeasure;
@@ -21,12 +21,12 @@ public class HexagonProgressBar extends View {
     private float mAnimatorValue;
     private float mStartDst, mStopDst;
 
-    public HexagonProgressBar(Context context) {
+    public Hexagon3ProgressBar(Context context) {
         super(context);
         this.initView();
     }
 
-    public HexagonProgressBar(Context context, @Nullable AttributeSet attrs) {
+    public Hexagon3ProgressBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.initView();
     }
@@ -49,12 +49,12 @@ public class HexagonProgressBar extends View {
                     mAnimatorValue = (Float) animation.getAnimatedValue();
                     mStopDst = circleLength * mAnimatorValue;
                     mStartDst = (float) (mStopDst - ((0.5 - Math.abs(mAnimatorValue - 0.5)) * circleLength));
-                    Log.d(TAG, "animated value = " + mAnimatorValue + ", start dst = " + mStartDst + ", stop dst = " + mStopDst);
+                    //Log.d(TAG, "animated value = " + mAnimatorValue + ", start dst = " + mStartDst + ", stop dst = " + mStopDst);
                     invalidate();//UI刷新
                 }
             }
         });
-        mValueAnimator.setDuration(2000);
+        mValueAnimator.setDuration(1500);
         mValueAnimator.setRepeatCount(ValueAnimator.INFINITE);//无限循环
         mValueAnimator.start();
     }

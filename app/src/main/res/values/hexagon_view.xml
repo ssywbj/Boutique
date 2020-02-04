@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HexagonView">
+        <!--圆角半径-->
+        <attr name="radius" format="dimension" />
+        <!--边长-->
+        <attr name="borderLen" format="dimension" />
+        <!--边宽-->
+        <attr name="borderWidth" format="dimension" />
+        <!--是否填充颜色-->
+        <attr name="isFillColor" format="boolean" />
+    </declare-styleable>
+</resources>

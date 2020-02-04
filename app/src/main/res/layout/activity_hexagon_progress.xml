@@ -6,24 +6,119 @@
     android:orientation="vertical"
     android:padding="6dp">
 
-    <com.suheng.ssy.boutique.view.SixProgressBar
-        android:id="@+id/hexagon_progress_bar"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        app:sexangleWidth="9dp" />
+    <FrameLayout
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/text_anim_describe"
-        android:layout_width="match_parent"
+        <com.suheng.ssy.boutique.view.HexagonView
+            android:id="@+id/stop_hexagon"
+            android:layout_width="242dp"
+            android:layout_height="242dp"
+            android:layout_gravity="center"
+            android:alpha="0.2"
+            android:visibility="gone"
+            app:borderWidth="10dp"
+            app:radius="8dp" />
+
+        <com.suheng.ssy.boutique.view.HexagonView
+            android:id="@+id/outer_hexagon_view"
+            android:layout_width="192dp"
+            android:layout_height="192dp"
+            android:layout_gravity="center"
+            app:borderWidth="10dp"
+            app:radius="8dp" />
+
+        <com.suheng.ssy.boutique.view.HexagonView
+            android:id="@+id/hexagon_view"
+            android:layout_width="192dp"
+            android:layout_height="192dp"
+            android:layout_gravity="center"
+            app:borderWidth="10dp"
+            app:radius="8dp" />
+
+        <TextView
+            android:id="@+id/text_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="66sp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp" />
+        android:padding="8dp">
 
-    <SeekBar
-        android:id="@+id/seek_bar_anim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:max="100" />
+        <FrameLayout
+            android:layout_width="192dp"
+            android:layout_height="192dp"
+            android:layout_gravity="center">
+
+            <com.suheng.ssy.boutique.view.HexagonView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:borderWidth="10dp"
+                app:radius="8dp" />
+
+            <com.suheng.ssy.boutique.view.HexagonWidget
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="28dp"
+                android:layout_marginBottom="46dp" />
+
+            <com.suheng.ssy.boutique.view.HexagonWidget
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="48dp" />
+
+            <com.suheng.ssy.boutique.view.HexagonWidget
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="52dp"
+                android:layout_marginTop="2dp" />
+
+            <com.suheng.ssy.boutique.view.HexagonWidget
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="52dp" />
+        </FrameLayout>
+
+        <com.suheng.ssy.boutique.view.HexagonView
+            android:layout_width="248dp"
+            android:layout_height="248dp"
+            android:layout_gravity="center"
+            android:alpha="0.1"
+            app:borderWidth="10dp"
+            app:radius="8dp" />
+
+        <com.suheng.ssy.boutique.view.HexagonView
+            android:id="@+id/middle_hexagon_view"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            app:borderWidth="10dp"
+            app:isFillColor="true"
+            app:radius="8dp" />
+
+        <com.suheng.ssy.boutique.view.HexagonView
+            android:id="@+id/middle_turn_hexagon"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:borderWidth="10dp"
+            app:isFillColor="true"
+            app:radius="8dp" />
+    </FrameLayout>
 </LinearLayout>

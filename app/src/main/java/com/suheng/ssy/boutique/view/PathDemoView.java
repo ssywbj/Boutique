@@ -1,15 +1,18 @@
 package com.suheng.ssy.boutique.view;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+
+import java.util.Arrays;
 
 /**
  * PathDemo
@@ -28,9 +31,6 @@ public class PathDemoView extends View {
     private PathMeasure mPathMeasure;
     private Path mPathDst;//用于存储PathMeasure截取片断
 
-    private float mAnimatorValue;
-    private float mCircleLength;
-
     public PathDemoView(Context context) {
         super(context);
         initView();
@@ -40,6 +40,9 @@ public class PathDemoView extends View {
         super(context, attrs);
         initView();
     }
+
+    private RectF mRectF;
+    private Matrix mMatrix;
 
     private void initView() {
         mPathLen = new Path();
@@ -51,18 +54,113 @@ public class PathDemoView extends View {
         mPathMeasure = new PathMeasure();
         mPathDst = new Path();
 
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);//属性动画
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {//监听动画过程
+        //this.matrixMapPoints();
+        this.matrixMapPoints2();
+        //this.matrixMapPoints3();
+        this.matrixMapRadius();
+        this.matrixMapRect();
+    }
 
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mAnimatorValue = (float) animation.getAnimatedValue();
-                invalidate();//UI刷新
-            }
-        });
-        valueAnimator.setDuration(2000);
-        valueAnimator.setRepeatCount(ValueAnimator.INFINITE);//无限循环
-        valueAnimator.start();
+    private void matrixMapPoints() {
+        Matrix matrix = new Matrix();
+        Log.d(TAG, "mMatrix = " + matrix.toString());
+        //初始数据为三个点 (0, 0) (80, 100) (400, 300)
+        float[] pts = {0, 0, 80, 100, 400, 300};
+        matrix.setScale(0.5f, 1f);//x坐标缩放0.5
+        Log.d(TAG, "before scale: " + Arrays.toString(pts));
+        matrix.mapPoints(pts);//调用map方法计算
+        Log.d(TAG, " after scale: " + Arrays.toString(pts));
+    }
+
+    private void matrixMapPoints2() {
+        //初始数据为三个点 (0, 0) (80, 100) (400, 300)
+        float[] src = {0, 0, 80, 100, 400, 300};
+        float[] dst = new float[6];
+
+        Matrix matrix = new Matrix();//构造一个matrix，x坐标缩放0.5
+        matrix.setScale(0.5f, 1f);
+
+        Log.i(TAG, "before: src=" + Arrays.toString(src));
+        Log.i(TAG, "before: dst=" + Arrays.toString(dst));
+
+        matrix.mapPoints(dst, src);
+
+        Log.i(TAG, "after : src=" + Arrays.toString(src));
+        Log.i(TAG, "after : dst=" + Arrays.toString(dst));
+    }
+
+    private void matrixMapPoints3() {
+        float[] src = new float[]{0, 0, 80, 100, 400, 300};
+        float[] dst = new float[6];
+
+        Matrix matrix = new Matrix();
+        matrix.setScale(0.5f, 1f);
+
+        Log.i(TAG, "before: src=" + Arrays.toString(src));
+        Log.i(TAG, "before: dst=" + Arrays.toString(dst));
+
+        //调用map方法计算(最后一个2表示两个点，即四个数值,并非两个数值)
+        matrix.mapPoints(dst, 0, src, 2, 2);
+
+        Log.i(TAG, "after : src=" + Arrays.toString(src));
+        Log.i(TAG, "after : dst=" + Arrays.toString(dst));
+    }
+
+    private void matrixMapRadius() {
+        float radius = 100;
+        float result;
+
+        Matrix matrix = new Matrix();
+        matrix.setScale(0.5f, 1f);
+        Log.i(TAG, "mapRadius: " + radius);
+        result = matrix.mapRadius(radius);
+        Log.i(TAG, "mapRadius: " + result);
+    }
+
+    private void matrixMapRect() {
+        mRectF = new RectF(400, 400, 1000, 800);
+
+        mMatrix = new Matrix();
+        mMatrix.setScale(0.5f, 1f);
+
+        Log.i(TAG, "mapRect: " + mRectF.toString());
+        boolean result = mMatrix.mapRect(mRectF);
+        Log.i(TAG, "mapRect: " + mRectF.toString());
+        Log.e(TAG, "isRect: " + result);
+
+        mRectF = new RectF(400, 400, 1000, 800);
+        mMatrix.postSkew(1, 0);
+        Log.i(TAG, "mapRect: " + mRectF.toString());
+        result = mMatrix.mapRect(mRectF);
+        Log.i(TAG, "mapRect: " + mRectF.toString());
+        Log.e(TAG, "isRect: " + result);
+
+        mRectF = new RectF(400, 400, 1000, 800);
+        mMatrix = new Matrix();
+        mMatrix.postTranslate(0, 100f);
+        Log.i(TAG, "mapRect: " + mRectF.toString());
+        result = mMatrix.mapRect(mRectF);
+        Log.i(TAG, "mapRect: " + mRectF.toString());
+        Log.e(TAG, "isRect: " + result);
+
+        mRectF = new RectF(400, 400, 1000, 800);
+        mMatrix = new Matrix();
+        mMatrix.setTranslate(0, 100f);
+        Log.i(TAG, "mapRect: " + mRectF.toString());
+        result = mMatrix.mapRect(mRectF);
+        Log.i(TAG, "mapRect: " + mRectF.toString());
+        Log.e(TAG, "isRect: " + result);
+
+        mRectF = new RectF(400, 400, 1000, 800);
+        mMatrix = new Matrix();
+        mMatrix.postRotate(90);
+        Log.i(TAG, "mapRect: " + mRectF.toString());
+        result = mMatrix.mapRect(mRectF);
+        Log.i(TAG, "mapRect: " + mRectF.toString());
+        Log.e(TAG, "isRect: " + result);//postRotate
+
+        mRectF = new RectF(100, 300, 200, 450);
+        mMatrix = new Matrix();
     }
 
     @Override
@@ -75,9 +173,9 @@ public class PathDemoView extends View {
         canvas.drawPath(mPathLen, mPaint);
         //forceClosed：测量时是否闭合，只对测量时候有影响，不关乎Path的绘制。
         mPathMeasureLen.setPath(mPathLen, true);
-        Log.d(TAG, "path length = " + mPathMeasureLen.getLength() + ", closed = " + mPathMeasureLen.isClosed());
+        //Log.d(TAG, "path length = " + mPathMeasureLen.getLength() + ", closed = " + mPathMeasureLen.isClosed());
         mPathMeasureLen.setPath(mPathLen, false);
-        Log.d(TAG, "path length = " + mPathMeasureLen.getLength() + ", closed = " + mPathMeasureLen.isClosed());
+        //Log.d(TAG, "path length = " + mPathMeasureLen.getLength() + ", closed = " + mPathMeasureLen.isClosed());
 
         //为Path添加一个圆形
         float radius = 100f;//半径长度
@@ -105,19 +203,25 @@ public class PathDemoView extends View {
         mPaint.setColor(Color.BLACK);
         canvas.drawPath(mPathDst, mPaint);
 
-        mPathDst.reset();
-        mPathDst.lineTo(0, 0);//避免使用硬件加速产生的bug
-        mPaint.setColor(Color.GREEN);
-        mPath.reset();
-        cCenterX = cCenterX + 2 * radius + 20;//圆心x坐标
-        mPath.addCircle(cCenterX, cCenterY, radius, Path.Direction.CW);//加入一个半径为100的圆
-        mPathMeasure.setPath(mPath, false);
-        mCircleLength = mPathMeasure.getLength();
-        //canvas.drawPath(mPath, mPaint);//把圆画出来
-        float stop = mCircleLength * mAnimatorValue;
-        float start = (float) (stop - ((0.5 - Math.abs(mAnimatorValue - 0.5)) * mCircleLength));
-        mPathMeasure.getSegment(start, stop, mPathDst, true);
-        canvas.drawPath(mPathDst, mPaint);//绘制截取的片段
+        canvas.drawRect(mRectF, mPaint);
+
+        mMatrix.postTranslate(0, 200f);
+        mMatrix.mapRect(mRectF);
+        mPaint.setColor(Color.DKGRAY);
+        canvas.drawRect(mRectF, mPaint);
+
+        mMatrix.reset();
+        mMatrix.preTranslate(-20f, 20f);
+        mMatrix.postScale(0.5f, 1f);
+        mMatrix.mapRect(mRectF);
+        mPaint.setColor(Color.GRAY);
+        canvas.drawRect(mRectF, mPaint);
+
+        /*mMatrix.reset();
+        mMatrix.postRotate(90);
+        mMatrix.mapRect(mRectF);
+        mPaint.setColor(Color.BLUE);
+        canvas.drawRect(mRectF, mPaint);*/
     }
 
     /**

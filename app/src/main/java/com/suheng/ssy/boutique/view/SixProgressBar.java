@@ -81,7 +81,7 @@ public class SixProgressBar extends View {
         }
 
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SixProgressBar);
-        radius = (int) typedArray.getDimension(R.styleable.SixProgressBar_radius, radius);
+        //radius = (int) typedArray.getDimension(R.styleable.SixProgressBar_radius, radius);
         mHexagonColor = typedArray.getColor(R.styleable.SixProgressBar_sexangleColor, mHexagonColor);
         mHexagonSecondColor = typedArray.getColor(R.styleable.SixProgressBar_sexangleSecondColor, mHexagonSecondColor);
         mHexagonWidth = (int) typedArray.getDimension(R.styleable.SixProgressBar_sexangleWidth, mHexagonWidth);
@@ -201,9 +201,6 @@ public class SixProgressBar extends View {
         float translateY = sin30 * xieLength;
 
         RectF rectF = new RectF();
-
-        //https://www.cnblogs.com/mmy0925/archive/2013/01/22/2871009.html
-        //https://blog.csdn.net/coderinchina/article/details/53665632
         Matrix matrix = new Matrix();
         matrix.postTranslate(translateX, translateY);
         matrix.mapRect(rectF, firstRect);
